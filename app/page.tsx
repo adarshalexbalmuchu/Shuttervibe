@@ -91,33 +91,26 @@ export default function Home() {
         {/* Gallery reveal layer (positioned on top of sticky stage) */}
         <div
           id="galleryPanel"
+          className="w-full sm:w-11/12 md:w-3/5 lg:w-[56%] px-4 sm:px-6 md:px-8 lg:px-14 py-6 md:py-10 lg:py-12"
           style={{
             position: "absolute",
             top: "105vh",
             right: 0,
-            width: "56%",
             minHeight: "90vh",
-            padding: "48px 56px",
             opacity: 0,
             transform: "translateY(40px)",
           }}
         >
-          <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 18 }}>Gallery</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 md:mb-6">Gallery</h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 18 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 lg:gap-6">
             {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  borderRadius: 16,
-                  height: 180,
-                  overflow: "hidden",
-                }}
+                className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden h-40 sm:h-44 md:h-48 lg:h-52 transition-transform hover:scale-105 cursor-pointer"
               >
                 {/* Replace with your real thumbnails */}
-                <div style={{ height: "100%", display: "grid", placeItems: "center", opacity: 0.8 }}>
+                <div className="h-full grid place-items-center opacity-80 text-sm md:text-base">
                   Photo {i + 1}
                 </div>
               </div>
@@ -127,9 +120,9 @@ export default function Home() {
       </section>
 
       {/* About section */}
-      <section style={{ padding: "80px 56px", maxWidth: 1100 }}>
-        <h3 style={{ fontSize: 28, fontWeight: 600 }}>About</h3>
-        <p style={{ marginTop: 10, opacity: 0.75, lineHeight: 1.7 }}>
+      <section className="px-4 sm:px-8 md:px-12 lg:px-14 py-12 md:py-16 lg:py-20 max-w-6xl mx-auto">
+        <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold">About</h3>
+        <p className="mt-3 md:mt-4 opacity-75 leading-relaxed text-sm md:text-base">
           This is where your story, awards, and philosophy go. Keep it minimal and cinematic.
         </p>
       </section>

@@ -73,13 +73,15 @@ function CameraRig({ url }: { url: string }) {
 
     // Small delay to ensure DOM is fully painted
     const timeoutId = setTimeout(() => {
+      const isMobileView = window.innerWidth < 768;
+      
       // OPTIMIZED: Balanced scrub for smooth performance
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#scrollWrap",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.8, // Balanced for smooth animation
+          scrub: isMobileView ? 1.2 : 0.8, // Smoother on mobile
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
@@ -174,16 +176,26 @@ useGLTF.preload('/models/camera.glb');
 
 export default function HeroToGalleryScene() {
   const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
     
     // Refresh ScrollTrigger when component mounts
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   if (!isClient) {
@@ -196,17 +208,18 @@ export default function HeroToGalleryScene() {
 
   return (
     <Canvas
-      dpr={[1, 2]} // Reduced for better performance (was [2, 3])
-      camera={{ position: [0, 0, 3.1], fov: 42 }}
+      dpr={isMobile ? [1, 1.5] : [1, 2]} // Lower DPI on mobile
+      camera={{ position: [0, 0, isMobile ? 4.2 : 3.1], fov: isMobile ? 55 : 42 }}
       style={{ background: "transparent" }}
       gl={{ 
-        antialias: true, 
+        antialias: !isMobile, 
         alpha: true,
-        powerPreference: "high-performance",
+        powerPreference: isMobile ? "default" : "high-performance",
         stencil: false,
         depth: true,
       }}
-      frameloop="always" // Continuous rendering for smooth animations
+      frameloop="always"
+      touch={{ target: typeof window !== 'undefined' ? window : undefined }}
     >
       <Suspense fallback={<Loader />}>
         <ambientLight intensity={0.5} />
