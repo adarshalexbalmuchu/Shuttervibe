@@ -110,31 +110,33 @@ export default function Home() {
         </a>
       </div>
 
-      {/* Brand Name - Fixed position top left */}
-      <div className="fixed top-4 left-4 z-50">
-        <AnimatedText 
-          text="Adarsh Alex"
-          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
-          gradientAnimationDuration={3}
-          hoverEffect={true}
-          className="py-0 leading-none"
-          textClassName="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-none"
-        />
-        <AnimatedText 
-          text="Balmuchu"
-          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
-          gradientAnimationDuration={3}
-          hoverEffect={true}
-          className="py-0 -mt-2 leading-none"
-          textClassName="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-none"
-        />
-      </div>
-
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
         {/* Sticky stage */}
         <div style={{ position: "sticky", top: 0, height: "100vh" }}>
           <HeroToGalleryScene />
+          
+          {/* Brand Name - Centered on hero section */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+            <div className="text-center">
+              <AnimatedText 
+                text="Adarsh Alex"
+                gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+                gradientAnimationDuration={3}
+                hoverEffect={true}
+                className="py-0"
+                textClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight pointer-events-auto"
+              />
+              <AnimatedText 
+                text="Balmuchu"
+                gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+                gradientAnimationDuration={3}
+                hoverEffect={true}
+                className="py-0 -mt-4"
+                textClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight pointer-events-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

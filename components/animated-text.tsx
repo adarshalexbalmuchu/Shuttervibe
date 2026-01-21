@@ -49,16 +49,17 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex justify-center items-center py-8", className)}
+        className={cn("flex justify-center items-center", className)}
         {...props}
       >
-        <motion.h1
-          className={cn("text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] leading-normal", textClassName)}
+        <motion.div
+          className={cn("inline-block", textClassName)}
           style={{
             background: gradientColors,
             backgroundSize: "200% auto",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
             textShadow: isHovered ? "0 0 8px rgba(255,255,255,0.3)" : "none",
           }}
           variants={textVariants}
@@ -68,7 +69,7 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
           onHoverEnd={() => hoverEffect && setIsHovered(false)}
         >
           {text}
-        </motion.h1>
+        </motion.div>
       </div>
     );
   }
