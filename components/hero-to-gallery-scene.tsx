@@ -127,25 +127,28 @@ function CameraRig({ url }: { url: string }) {
     if (!group.current) return;
     const t = clock.getElapsedTime();
 
-    // Simplified idle motion for better performance
-    const idleFloat = Math.sin(t * 0.5) * 0.03; // Reduced frequency and amplitude
-    const idleRot = t * 0.1; // Slower rotation
+    // Subtle idle rotation only (no vertical float)
+    const idleRot = Math.sin(t * 0.3) * 0.05;
 
-    // Optimized lerp factor (lower = smoother, less CPU)
-    const lerpFactor = 0.08; // Reduced from 0.12
+    // Optimized lerp factor
+    const lerpFactor = 0.08;
 
-    // Apply transforms (optimized)
+    // Apply position transforms - NO idle float on Y to prevent upward drift
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, motion.current.x, lerpFactor);
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, motion.current.y + idleFloat, lerpFactor);
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, motion.current.y, lerpFactor);
     group.current.position.z = THREE.MathUtils.lerp(group.current.position.z, motion.current.z, lerpFactor);
 
     const s = THREE.MathUtils.lerp(group.current.scale.x, motion.current.scale, lerpFactor);
     group.current.scale.set(s, s, s);
 
-    // Simplified mouse parallax (less calculations)
-    const targetY = motion.current.rotY + idleRot * 0.1;
-    const targetX = motion.current.rotX + mouse.y * 0.05; // Reduced sensitivity
-    const targetZ = motion.current.rotZ - mouse.x * 0.03; // Reduced sensitivity
+    // Mouse controls: left/right mouse movement rotates model left/right (Y-axis)
+    const mouseRotationY = mouse.x * 0.3; // Horizontal mouse controls left/right rotation
+    const mouseRotationX = mouse.y * 0.1; // Vertical mouse adds slight tilt
+    
+    const targetY = motion.current.rotY + idleRot + mouseRotationY;
+    const targetX = motion.current.rotX + mouseRotationX;
+    const targetZ = motion.current.rotZ;
+    
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetY, lerpFactor);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetX, lerpFactor);
     group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, targetZ, lerpFactor);
