@@ -111,17 +111,17 @@ function CameraRig({ url }: { url: string }) {
     }, 0.25);
 
     /**
-     * Gallery panel - Fast elegant reveal
+     * Gallery panel - Smooth elegant reveal
      */
     tl.to(
       "#galleryPanel",
       { 
         opacity: 1, 
         y: 0, 
-        duration: 0.6,
-        ease: "power4.out"
+        duration: 0.8,
+        ease: "power2.out"
       },
-      0.3
+      0.4
     );
 
       // Cleanup function

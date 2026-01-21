@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
+import { CircularGallery, GalleryItem } from "@/components/circular-gallery";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
@@ -12,6 +13,70 @@ const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-sc
 const Footer = dynamic(() => import("@/components/footer"), {
   loading: () => null,
 });
+
+// Sample gallery items - replace with your actual photos
+const galleryItems: GalleryItem[] = [
+  {
+    common: "Golden Hour",
+    binomial: "Sunset Photography",
+    photo: {
+      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+      text: "Mountain sunset",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+  {
+    common: "Urban Life",
+    binomial: "Street Photography",
+    photo: {
+      url: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800",
+      text: "City streets",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+  {
+    common: "Nature's Canvas",
+    binomial: "Landscape Photography",
+    photo: {
+      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+      text: "Natural beauty",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+  {
+    common: "Portrait",
+    binomial: "Human Stories",
+    photo: {
+      url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800",
+      text: "People",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+  {
+    common: "Abstract",
+    binomial: "Creative Vision",
+    photo: {
+      url: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800",
+      text: "Abstract art",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+  {
+    common: "Architecture",
+    binomial: "Built Environment",
+    photo: {
+      url: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800",
+      text: "Buildings",
+      pos: "center",
+      by: "Shuttervibe"
+    }
+  },
+];
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -88,34 +153,23 @@ export default function Home() {
           <HeroToGalleryScene />
         </div>
 
-        {/* Gallery reveal layer (positioned on top of sticky stage) */}
+        {/* Circular Gallery reveal layer (positioned on top of sticky stage) */}
         <div
           id="galleryPanel"
-          className="w-full sm:w-11/12 md:w-3/5 lg:w-[56%] px-4 sm:px-6 md:px-8 lg:px-14 py-6 md:py-10 lg:py-12"
+          className="w-full h-screen"
           style={{
             position: "absolute",
-            top: "105vh",
+            top: "100vh",
             right: 0,
-            minHeight: "90vh",
             opacity: 0,
             transform: "translateY(40px)",
           }}
         >
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 md:mb-6">Gallery</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 lg:gap-6">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden h-40 sm:h-44 md:h-48 lg:h-52 transition-transform hover:scale-105 cursor-pointer"
-              >
-                {/* Replace with your real thumbnails */}
-                <div className="h-full grid place-items-center opacity-80 text-sm md:text-base">
-                  Photo {i + 1}
-                </div>
-              </div>
-            ))}
-          </div>
+          <CircularGallery 
+            items={galleryItems} 
+            radius={400}
+            autoRotateSpeed={0.01}
+          />
         </div>
       </section>
 
