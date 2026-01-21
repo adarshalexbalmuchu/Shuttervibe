@@ -111,14 +111,22 @@ export default function Home() {
       </div>
 
       {/* Brand Name - Fixed position top left */}
-      <div className="fixed top-6 left-6 z-50">
+      <div className="fixed top-4 left-4 z-50">
         <AnimatedText 
-          text="Adarsh Alex Balmuchu"
+          text="Adarsh Alex"
           gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
           gradientAnimationDuration={3}
           hoverEffect={true}
-          className="py-0"
-          textClassName="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight"
+          className="py-0 leading-none"
+          textClassName="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-none"
+        />
+        <AnimatedText 
+          text="Balmuchu"
+          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+          gradientAnimationDuration={3}
+          hoverEffect={true}
+          className="py-0 -mt-2 leading-none"
+          textClassName="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-none"
         />
       </div>
 
