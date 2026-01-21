@@ -86,20 +86,23 @@ function CameraRig({ url }: { url: string }) {
         z: 0.6, 
         scale: 1.8, 
         rotY: 0.3,
+        y: 0,
         ease: "power2.out"
       }, 0);
 
       /**
-       * Phase 2 (0.25 → 1.0): Move left and disappear off screen
+       * Phase 2 (0.25 → 1.0): Move left horizontally and disappear
+       * Keep y at 0 to prevent unwanted vertical movement
        */
       tl.to(motion.current, { 
-        x: -4.0,
-        z: 0.3,
-        scale: 0.5,
-        rotY: -0.8,
-        rotX: 0.1,
-        rotZ: 0.05,
-        ease: "power3.inOut"
+        x: -4.5,
+        y: 0,
+        z: 0.4,
+        scale: 0.4,
+        rotY: -0.9,
+        rotX: 0,
+        rotZ: 0,
+        ease: "power2.inOut"
       }, 0.25);
 
       /**
