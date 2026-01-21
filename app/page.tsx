@@ -3,43 +3,17 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
-import { ZoomParallax } from "@/components/zoom-parallax";
 import { AnimatedText } from "@/components/animated-text";
 import { GlassButton } from "@/components/glass-button";
+import { HeroMessage } from "@/components/hero-message";
+import { ScrollIndicator } from "@/components/scroll-indicator";
+import { LensGlow } from "@/components/lens-glow";
+import { FeaturedProjects } from "@/components/featured-projects";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
   loading: () => null,
 });
-
-// Sample gallery images - replace with your actual photos (20+ images recommended for best parallax effect)
-const galleryImages = [
-  { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", alt: "Mountain landscape" },
-  { src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80", alt: "City skyline" },
-  { src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80", alt: "Nature scene" },
-  { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80", alt: "Portrait" },
-  { src: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=1200&q=80", alt: "Abstract" },
-  { src: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1200&q=80", alt: "Architecture" },
-  { src: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1200&q=80", alt: "Wildlife" },
-  { src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&q=80", alt: "Ocean waves" },
-  { src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80", alt: "Mountain peak" },
-  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80", alt: "Desert road" },
-  { src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80", alt: "Forest path" },
-  { src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80", alt: "Green valley" },
-  { src: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&q=80", alt: "Winter forest" },
-  { src: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=1200&q=80", alt: "Waterfall" },
-  { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&q=80", alt: "Urban street" },
-  { src: "https://images.unsplash.com/photo-1485470733090-0aae1788d5af?w=1200&q=80", alt: "Bridge view" },
-  { src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1200&q=80", alt: "Sunset horizon" },
-  { src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&q=80", alt: "Flower field" },
-  { src: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1200&q=80", alt: "Lake reflection" },
-  { src: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=1200&q=80", alt: "Starry night" },
-  { src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80", alt: "Snow mountain" },
-  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", alt: "Rocky coast" },
-  { src: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200&q=80", alt: "Aurora lights" },
-  { src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80", alt: "Tropical beach" },
-  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80", alt: "Galaxy sky" },
-];
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -120,6 +94,9 @@ export default function Home() {
         />
       </div>
 
+      {/* Lens Glow - cursor following effect */}
+      <LensGlow />
+
       {/* Navigation Button - Fixed position */}
       <div className="fixed top-6 right-6 z-50">
         <a href="#contact">
@@ -141,65 +118,52 @@ export default function Home() {
         />
       </div>
 
-      {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
-      <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
-        {/* Sticky stage with heroStage id for fade-out */}
-        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", width: "100%", overflow: "visible" }}>
+      {/* Hero Message - positioning statement */}
+      <HeroMessage />
+
+      {/* Scroll Indicator */}
+      <ScrollIndicator />
+
+      {/* Scroll wrapper with pinned hero */}
+      <section id="scrollWrap" style={{ height: "200vh", position: "relative" }}>
+        <div id="heroStage" style={{ height: "100vh", width: "100%", position: "relative" }}>
           <HeroToGalleryScene />
-          
-          {/* Camera Flash Overlay */}
-          <div 
-            id="flashOverlay" 
+
+          {/* Flash glow (soft bloom) */}
+          <div
+            id="flashGlow"
             style={{
               position: "absolute",
-              inset: 0,
-              background: "#ffffff",
+              inset: "-10%",
+              background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.85), rgba(255,255,255,0) 60%)",
               opacity: 0,
               pointerEvents: "none",
-              zIndex: 20
+              filter: "blur(18px)",
+              zIndex: 49,
+              transform: "scale(0.98)",
             }}
           />
-          
-          {/* Camera Shutter Bars */}
-          <div 
-            id="shutterBars" 
+
+          {/* Flash overlay (hard flash) */}
+          <div
+            id="flashOverlay"
             style={{
               position: "absolute",
               inset: 0,
+              background: "white",
+              opacity: 0,
               pointerEvents: "none",
-              zIndex: 19
+              zIndex: 50,
             }}
-          >
-            <div 
-              id="barTop" 
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: "0%",
-                background: "#000000"
-              }}
-            />
-            <div 
-              id="barBottom" 
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: "0%",
-                background: "#000000"
-              }}
-            />
-          </div>
+          />
         </div>
+
+        {/* Transition spacer */}
+        <div style={{ height: "100vh", background: "#000" }} />
       </section>
 
-      {/* Zoom Parallax Gallery - Isolated scroll section */}
-      <section style={{ position: "relative", zIndex: 2, background: "#000", paddingTop: "120px", minHeight: "300vh", overflow: "visible" }}>
-        <ZoomParallax images={galleryImages} />
-      </section>
+      {/* Featured Projects Section */}
+      <FeaturedProjects />
     </div>
   );
 }
