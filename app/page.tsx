@@ -110,33 +110,23 @@ export default function Home() {
         </a>
       </div>
 
+      {/* Brand Name - Fixed position top left */}
+      <div className="fixed top-6 left-6 z-50">
+        <AnimatedText 
+          text="Adarsh Alex Balmuchu"
+          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+          gradientAnimationDuration={3}
+          hoverEffect={true}
+          className="py-0"
+          textClassName="!text-base sm:!text-lg md:!text-xl lg:!text-2xl"
+        />
+      </div>
+
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
         {/* Sticky stage */}
         <div style={{ position: "sticky", top: 0, height: "100vh" }}>
           <HeroToGalleryScene />
-          
-          {/* Brand Name - Centered on hero section */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-            <div className="text-center">
-              <AnimatedText 
-                text="Adarsh Alex"
-                gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
-                gradientAnimationDuration={3}
-                hoverEffect={true}
-                className="py-0"
-                textClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight pointer-events-auto"
-              />
-              <AnimatedText 
-                text="Balmuchu"
-                gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
-                gradientAnimationDuration={3}
-                hoverEffect={true}
-                className="py-0 -mt-4"
-                textClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight pointer-events-auto"
-              />
-            </div>
-          </div>
         </div>
       </section>
 
