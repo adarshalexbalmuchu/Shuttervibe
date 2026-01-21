@@ -110,20 +110,6 @@ function CameraRig({ url }: { url: string }) {
       ease: "power3.inOut" // Stronger easing for premium feel
     }, 0.25);
 
-    /**
-     * Gallery panel - Smooth elegant reveal
-     */
-    tl.to(
-      "#galleryPanel",
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8,
-        ease: "power2.out"
-      },
-      0.4
-    );
-
       // Cleanup function
       return () => {
         tl.kill();

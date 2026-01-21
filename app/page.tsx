@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
-import { CircularGallery, GalleryItem } from "@/components/circular-gallery";
+import { ZoomParallax } from "@/components/zoom-parallax";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
@@ -14,68 +14,15 @@ const Footer = dynamic(() => import("@/components/footer"), {
   loading: () => null,
 });
 
-// Sample gallery items - replace with your actual photos
-const galleryItems: GalleryItem[] = [
-  {
-    common: "Golden Hour",
-    binomial: "Sunset Photography",
-    photo: {
-      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
-      text: "Mountain sunset",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
-  {
-    common: "Urban Life",
-    binomial: "Street Photography",
-    photo: {
-      url: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800",
-      text: "City streets",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
-  {
-    common: "Nature's Canvas",
-    binomial: "Landscape Photography",
-    photo: {
-      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
-      text: "Natural beauty",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
-  {
-    common: "Portrait",
-    binomial: "Human Stories",
-    photo: {
-      url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800",
-      text: "People",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
-  {
-    common: "Abstract",
-    binomial: "Creative Vision",
-    photo: {
-      url: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800",
-      text: "Abstract art",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
-  {
-    common: "Architecture",
-    binomial: "Built Environment",
-    photo: {
-      url: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800",
-      text: "Buildings",
-      pos: "center",
-      by: "Shuttervibe"
-    }
-  },
+// Sample gallery images - replace with your actual photos (7 images recommended for best effect)
+const galleryImages = [
+  { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", alt: "Mountain landscape" },
+  { src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80", alt: "City skyline" },
+  { src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80", alt: "Nature scene" },
+  { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80", alt: "Portrait" },
+  { src: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=1200&q=80", alt: "Abstract" },
+  { src: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1200&q=80", alt: "Architecture" },
+  { src: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1200&q=80", alt: "Wildlife" },
 ];
 
 export default function Home() {
@@ -152,25 +99,11 @@ export default function Home() {
         <div style={{ position: "sticky", top: 0, height: "100vh" }}>
           <HeroToGalleryScene />
         </div>
+      </section>
 
-        {/* Circular Gallery reveal layer (positioned on top of sticky stage) */}
-        <div
-          id="galleryPanel"
-          className="w-full h-screen"
-          style={{
-            position: "absolute",
-            top: "100vh",
-            right: 0,
-            opacity: 0,
-            transform: "translateY(40px)",
-          }}
-        >
-          <CircularGallery 
-            items={galleryItems} 
-            radius={400}
-            autoRotateSpeed={0.01}
-          />
-        </div>
+      {/* Zoom Parallax Gallery */}
+      <section style={{ position: "relative", zIndex: 2 }}>
+        <ZoomParallax images={galleryImages} />
       </section>
 
       {/* About section */}
