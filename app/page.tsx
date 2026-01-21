@@ -11,10 +11,6 @@ const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-sc
   loading: () => null,
 });
 
-const Footer = dynamic(() => import("@/components/footer"), {
-  loading: () => null,
-});
-
 // Sample gallery images - replace with your actual photos (7 images recommended for best effect)
 const galleryImages = [
   { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", alt: "Mountain landscape" },
@@ -95,13 +91,7 @@ export default function Home() {
       </div>
 
       {/* Navigation Button - Fixed position */}
-      <div className="fixed top-6 right-6 z-50 flex gap-3">
-        <a
-          href="#about"
-          className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border border-white/20 transition-all text-sm font-medium"
-        >
-          About
-        </a>
+      <div className="fixed top-6 right-6 z-50">
         <a
           href="#contact"
           className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border border-white/20 transition-all text-sm font-medium"
@@ -133,34 +123,6 @@ export default function Home() {
       {/* Zoom Parallax Gallery - Isolated scroll section */}
       <section style={{ position: "relative", zIndex: 2, background: "#000" }}>
         <ZoomParallax images={galleryImages} />
-      </section>
-
-      {/* Spacer to ensure smooth transition */}
-      <div style={{ height: "20vh", background: "#000" }} />
-
-      {/* About section */}
-      <section id="about" className="px-4 sm:px-8 md:px-12 lg:px-14 py-20 md:py-32 max-w-4xl mx-auto" style={{ background: "#000" }}>
-        <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6">About</h3>
-        <p className="mt-4 opacity-75 leading-relaxed text-base md:text-lg">
-          This is where your story, awards, and philosophy go. Keep it minimal and cinematic.
-        </p>
-      </section>
-
-      {/* Contact/Footer section - Separate page-like section */}
-      <section id="contact" className="min-h-screen flex items-center justify-center px-4">
-        <Footer
-          leftLinks={[
-            { href: "#about", label: "About" },
-            { href: "#", label: "Services" },
-            { href: "#contact", label: "Contact" },
-          ]}
-          rightLinks={[
-            { href: "#", label: "Privacy" },
-            { href: "#", label: "Terms" },
-            { href: "#", label: "Support" },
-          ]}
-          copyrightText="© 2026 Shuttervibe. All rights reserved."
-        />
       </section>
     </div>
   );
