@@ -8,7 +8,7 @@ import { GlassButton } from "@/components/glass-button";
 import { HeroMessage } from "@/components/hero-message";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { LensGlow } from "@/components/lens-glow";
-import { FeaturedProjects } from "@/components/featured-projects";
+import FeaturedProjects from "@/components/featured-projects";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
