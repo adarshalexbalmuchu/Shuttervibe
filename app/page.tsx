@@ -126,13 +126,49 @@ export default function Home() {
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
         {/* Sticky stage with heroStage id for fade-out */}
-        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", overflowX: "hidden" }}>
           <HeroToGalleryScene />
+          
+          {/* Gallery Preview Overlay - reveals during last 30% of hero animation */}
+          <div 
+            id="galleryReveal"
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: 0,
+              transform: "translateY(30px)",
+              filter: "blur(8px)",
+              pointerEvents: "none",
+              zIndex: 10
+            }}
+          >
+            <div className="w-full max-w-4xl px-6">
+              {/* 3x3 Gallery Preview Grid */}
+              <div className="grid grid-cols-3 gap-3 md:gap-4">
+                {galleryImages.slice(0, 9).map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="aspect-square overflow-hidden rounded-lg border border-white/10 bg-black/60 backdrop-blur-sm"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Zoom Parallax Gallery - Isolated scroll section */}
-      <section style={{ position: "relative", zIndex: 2, background: "#000" }}>
+      <section style={{ position: "relative", zIndex: 2, background: "#000", paddingTop: "120px" }}>
         <ZoomParallax images={galleryImages} />
       </section>
     </div>
