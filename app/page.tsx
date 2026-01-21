@@ -12,7 +12,7 @@ const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-sc
   loading: () => null,
 });
 
-// Sample gallery images - replace with your actual photos (7 images recommended for best effect)
+// Sample gallery images - replace with your actual photos (20+ images recommended for best parallax effect)
 const galleryImages = [
   { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", alt: "Mountain landscape" },
   { src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80", alt: "City skyline" },
@@ -21,6 +21,24 @@ const galleryImages = [
   { src: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=1200&q=80", alt: "Abstract" },
   { src: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1200&q=80", alt: "Architecture" },
   { src: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=1200&q=80", alt: "Wildlife" },
+  { src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&q=80", alt: "Ocean waves" },
+  { src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=80", alt: "Mountain peak" },
+  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80", alt: "Desert road" },
+  { src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80", alt: "Forest path" },
+  { src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80", alt: "Green valley" },
+  { src: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&q=80", alt: "Winter forest" },
+  { src: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=1200&q=80", alt: "Waterfall" },
+  { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&q=80", alt: "Urban street" },
+  { src: "https://images.unsplash.com/photo-1485470733090-0aae1788d5af?w=1200&q=80", alt: "Bridge view" },
+  { src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1200&q=80", alt: "Sunset horizon" },
+  { src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&q=80", alt: "Flower field" },
+  { src: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1200&q=80", alt: "Lake reflection" },
+  { src: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=1200&q=80", alt: "Starry night" },
+  { src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80", alt: "Snow mountain" },
+  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", alt: "Rocky coast" },
+  { src: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200&q=80", alt: "Aurora lights" },
+  { src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80", alt: "Tropical beach" },
+  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80", alt: "Galaxy sky" },
 ];
 
 export default function Home() {
