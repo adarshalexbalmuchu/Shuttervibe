@@ -23,8 +23,8 @@ function CameraRig({ url }: { url: string }) {
   const motion = useRef({
     x: 0,
     y: 0,
-    z: -0.6,
-    scale: 0.45,
+    z: -1.2,
+    scale: 0.3,
     rotX: 0,
     rotY: 0,
     rotZ: 0,
@@ -76,8 +76,8 @@ function CameraRig({ url }: { url: string }) {
       gsap.set(motion.current, {
         x: 0,
         y: 0,
-        z: -0.6,
-        scale: 0.45,
+        z: -1.2,
+        scale: 0.3,
         rotX: 0,
         rotY: 0,
         rotZ: 0,
@@ -124,12 +124,13 @@ function CameraRig({ url }: { url: string }) {
           });
 
           /**
-           * Phase 1 (0 → 0.30): Zoom in (small → big), in place.
+           * Phase 1 (0 → 0.35): Zoom in (small → big), in place.
            * IMPORTANT: For scrubbed timelines, use ease:"none" for predictable behavior.
            */
           tl.to(
             motion.current,
             {
+              y: 0,
               z: 0.6,
               scale: ZOOM_SCALE,
               rotY: 0.25,
@@ -139,35 +140,36 @@ function CameraRig({ url }: { url: string }) {
           );
 
           /**
-           * Phase 2 (0.30 → 0.80): Slide left and shrink (exit).
+           * Phase 2 (0.35 → 0.70): Slide left and shrink (exit).
            */
           tl.to(
             motion.current,
             {
               x: EXIT_X,
-              z: 0.25,
+              y: 0,
+              z: 0.3,
               scale: EXIT_SCALE,
               rotY: -0.9,
               rotX: 0,
               rotZ: 0,
               ease: "none",
             },
-            0.30
+            0.35
           );
 
           /**
-           * Phase 3 (0.80 → 0.92): Shutter effect (flash + bars).
-           * These are not scrub-critical; small timed tweens are fine.
+           * Phase 3 (0.65 → 0.78): Shutter effect (flash + bars).
+           * Happens while camera is still visible on screen
            */
           if (flashOverlay) {
             tl.to(
               flashOverlay,
               { opacity: 1, duration: 0.05, ease: "power1.in" },
-              0.82
+              0.65
             ).to(
               flashOverlay,
-              { opacity: 0, duration: 0.18, ease: "power2.out" },
-              0.87
+              { opacity: 0, duration: 0.15, ease: "power2.out" },
+              0.70
             );
           }
 
@@ -175,22 +177,22 @@ function CameraRig({ url }: { url: string }) {
             tl.to(
               [barTop, barBottom],
               { height: "18%", duration: 0.08, ease: "power2.inOut" },
-              0.82
+              0.65
             ).to(
               [barTop, barBottom],
               { height: "0%", duration: 0.12, ease: "power2.out" },
-              0.90
+              0.73
             );
           }
 
           /**
-           * Phase 4 (0.92 → 1.0): Fade out heroStage so gallery becomes primary.
+           * Phase 4 (0.78 → 1.0): Fade out heroStage so gallery becomes primary.
            */
           if (heroStage) {
             tl.to(
               heroStage,
-              { opacity: 0, duration: 0.25, ease: "power2.out" },
-              0.92
+              { opacity: 0, duration: 0.22, ease: "power2.out" },
+              0.78
             );
           }
 
