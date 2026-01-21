@@ -27,12 +27,12 @@ function CameraRig({ url }: { url: string }) {
   const motion = useRef({
     x: 0,
     y: 0,
-    z: 0,
-    scale: 1.25,
+    z: -0.6,
+    scale: 0.45,
     rotY: 0,
     rotX: 0,
     rotZ: 0,
-    intensity: 1.0, // for "energy" feel if you want later
+    intensity: 1.0,
   });
 
   // Make materials more efficient (run once)
@@ -68,6 +68,17 @@ function CameraRig({ url }: { url: string }) {
     const ctx = gsap.context(() => {
       const isMobileView = window.innerWidth < 768;
       
+      // Phase 0: Set explicit initial state
+      gsap.set(motion.current, {
+        x: 0,
+        y: 0,
+        z: -0.6,
+        scale: 0.45,
+        rotX: 0,
+        rotY: 0,
+        rotZ: 0
+      });
+      
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#scrollWrap",
@@ -80,40 +91,74 @@ function CameraRig({ url }: { url: string }) {
       });
 
       /**
-       * Phase 1 (0 → 0.25): Zoom in with rotation
+       * Phase 1 (0 → 0.30): Zoom in - camera grows in place
        */
       tl.to(motion.current, { 
         z: 0.6, 
-        scale: 1.8, 
-        rotY: 0.3,
-        y: 0,
+        scale: 1.6, 
+        rotY: 0.25,
         ease: "power2.out"
       }, 0);
 
       /**
-       * Phase 2 (0.25 → 1.0): Move left horizontally and disappear
-       * Keep y at 0 to prevent unwanted vertical movement
+       * Phase 2 (0.30 → 0.80): Slide left and shrink - camera exits
        */
       tl.to(motion.current, { 
         x: -4.5,
-        y: 0,
-        z: 0.4,
-        scale: 0.4,
+        z: 0.3,
+        scale: 0.45,
         rotY: -0.9,
         rotX: 0,
         rotZ: 0,
         ease: "power2.inOut"
-      }, 0.25);
+      }, 0.30);
 
       /**
-       * Fade out entire hero stage (0.78 → 1.0)
-       * Ensures clean disappearance before gallery
+       * Phase 3a (0.80 → 0.86): Camera shutter flash effect
+       */
+      const flashOverlay = document.getElementById('flashOverlay');
+      const barTop = document.getElementById('barTop');
+      const barBottom = document.getElementById('barBottom');
+      
+      if (flashOverlay) {
+        // Quick flash: 0 → 1 (0.06s) → 0 (0.18s)
+        tl.to(flashOverlay, {
+          opacity: 1,
+          duration: 0.06,
+          ease: "power1.in"
+        }, 0.80);
+        
+        tl.to(flashOverlay, {
+          opacity: 0,
+          duration: 0.18,
+          ease: "power2.out"
+        }, 0.86);
+      }
+      
+      if (barTop && barBottom) {
+        // Shutter bars close
+        tl.to([barTop, barBottom], {
+          height: "18%",
+          duration: 0.08,
+          ease: "power2.inOut"
+        }, 0.80);
+        
+        // Shutter bars open
+        tl.to([barTop, barBottom], {
+          height: "0%",
+          duration: 0.12,
+          ease: "power2.out"
+        }, 0.88);
+      }
+
+      /**
+       * Phase 3b (0.90 → 1.0): Fade out entire hero stage
        */
       if (heroStage) {
         tl.to(heroStage, {
           opacity: 0,
           ease: "power2.out"
-        }, 0.78);
+        }, 0.90);
       }
     });
 

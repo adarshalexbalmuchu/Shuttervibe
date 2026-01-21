@@ -146,6 +146,53 @@ export default function Home() {
         {/* Sticky stage with heroStage id for fade-out */}
         <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", width: "100%", overflow: "visible" }}>
           <HeroToGalleryScene />
+          
+          {/* Camera Flash Overlay */}
+          <div 
+            id="flashOverlay" 
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "#ffffff",
+              opacity: 0,
+              pointerEvents: "none",
+              zIndex: 20
+            }}
+          />
+          
+          {/* Camera Shutter Bars */}
+          <div 
+            id="shutterBars" 
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              zIndex: 19
+            }}
+          >
+            <div 
+              id="barTop" 
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "0%",
+                background: "#000000"
+              }}
+            />
+            <div 
+              id="barBottom" 
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "0%",
+                background: "#000000"
+              }}
+            />
+          </div>
         </div>
       </section>
 
