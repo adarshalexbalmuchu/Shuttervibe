@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
 import { ZoomParallax } from "@/components/zoom-parallax";
+import { AnimatedText } from "@/components/animated-text";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
@@ -107,6 +108,18 @@ export default function Home() {
         >
           Contact
         </a>
+      </div>
+
+      {/* Brand Name - Fixed position top left */}
+      <div className="fixed top-6 left-6 z-50">
+        <AnimatedText 
+          text="Adarsh Alex Balmuchu"
+          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+          gradientAnimationDuration={3}
+          hoverEffect={true}
+          className="py-0"
+          textClassName="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight"
+        />
       </div>
 
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
