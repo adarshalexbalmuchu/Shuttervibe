@@ -60,7 +60,7 @@ function CameraRig({ url }: { url: string }) {
 
   useLayoutEffect(() => {
     const scrollWrap = document.getElementById('scrollWrap');
-    const galleryReveal = document.getElementById('galleryReveal');
+    const heroStage = document.getElementById('heroStage');
     
     if (!scrollWrap) return;
 
@@ -80,61 +80,37 @@ function CameraRig({ url }: { url: string }) {
       });
 
       /**
-       * Phase 1 (0 → 0.22): Premium push-in
-       * Subtle zoom with gentle rotation for editorial feel
+       * Phase 1 (0 → 0.25): Zoom in with rotation
        */
       tl.to(motion.current, { 
-        z: 0.55, 
-        scale: 1.72, 
-        rotY: 0.18,
-        rotX: 0.05,
-        ease: "power2.inOut"
+        z: 0.6, 
+        scale: 1.8, 
+        rotY: 0.3,
+        ease: "power2.out"
       }, 0);
 
       /**
-       * Phase 2 (0.22 → 0.9): Slide left but stay visible
-       * Camera becomes "guide object" on the left
+       * Phase 2 (0.25 → 1.0): Move left and disappear off screen
        */
       tl.to(motion.current, { 
-        x: isMobileView ? -0.65 : -1.45,
-        z: isMobileView ? 0.14 : 0.20,
-        scale: isMobileView ? 0.76 : 0.90,
-        rotY: isMobileView ? -0.32 : -0.45,
-        rotX: 0.08,
-        rotZ: 0.03,
-        ease: "power2.inOut"
-      }, 0.22);
+        x: -4.0,
+        z: 0.3,
+        scale: 0.5,
+        rotY: -0.8,
+        rotX: 0.1,
+        rotZ: 0.05,
+        ease: "power3.inOut"
+      }, 0.25);
 
       /**
-       * Phase 3 (0.9 → 1.0): Settle with soft ease
-       * Final 10% uses gentler easing for premium feel
+       * Fade out entire hero stage (0.75 → 1.0)
+       * Ensures clean disappearance before gallery
        */
-      tl.to(motion.current, {
-        x: isMobileView ? -0.60 : -1.50,
-        z: isMobileView ? 0.12 : 0.18,
-        scale: isMobileView ? 0.74 : 0.88,
-        rotY: isMobileView ? -0.35 : -0.48,
-        ease: "power2.out"
-      }, 0.9);
-
-      /**
-       * Gallery Reveal Animation (0.55 → 1.0)
-       * Blur-to-sharp fade with vertical slide
-       */
-      if (galleryReveal) {
-        gsap.set(galleryReveal, { 
-          opacity: 0, 
-          y: 24, 
-          filter: "blur(8px)" 
-        });
-        
-        tl.to(galleryReveal, {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          ease: "power2.out",
-          duration: 0.45
-        }, 0.55);
+      if (heroStage) {
+        tl.to(heroStage, {
+          opacity: 0,
+          ease: "power2.out"
+        }, 0.75);
       }
     });
 

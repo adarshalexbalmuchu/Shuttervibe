@@ -30,30 +30,42 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Optional Lenis smooth scroll (recommended)
+  // Lenis smooth scroll with proper ScrollTrigger sync
   useEffect(() => {
     if (!mounted) return;
 
     let lenis: any;
-    let rafId: number;
 
     const initLenis = async () => {
       try {
         const { default: Lenis } = await import("@studio-freight/lenis");
+        const gsap = (await import("gsap")).default;
+        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        
         lenis = new Lenis({ 
           smoothWheel: true, 
-          duration: 1.2, // Balanced for performance
-          lerp: 0.1, // Optimized interpolation
+          duration: 1.2,
+          lerp: 0.1,
           orientation: 'vertical' as const,
           gestureOrientation: 'vertical' as const,
           touchMultiplier: 2,
         });
         
-        const raf = (time: number) => {
-          lenis.raf(time);
-          rafId = requestAnimationFrame(raf);
-        };
-        rafId = requestAnimationFrame(raf);
+        // Sync Lenis with ScrollTrigger
+        lenis.on("scroll", ScrollTrigger.update);
+        
+        // Use GSAP ticker for smoother integration
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        
+        // Disable lag smoothing for better scroll sync
+        gsap.ticker.lagSmoothing(0);
+        
+        // Refresh ScrollTrigger after init
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
       } catch (error) {
         console.warn('Lenis not loaded:', error);
       }
@@ -62,7 +74,6 @@ export default function Home() {
     initLenis();
 
     return () => {
-      if (rafId) cancelAnimationFrame(rafId);
       lenis?.destroy?.();
     };
   }, [mounted]);
@@ -114,52 +125,9 @@ export default function Home() {
 
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
-        {/* Sticky stage */}
-        <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+        {/* Sticky stage with heroStage id for fade-out */}
+        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
           <HeroToGalleryScene />
-          
-          {/* Gallery Reveal Panel - appears during scroll on the right */}
-          <div 
-            id="galleryReveal" 
-            className="absolute inset-0 pointer-events-auto"
-            style={{
-              opacity: 0,
-              willChange: "opacity, transform, filter"
-            }}
-          >
-            {/* Desktop: right side panel, Mobile: stacked below */}
-            <div className="h-full w-full md:w-[55%] md:ml-auto flex items-center justify-center px-6 md:px-12 pt-32 md:pt-28 pb-12">
-              <div className="w-full max-w-3xl">
-                {/* Premium Editorial Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                  {galleryImages.slice(0, 6).map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="gallery-card group relative aspect-[4/5] overflow-hidden rounded-lg border border-white/[0.12] bg-black/40 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
-                      style={{
-                        cursor: "pointer"
-                      }}
-                    >
-                      <img
-                        src={img.src}
-                        alt={img.alt}
-                        className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-110"
-                        loading="lazy"
-                      />
-                      
-                      {/* Caption overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                        <div>
-                          <p className="text-white text-xs md:text-sm font-medium tracking-wide">{img.alt}</p>
-                          <p className="text-white/60 text-[10px] md:text-xs mt-0.5">Photography</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
