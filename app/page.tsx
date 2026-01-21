@@ -117,13 +117,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Zoom Parallax Gallery */}
-      <section style={{ position: "relative", zIndex: 2 }}>
+      {/* Zoom Parallax Gallery - Isolated scroll section */}
+      <section style={{ position: "relative", zIndex: 2, background: "#000" }}>
         <ZoomParallax images={galleryImages} />
       </section>
 
+      {/* Spacer to ensure smooth transition */}
+      <div style={{ height: "20vh", background: "#000" }} />
+
       {/* About section */}
-      <section id="about" className="px-4 sm:px-8 md:px-12 lg:px-14 py-20 md:py-32 max-w-4xl mx-auto">
+      <section id="about" className="px-4 sm:px-8 md:px-12 lg:px-14 py-20 md:py-32 max-w-4xl mx-auto" style={{ background: "#000" }}>
         <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6">About</h3>
         <p className="mt-4 opacity-75 leading-relaxed text-base md:text-lg">
           This is where your story, awards, and philosophy go. Keep it minimal and cinematic.
