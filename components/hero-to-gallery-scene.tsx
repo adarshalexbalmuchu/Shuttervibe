@@ -194,7 +194,7 @@ export default function HeroToGalleryScene() {
     <Canvas
       dpr={isMobile ? [1, 1.5] : [1, 2]} // Lower DPI on mobile
       camera={{ position: [0, 0, isMobile ? 4.2 : 3.1], fov: isMobile ? 55 : 42 }}
-      style={{ background: "transparent", touchAction: "pan-y" }}
+      style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y" }}
       gl={{ 
         antialias: !isMobile, 
         alpha: true,

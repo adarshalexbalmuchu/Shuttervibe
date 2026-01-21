@@ -126,7 +126,7 @@ export default function Home() {
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
         {/* Sticky stage with heroStage id for fade-out */}
-        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", overflowX: "hidden" }}>
+        <div id="heroStage" style={{ position: "sticky", top: 0, height: "100vh", width: "100%", overflow: "visible" }}>
           <HeroToGalleryScene />
         </div>
       </section>
