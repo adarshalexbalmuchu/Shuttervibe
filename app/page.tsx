@@ -113,12 +113,12 @@ export default function Home() {
       {/* Brand Name - Fixed position top left */}
       <div className="fixed top-6 left-6 z-50">
         <AnimatedText 
-          text="Adarsh Alex Balmuchu"
+          text="ADARSH ALEX BALMUCHU"
           gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
           gradientAnimationDuration={3}
           hoverEffect={true}
           className="py-0"
-          textClassName="!text-base sm:!text-lg md:!text-xl lg:!text-2xl"
+          textClassName="!text-xl sm:!text-2xl md:!text-3xl lg:!text-4xl !font-bold !uppercase"
         />
       </div>
 
