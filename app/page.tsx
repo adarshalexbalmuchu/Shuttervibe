@@ -93,6 +93,22 @@ export default function Home() {
         />
       </div>
 
+      {/* Navigation Button - Fixed position */}
+      <div className="fixed top-6 right-6 z-50 flex gap-3">
+        <a
+          href="#about"
+          className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border border-white/20 transition-all text-sm font-medium"
+        >
+          About
+        </a>
+        <a
+          href="#contact"
+          className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border border-white/20 transition-all text-sm font-medium"
+        >
+          Contact
+        </a>
+      </div>
+
       {/* Scroll wrapper: gives us enough scroll distance for the full transition */}
       <section id="scrollWrap" style={{ height: "220vh", position: "relative", zIndex: 1 }}>
         {/* Sticky stage */}
@@ -107,27 +123,29 @@ export default function Home() {
       </section>
 
       {/* About section */}
-      <section className="px-4 sm:px-8 md:px-12 lg:px-14 py-12 md:py-16 lg:py-20 max-w-6xl mx-auto">
-        <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold">About</h3>
-        <p className="mt-3 md:mt-4 opacity-75 leading-relaxed text-sm md:text-base">
+      <section id="about" className="px-4 sm:px-8 md:px-12 lg:px-14 py-20 md:py-32 max-w-4xl mx-auto">
+        <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6">About</h3>
+        <p className="mt-4 opacity-75 leading-relaxed text-base md:text-lg">
           This is where your story, awards, and philosophy go. Keep it minimal and cinematic.
         </p>
       </section>
 
-      {/* Footer */}
-      <Footer
-        leftLinks={[
-          { href: "#", label: "About" },
-          { href: "#", label: "Services" },
-          { href: "#", label: "Contact" },
-        ]}
-        rightLinks={[
-          { href: "#", label: "Privacy" },
-          { href: "#", label: "Terms" },
-          { href: "#", label: "Support" },
-        ]}
-        copyrightText="© 2026 Shuttervibe. All rights reserved."
-      />
+      {/* Contact/Footer section - Separate page-like section */}
+      <section id="contact" className="min-h-screen flex items-center justify-center px-4">
+        <Footer
+          leftLinks={[
+            { href: "#about", label: "About" },
+            { href: "#", label: "Services" },
+            { href: "#contact", label: "Contact" },
+          ]}
+          rightLinks={[
+            { href: "#", label: "Privacy" },
+            { href: "#", label: "Terms" },
+            { href: "#", label: "Support" },
+          ]}
+          copyrightText="© 2026 Shuttervibe. All rights reserved."
+        />
+      </section>
     </div>
   );
 }
