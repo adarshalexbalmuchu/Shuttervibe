@@ -35,7 +35,7 @@ function CameraRig({ url }: { url: string }) {
     intensity: 1.0, // for "energy" feel if you want later
   });
 
-  // Make materials more efficient
+  // Make materials more efficient (run once)
   useMemo(() => {
     scene.traverse((o: any) => {
       if (!o.isMesh || !o.material) return;
@@ -48,77 +48,99 @@ function CameraRig({ url }: { url: string }) {
       if (o.material.metalness != null) o.material.metalness = Math.min(1, o.material.metalness + 0.1);
       if (o.material.roughness != null) o.material.roughness = Math.max(0.1, o.material.roughness - 0.05);
       
-      // Reduce anisotropic filtering for better performance
+      // Set anisotropic filtering once (no needsUpdate spam)
       if (o.material.map) {
-        o.material.map.anisotropy = 4; // Reduced from 16
-        o.material.map.needsUpdate = true;
+        o.material.map.anisotropy = 4;
       }
       if (o.material.normalMap) {
         o.material.normalMap.anisotropy = 4;
-        o.material.normalMap.needsUpdate = true;
       }
-      
-      o.material.needsUpdate = true;
     });
   }, [scene]);
 
   useLayoutEffect(() => {
-    // Wait for DOM to be ready
     const scrollWrap = document.getElementById('scrollWrap');
-    const galleryPanel = document.getElementById('galleryPanel');
+    const galleryReveal = document.getElementById('galleryReveal');
     
-    if (!scrollWrap || !galleryPanel) {
-      return;
-    }
+    if (!scrollWrap) return;
 
-    // Small delay to ensure DOM is fully painted
-    const timeoutId = setTimeout(() => {
+    // Use gsap.context for scoped, safe cleanup
+    const ctx = gsap.context(() => {
       const isMobileView = window.innerWidth < 768;
       
-      // OPTIMIZED: Balanced scrub for smooth performance
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#scrollWrap",
           start: "top top",
           end: "bottom bottom",
-          scrub: isMobileView ? 1.2 : 0.8, // Smoother on mobile
+          scrub: isMobileView ? 1.2 : 0.8,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
       });
 
-    /**
-     * Phase 1 (0% → ~25%): Zoom in with rotation
-     */
-    tl.to(motion.current, { 
-      z: 0.6, 
-      scale: 1.8, 
-      rotY: 0.3,
-      ease: "power2.out"
-    }, 0);
+      /**
+       * Phase 1 (0 → 0.22): Premium push-in
+       * Subtle zoom with gentle rotation for editorial feel
+       */
+      tl.to(motion.current, { 
+        z: 0.55, 
+        scale: 1.72, 
+        rotY: 0.18,
+        rotX: 0.05,
+        ease: "power2.inOut"
+      }, 0);
 
-    /**
-     * Phase 2 (~25% → ~100%): Move left and disappear off screen
-     */
-    tl.to(motion.current, { 
-      x: -4.0,  // Move far left to disappear
-      z: 0.3, 
-      scale: 0.5,  // Shrink as it moves away
-      rotY: -0.8, 
-      rotX: 0.1, 
-      rotZ: 0.05,
-      ease: "power3.inOut"
-    }, 0.25);
+      /**
+       * Phase 2 (0.22 → 0.9): Slide left but stay visible
+       * Camera becomes "guide object" on the left
+       */
+      tl.to(motion.current, { 
+        x: isMobileView ? -0.65 : -1.45,
+        z: isMobileView ? 0.14 : 0.20,
+        scale: isMobileView ? 0.76 : 0.90,
+        rotY: isMobileView ? -0.32 : -0.45,
+        rotX: 0.08,
+        rotZ: 0.03,
+        ease: "power2.inOut"
+      }, 0.22);
 
-      // Cleanup function
-      return () => {
-        tl.kill();
-        ScrollTrigger.getAll().forEach(st => st.kill());
-      };
-    }, 100);
+      /**
+       * Phase 3 (0.9 → 1.0): Settle with soft ease
+       * Final 10% uses gentler easing for premium feel
+       */
+      tl.to(motion.current, {
+        x: isMobileView ? -0.60 : -1.50,
+        z: isMobileView ? 0.12 : 0.18,
+        scale: isMobileView ? 0.74 : 0.88,
+        rotY: isMobileView ? -0.35 : -0.48,
+        ease: "power2.out"
+      }, 0.9);
 
+      /**
+       * Gallery Reveal Animation (0.55 → 1.0)
+       * Blur-to-sharp fade with vertical slide
+       */
+      if (galleryReveal) {
+        gsap.set(galleryReveal, { 
+          opacity: 0, 
+          y: 24, 
+          filter: "blur(8px)" 
+        });
+        
+        tl.to(galleryReveal, {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          ease: "power2.out",
+          duration: 0.45
+        }, 0.55);
+      }
+    });
+
+    // Cleanup: only kills animations created in THIS context
     return () => {
-      clearTimeout(timeoutId);
+      ctx.revert();
     };
   }, []);
 
