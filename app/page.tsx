@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
-import { CinematicGallery } from "@/components/cinematic-gallery";
+import { ZoomParallax } from "@/components/zoom-parallax";
 import { AnimatedText } from "@/components/animated-text";
 import { GlassButton } from "@/components/glass-button";
 
@@ -149,9 +149,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cinematic Gallery - No vertical motion, only scale + opacity + X-axis */}
-      <section style={{ position: "relative", zIndex: 2, background: "#000" }}>
-        <CinematicGallery images={galleryImages} />
+      {/* Zoom Parallax Gallery - Isolated scroll section */}
+      <section style={{ position: "relative", zIndex: 2, background: "#000", paddingTop: "120px", minHeight: "300vh", overflow: "visible" }}>
+        <ZoomParallax images={galleryImages} />
       </section>
     </div>
   );
