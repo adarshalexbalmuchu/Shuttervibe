@@ -88,26 +88,27 @@ function CameraRig({ url }: { url: string }) {
       });
 
     /**
-     * Phase 1 (0% → ~25%): Quick zoom with dynamic rotation
+     * Phase 1 (0% → ~25%): Zoom in with rotation
      */
     tl.to(motion.current, { 
       z: 0.6, 
-      scale: 1.6, 
-      rotY: 0.2,
-      ease: "power2.out" // Snappier easing
+      scale: 1.8, 
+      rotY: 0.4,
+      rotX: 0.1,
+      ease: "power2.out"
     }, 0);
 
     /**
-     * Phase 2 (~25% → ~100%): Fast, smooth left slide
+     * Phase 2 (~25% → ~100%): Move up while rotating
      */
     tl.to(motion.current, { 
-      x: -2.0, 
-      z: 0.2, 
-      scale: 0.8,
-      rotY: -0.7, 
-      rotX: 0.12, 
-      rotZ: 0.05,
-      ease: "power3.inOut" // Stronger easing for premium feel
+      y: -2.5, 
+      z: 0.3, 
+      scale: 0.7,
+      rotY: 0.8, 
+      rotX: 0.3, 
+      rotZ: 0.1,
+      ease: "power3.inOut"
     }, 0.25);
 
       // Cleanup function
