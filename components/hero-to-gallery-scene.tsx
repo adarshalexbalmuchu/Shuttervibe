@@ -93,21 +93,20 @@ function CameraRig({ url }: { url: string }) {
     tl.to(motion.current, { 
       z: 0.6, 
       scale: 1.8, 
-      rotY: 0.4,
-      rotX: 0.1,
+      rotY: 0.3,
       ease: "power2.out"
     }, 0);
 
     /**
-     * Phase 2 (~25% → ~100%): Move up while rotating
+     * Phase 2 (~25% → ~100%): Move left and disappear off screen
      */
     tl.to(motion.current, { 
-      y: -2.5, 
+      x: -4.0,  // Move far left to disappear
       z: 0.3, 
-      scale: 0.7,
-      rotY: 0.8, 
-      rotX: 0.3, 
-      rotZ: 0.1,
+      scale: 0.5,  // Shrink as it moves away
+      rotY: -0.8, 
+      rotX: 0.1, 
+      rotZ: 0.05,
       ease: "power3.inOut"
     }, 0.25);
 
