@@ -103,23 +103,8 @@ function CameraRig({ url }: { url: string }) {
       }, 0.25);
 
       /**
-       * Gallery Reveal Animation (0.65 → 0.95)
-       * Show preview grid during last 30% of scroll
-       */
-      const galleryReveal = document.getElementById('galleryReveal');
-      if (galleryReveal) {
-        tl.to(galleryReveal, {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          ease: "power2.out",
-          duration: 0.3
-        }, 0.65);
-      }
-
-      /**
        * Fade out entire hero stage (0.78 → 1.0)
-       * Ensures clean disappearance before full gallery
+       * Ensures clean disappearance before gallery
        */
       if (heroStage) {
         tl.to(heroStage, {
