@@ -32,8 +32,8 @@ export default function Home() {
         const { default: Lenis } = await import("@studio-freight/lenis");
         lenis = new Lenis({ 
           smoothWheel: true, 
-          duration: 1.0, // Faster scroll response (was 1.6)
-          lerp: 0.12, // Snappier interpolation (was 0.08)
+          duration: 1.2, // Balanced for performance
+          lerp: 0.1, // Optimized interpolation
           orientation: 'vertical' as const,
           gestureOrientation: 'vertical' as const,
           touchMultiplier: 2,

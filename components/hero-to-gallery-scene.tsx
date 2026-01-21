@@ -35,24 +35,26 @@ function CameraRig({ url }: { url: string }) {
     intensity: 1.0, // for "energy" feel if you want later
   });
 
-  // Make materials slightly more "premium" (safe + subtle)
+  // Make materials more efficient
   useMemo(() => {
     scene.traverse((o: any) => {
       if (!o.isMesh || !o.material) return;
-      o.castShadow = true;
-      o.receiveShadow = true;
       
-      // Enhanced material quality
-      if (o.material.metalness != null) o.material.metalness = Math.min(1, o.material.metalness + 0.15);
-      if (o.material.roughness != null) o.material.roughness = Math.max(0.05, o.material.roughness - 0.12);
+      // Disable shadows on complex models (major performance boost)
+      o.castShadow = false;
+      o.receiveShadow = false;
       
-      // Enable anisotropic filtering for sharper textures
+      // Simpler material adjustments
+      if (o.material.metalness != null) o.material.metalness = Math.min(1, o.material.metalness + 0.1);
+      if (o.material.roughness != null) o.material.roughness = Math.max(0.1, o.material.roughness - 0.05);
+      
+      // Reduce anisotropic filtering for better performance
       if (o.material.map) {
-        o.material.map.anisotropy = 16; // Max anisotropic filtering
+        o.material.map.anisotropy = 4; // Reduced from 16
         o.material.map.needsUpdate = true;
       }
       if (o.material.normalMap) {
-        o.material.normalMap.anisotropy = 16;
+        o.material.normalMap.anisotropy = 4;
         o.material.normalMap.needsUpdate = true;
       }
       
@@ -71,13 +73,13 @@ function CameraRig({ url }: { url: string }) {
 
     // Small delay to ensure DOM is fully painted
     const timeoutId = setTimeout(() => {
-      // FASTER, SNAPPIER ANIMATION TIMELINE
+      // OPTIMIZED: Balanced scrub for smooth performance
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#scrollWrap",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5, // Lower = faster, more responsive (was 2)
+          scrub: 0.8, // Balanced for smooth animation
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
@@ -136,14 +138,14 @@ function CameraRig({ url }: { url: string }) {
     if (!group.current) return;
     const t = clock.getElapsedTime();
 
-    // Faster, more dynamic idle motion
-    const idleFloat = Math.sin(t * 1.2) * 0.05;
-    const idleRot = t * 0.2;
+    // Simplified idle motion for better performance
+    const idleFloat = Math.sin(t * 0.5) * 0.03; // Reduced frequency and amplitude
+    const idleRot = t * 0.1; // Slower rotation
 
-    // Faster lerp for snappier response (higher = faster)
-    const lerpFactor = 0.12; // Increased from 0.06
+    // Optimized lerp factor (lower = smoother, less CPU)
+    const lerpFactor = 0.08; // Reduced from 0.12
 
-    // Apply GSAP-driven transforms with faster interpolation
+    // Apply transforms (optimized)
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, motion.current.x, lerpFactor);
     group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, motion.current.y + idleFloat, lerpFactor);
     group.current.position.z = THREE.MathUtils.lerp(group.current.position.z, motion.current.z, lerpFactor);
@@ -151,11 +153,10 @@ function CameraRig({ url }: { url: string }) {
     const s = THREE.MathUtils.lerp(group.current.scale.x, motion.current.scale, lerpFactor);
     group.current.scale.set(s, s, s);
 
-    // More responsive mouse parallax
-    const targetY = motion.current.rotY + idleRot * 0.15;
-    const targetX = motion.current.rotX + mouse.y * 0.1;
-    const targetZ = motion.current.rotZ - mouse.x * 0.05;
-
+    // Simplified mouse parallax (less calculations)
+    const targetY = motion.current.rotY + idleRot * 0.1;
+    const targetX = motion.current.rotX + mouse.y * 0.05; // Reduced sensitivity
+    const targetZ = motion.current.rotZ - mouse.x * 0.03; // Reduced sensitivity
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetY, lerpFactor);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetX, lerpFactor);
     group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, targetZ, lerpFactor);
@@ -195,7 +196,7 @@ export default function HeroToGalleryScene() {
 
   return (
     <Canvas
-      dpr={[2, 3]} // HIGHER DPI for sharper model (was [1, 2])
+      dpr={[1, 2]} // Reduced for better performance (was [2, 3])
       camera={{ position: [0, 0, 3.1], fov: 42 }}
       style={{ background: "transparent" }}
       gl={{ 
@@ -204,18 +205,14 @@ export default function HeroToGalleryScene() {
         powerPreference: "high-performance",
         stencil: false,
         depth: true,
-        preserveDrawingBuffer: true, // Better quality
-        logarithmicDepthBuffer: true, // Better depth precision
       }}
-      shadows
-      frameloop="always" // Ensure continuous rendering
+      frameloop="always" // Continuous rendering for smooth animations
     >
       <Suspense fallback={<Loader />}>
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
-        <directionalLight position={[-3, 2, -2]} intensity={0.6} />
-        <spotLight position={[0, 10, 0]} angle={0.3} penumbra={1} intensity={0.8} castShadow />
-        <Environment preset="city" environmentIntensity={0.4} />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={1.2} />
+        <directionalLight position={[-3, 2, -2]} intensity={0.4} />
+        <Environment preset="city" environmentIntensity={0.3} />
         <CameraRig url="/models/camera.glb" />
       </Suspense>
     </Canvas>
