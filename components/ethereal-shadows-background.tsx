@@ -100,26 +100,6 @@ const ShadowOverlay = ({
             };
         }
     }, [feColorMatrixRef, animationEnabled, hueRotateMotionValue, animationDuration]);
-                duration: animationDuration / 25,
-                repeat: Infinity,
-                repeatType: "loop",
-                repeatDelay: 0,
-                ease: "linear",
-                delay: 0,
-                onUpdate: (value: number) => {
-                    if (feColorMatrixRef.current) {
-                        feColorMatrixRef.current.setAttribute("values", String(value));
-                    }
-                }
-            });
-
-            return () => {
-                if (hueRotateAnimation.current) {
-                    hueRotateAnimation.current.stop();
-                }
-            };
-        }
-    }, [animationEnabled, animationDuration, hueRotateMotionValue]);
 
     return (
         <div

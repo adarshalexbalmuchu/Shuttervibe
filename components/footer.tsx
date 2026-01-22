@@ -27,7 +27,7 @@ export function Footer() {
 				{/* Brand Section */}
 				<AnimatedContainer className="space-y-4 lg:col-span-1">
 					<div className="flex items-center gap-2">
-						<Camera className="w-8 h-8 text-white" strokeWidth={1.5} />
+						<Camera className="w-8 h-8 text-white" />
 						<h3 className="text-2xl font-light tracking-wider text-white">
 							Shuttervibe
 						</h3>
@@ -67,7 +67,7 @@ export function Footer() {
 								className="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-300"
 							>
 								<div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5 transition-all duration-300">
-									<link.icon className="w-4 h-4" strokeWidth={1.5} />
+									<link.icon className="w-4 h-4" />
 								</div>
 								<span className="text-sm">{link.title}</span>
 							</a>
