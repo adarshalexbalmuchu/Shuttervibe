@@ -116,7 +116,7 @@ export default function Home() {
   }
 
   return (
-    <div style={{ background: "#0D0D0D", color: "white", position: "relative", overflowX: "hidden" }} className="grain-overlay">
+    <div style={{ background: "#000000", color: "white", position: "relative", overflowX: "hidden" }}>
       {/* Ethereal Shadows Background - Fixed behind everything */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }} className="contain-layout">
         <EtherealBackground
@@ -140,17 +140,12 @@ export default function Home() {
       {/* Lens Glow - cursor following effect */}
       <LensGlow />
 
-      {/* Contact Button - Pill-shaped ghost button top right */}
-      <div className="fixed top-8 sm:top-10 md:top-12 right-6 sm:right-8 md:right-12 lg:right-16 z-50">
-        <a 
-          href="#contact"
-          className="inline-block px-8 py-3 border border-white/20 hover:border-white/40 transition-all duration-300 font-inter font-light text-white/80 hover:text-white text-sm tracking-[0.15em] uppercase backdrop-blur-sm hover:bg-white/5"
-          style={{
-            borderRadius: '50px',
-            letterSpacing: '0.15em',
-          }}
-        >
-          Contact
+      {/* Navigation Button - Fixed position */}
+      <div className="fixed top-6 right-6 z-50">
+        <a href="#contact">
+          <GlassButton size="sm">
+            Contact
+          </GlassButton>
         </a>
       </div>
 
@@ -163,16 +158,12 @@ export default function Home() {
       {/* Scroll wrapper with pinned hero */}
       <section id="scrollWrap" style={{ height: "200vh", position: "relative" }}>
         <div id="heroStage" className="relative h-screen w-full">
-          {/* 2-column layout: Text left, Camera right */}
+          {/* Quote & chips behind the camera */}
           <HeroMessage />
 
-          {/* Canvas positioned in right column */}
-          <div className="absolute inset-0 z-20 pointer-events-none" style={{ willChange: 'transform' }}>
-            <div className="h-full w-full flex items-center justify-end" style={{ paddingRight: 'clamp(24px, 8vw, 120px)' }}>
-              <div className="w-full lg:w-1/2 h-full">
-                <HeroToGalleryScene />
-              </div>
-            </div>
+          {/* Canvas above the text so the 3D model sits in front */}
+          <div className="absolute inset-0 z-20" style={{ willChange: 'transform' }}>
+            <HeroToGalleryScene />
           </div>
 
           {/* Flash glow (soft bloom) */}
