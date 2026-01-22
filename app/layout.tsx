@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Playfair_Display, Inter } from 'next/font/google';
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: "Shuttervibe",
-  description: "Ethereal Shadows Background",
+  title: "Shuttervibe . by Adarsh Alex Balmuchu",
+  description: "Professional Photography Portfolio",
 };
 
 export default function RootLayout({
@@ -12,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="antialiased">
         {children}
       </body>

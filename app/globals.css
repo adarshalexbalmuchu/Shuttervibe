@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Variables */
+@layer base {
+  :root {
+    --font-playfair: var(--font-playfair);
+    --font-inter: var(--font-inter);
+  }
+}
+
 /* GPU Acceleration & Performance Optimizations */
 * {
   -webkit-font-smoothing: antialiased;
