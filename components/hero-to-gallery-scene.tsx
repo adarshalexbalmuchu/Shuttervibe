@@ -51,9 +51,10 @@ function Loader() {
   );
 }
 
-function CameraRig({ url }: { url: string }) {
+function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 'tablet' | 'desktop' }) {
   const group = useRef<THREE.Group>(null);
   const { scene } = useGLTF(url);
+  const isTouchDevice = useRef(false);
 
   // Animated state driven by GSAP (we smooth application in useFrame)
   const motion = useRef({
@@ -66,7 +67,7 @@ function CameraRig({ url }: { url: string }) {
     scale: 1.08,
   });
 
-  // “Displayed” values for premium damping (prevents jitter)
+  // "Displayed" values for premium damping (prevents jitter)
   const displayed = useRef({
     x: 0,
     y: 0,
@@ -76,6 +77,11 @@ function CameraRig({ url }: { url: string }) {
     rotZ: 0,
     scale: 1.08,
   });
+
+  // Detect if device supports touch
+  useEffect(() => {
+    isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }, []);
 
   useMemo(() => {
     scene.traverse((o: any) => {
