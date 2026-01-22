@@ -1,8 +1,38 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 export function BrandName() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const container = containerRef.current!;
+
+      // Fade out as we leave the hero
+      gsap.to(container, {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#scrollWrap",
+          start: "65% top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className="
         fixed top-10 md:top-12 left-6 md:left-12 lg:left-16
         z-50
