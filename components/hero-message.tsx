@@ -45,60 +45,96 @@ export function HeroMessage() {
   }, []);
 
   return (
-    // IMPORTANT: keep z lower than Canvas wrapper (Canvas should be z-20)
     <div
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-6 md:left-12 lg:left-16
-        top-[22vh] md:top-[24vh] lg:top-[26vh]
-        w-[min(560px,calc(100vw-3rem))]
+        left-8 md:left-16 lg:left-20
+        bottom-[20vh] md:bottom-[22vh] lg:bottom-[24vh]
+        w-[min(560px,calc(100vw-4rem))]
       "
       style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
     >
-      {/* Quote: controlled size, controlled line breaks */}
+      {/* Subtle backdrop glow */}
+      <div 
+        className="absolute -inset-12 -z-10"
+        style={{
+          background: "radial-gradient(ellipse 600px 400px at 30% 50%, rgba(255,255,255,0.04), transparent 70%)",
+          filter: "blur(40px)"
+        }}
+      />
+
+      {/* Quote: enhanced typography */}
       <h1
         data-hero-item
         className="
-          mt-5 text-white/95 font-semibold
-          tracking-[-0.02em]
-          leading-[0.98]
-          text-[34px] sm:text-[40px]
-          md:text-[52px]
-          lg:text-[60px]
-          xl:text-[66px]
+          text-white font-bold
+          tracking-[-0.03em]
+          leading-[0.92]
+          text-[38px] sm:text-[46px]
+          md:text-[58px]
+          lg:text-[68px]
+          xl:text-[76px]
+          max-w-[540px]
         "
-        style={{ textShadow: "0 12px 40px rgba(0,0,0,0.45)" }}
+        style={{ 
+          textShadow: "0 6px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4)",
+          filter: "drop-shadow(0 0 20px rgba(255,255,255,0.03))"
+        }}
       >
         I photograph silence
         <br />
         inside chaos.
       </h1>
 
-      {/* Chips: aligned and not too low */}
-      <div data-hero-item className="mt-7 flex flex-wrap gap-3">
+      {/* Editorial navigation - vertical stack */}
+      <nav 
+        data-hero-item 
+        className="mt-10 flex flex-col gap-2 items-start"
+      >
         <button
-          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
-                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
-                     hover:border-white/28 hover:text-white/90 transition"
+          className="
+            pointer-events-auto 
+            text-[11px] tracking-[0.24em] uppercase 
+            text-white/50 hover:text-white/90
+            transition-all duration-500
+            relative
+            group
+            py-1
+          "
         >
-          Portraits
+          <span className="relative z-10">Portraits</span>
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
         </button>
         <button
-          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
-                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
-                     hover:border-white/28 hover:text-white/90 transition"
+          className="
+            pointer-events-auto 
+            text-[11px] tracking-[0.24em] uppercase 
+            text-white/50 hover:text-white/90
+            transition-all duration-500
+            relative
+            group
+            py-1
+          "
         >
-          Street
+          <span className="relative z-10">Street</span>
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
         </button>
         <button
-          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
-                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
-                     hover:border-white/28 hover:text-white/90 transition"
+          className="
+            pointer-events-auto 
+            text-[11px] tracking-[0.24em] uppercase 
+            text-white/50 hover:text-white/90
+            transition-all duration-500
+            relative
+            group
+            py-1
+          "
         >
-          Nature
+          <span className="relative z-10">Nature</span>
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
         </button>
-      </div>
+      </nav>
     </div>
   );
 }
