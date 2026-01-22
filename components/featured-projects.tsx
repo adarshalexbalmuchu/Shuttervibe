@@ -106,11 +106,11 @@ export default function FeaturedProjects() {
         </div>
 
         {/* Circular 3D Gallery */}
-        <div className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px]">
+        <div className="relative w-full h-[350px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
           <CircularGallery 
             items={featuredProjects} 
-            radius={600}
-            autoRotateSpeed={0.02}
+            radius={400}
+            autoRotateSpeed={0.015}
           />
         </div>
       </div>

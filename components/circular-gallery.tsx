@@ -60,11 +60,11 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       const updateRadius = () => {
         const width = window.innerWidth;
         if (width < 640) {
-          setDeviceRadius(radius * 0.5); // 50% for mobile
+          setDeviceRadius(radius * 0.45); // 45% for mobile
         } else if (width < 1024) {
-          setDeviceRadius(radius * 0.75); // 75% for tablet
+          setDeviceRadius(radius * 0.65); // 65% for tablet
         } else {
-          setDeviceRadius(radius); // 100% for desktop
+          setDeviceRadius(radius * 0.85); // 85% for desktop
         }
       };
       
@@ -155,19 +155,29 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
             // Use device-specific radius
             const xPos = Math.sin((itemAngle * Math.PI) / 180) * deviceRadius;
             const zPos = Math.cos((itemAngle * Math.PI) / 180) * deviceRadius;
+            
+            // Responsive card size - smaller for better performance
+            const cardWidth = typeof window !== 'undefined' 
+              ? (window.innerWidth < 640 ? 150 : window.innerWidth < 1024 ? 180 : 220)
+              : 220;
+            const cardHeight = typeof window !== 'undefined'
+              ? (window.innerWidth < 640 ? 210 : window.innerWidth < 1024 ? 252 : 308)
+              : 308;
 
             return (
               <div
                 key={item.photo.url} 
                 role="group"
                 aria-label={item.common}
-                className="absolute w-[300px] h-[400px]"
+                className="absolute"
                 style={{
-                  transform: `rotateY(${itemAngle}deg) translateZ(${radius}px)`,
+                  width: `${cardWidth}px`,
+                  height: `${cardHeight}px`,
+                  transform: `rotateY(${itemAngle}deg) translateZ(${deviceRadius}px)`,
                   left: '50%',
                   top: '50%',
-                  marginLeft: '-150px',
-                  marginTop: '-200px',
+                  marginLeft: `-${cardWidth / 2}px`,
+                  marginTop: `-${cardHeight / 2}px`,
                   opacity: opacity,
                   transition: 'opacity 0.3s linear'
                 }}
