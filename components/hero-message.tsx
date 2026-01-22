@@ -16,16 +16,16 @@ export function HeroMessage() {
       const items = container.querySelectorAll("[data-hero-item]");
 
       // Start hidden + blurred
-      gsap.set(items, { opacity: 0, y: 12, filter: "blur(10px)" });
+      gsap.set(items, { opacity: 0, y: 20, filter: "blur(8px)" });
 
       // Intro reveal after camera intro
-      gsap.timeline({ delay: 1.7 }).to(items, {
+      gsap.timeline({ delay: 1.8 }).to(items, {
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power2.out",
-        stagger: 0.12,
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.15,
       });
 
       // Fade out as we leave the hero
@@ -47,101 +47,64 @@ export function HeroMessage() {
   return (
     <div
       ref={containerRef}
-      className="
-        absolute z-10 pointer-events-none
-        left-4 sm:left-8 md:left-16 lg:left-20
-        top-[90px] sm:top-[110px] md:top-[140px] lg:top-[160px]
-        right-4 sm:right-auto
-        px-safe
-      "
-      style={{ 
-        fontFamily: "system-ui, -apple-system, sans-serif",
-        maxWidth: "min(520px, calc(100vw - 2rem))"
+      className="absolute inset-0 z-10 flex items-center"
+      style={{
+        paddingLeft: 'clamp(24px, 8vw, 120px)',
+        paddingRight: 'clamp(24px, 4vw, 60px)',
       }}
     >
-      {/* Subtle backdrop glow */}
-      <div 
-        className="absolute -inset-8 sm:-inset-12 -z-10"
-        style={{
-          background: "radial-gradient(ellipse 500px 350px at 30% 40%, rgba(255,255,255,0.035), transparent 70%)",
-          filter: "blur(40px)"
-        }}
-      />
+      <div className="w-full max-w-7xl mx-auto">
+        {/* 2-column grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left column: Hero text */}
+          <div className="space-y-8 order-2 lg:order-1">
+            <div data-hero-item className="space-y-6">
+              {/* Main hero text with mixed typography */}
+              <h1 
+                className="font-inter font-bold leading-[1.1] tracking-tight"
+                style={{ 
+                  fontSize: 'clamp(40px, 6vw, 84px)',
+                  textShadow: '0 4px 40px rgba(0,0,0,0.4)',
+                }}
+              >
+                <span className="text-white/95 block mb-2">I photograph</span>
+                <span className="text-white/95 block mb-2">silence inside</span>
+                <span 
+                  className="font-playfair italic font-normal text-white/90 inline-block"
+                  style={{
+                    textShadow: '0 4px 40px rgba(255,255,255,0.1)',
+                  }}
+                >
+                  chaos.
+                </span>
+              </h1>
+            </div>
 
-      {/* Quote: enhanced typography, smaller but still impactful */}
-      <h1
-        data-hero-item
-        className="
-          text-white font-bold
-          tracking-[-0.025em]
-          max-w-[480px]
-        "
-        style={{ 
-          fontSize: "clamp(28px, 6vw, 58px)",
-          lineHeight: "clamp(0.94, 0.96, 1.0)",
-          textShadow: "0 4px 24px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3)",
-          filter: "drop-shadow(0 0 16px rgba(255,255,255,0.025))"
-        }}
-      >
-        I photograph silence
-        <br />
-        inside chaos.
-      </h1>
+            {/* Subtle divider line */}
+            <div 
+              data-hero-item 
+              className="h-px bg-gradient-to-r from-white/20 via-white/40 to-transparent"
+              style={{ width: 'clamp(100px, 40%, 300px)' }}
+            />
 
-      {/* Editorial navigation - vertical stack */}
-      <nav 
-        data-hero-item 
-        className="mt-6 sm:mt-8 flex flex-col gap-1 sm:gap-2 items-start"
-      >
-        <button
-          className="
-            pointer-events-auto 
-            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
-            text-white/50 hover:text-white/90
-            transition-all duration-500
-            relative
-            group
-            py-2 sm:py-1
-            min-h-[44px] sm:min-h-0
-            flex items-center
-          "
-        >
-          <span className="relative z-10">Portraits</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
-        </button>
-        <button
-          className="
-            pointer-events-auto 
-            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
-            text-white/50 hover:text-white/90
-            transition-all duration-500
-            relative
-            group
-            py-2 sm:py-1
-            min-h-[44px] sm:min-h-0
-            flex items-center
-          "
-        >
-          <span className="relative z-10">Street</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
-        </button>
-        <button
-          className="
-            pointer-events-auto 
-            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
-            text-white/50 hover:text-white/90
-            transition-all duration-500
-            relative
-            group
-            py-2 sm:py-1
-            min-h-[44px] sm:min-h-0
-            flex items-center
-          "
-        >
-          <span className="relative z-10">Nature</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full transition-all duration-500" />
-        </button>
-      </nav>
+            {/* Subtitle */}
+            <p 
+              data-hero-item
+              className="font-inter font-light text-white/60 leading-relaxed tracking-wide"
+              style={{ 
+                fontSize: 'clamp(14px, 1.5vw, 18px)',
+                letterSpacing: '0.05em',
+                maxWidth: '500px',
+              }}
+            >
+              Capturing the extraordinary moments that exist between heartbeats.
+            </p>
+          </div>
+
+          {/* Right column: 3D Camera (empty here, handled by parent) */}
+          <div className="order-1 lg:order-2" />
+        </div>
+      </div>
     </div>
   );
 }

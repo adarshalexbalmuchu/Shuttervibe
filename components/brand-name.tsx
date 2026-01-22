@@ -57,17 +57,16 @@ export function BrandName() {
           select-none
         "
       >
-        {/* Main brand name with elegant serif font - larger size */}
+        {/* Main brand name with sophisticated wide-spaced serif */}
         <div 
-          className="font-playfair font-bold"
+          className="font-playfair font-normal"
           style={{
-            fontSize: "clamp(32px, 4.5vw, 96px)",
-            letterSpacing: '0.02em',
-            background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            textShadow: '0 2px 20px rgba(255,255,255,0.1)',
+            fontSize: "clamp(28px, 3.5vw, 72px)",
+            letterSpacing: '0.15em',
+            fontWeight: 400,
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.92)',
+            textShadow: '0 2px 30px rgba(255,255,255,0.08)',
           }}
         >
           Shuttervibe
