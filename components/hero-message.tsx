@@ -50,8 +50,8 @@ export function HeroMessage() {
       className="
         absolute z-10 pointer-events-none
         left-8 md:left-16 lg:left-20
-        bottom-[20vh] md:bottom-[22vh] lg:bottom-[24vh]
-        w-[min(560px,calc(100vw-4rem))]
+        top-[120px] md:top-[140px] lg:top-[160px]
+        w-[min(520px,calc(100vw-4rem))]
       "
       style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
     >
@@ -59,27 +59,27 @@ export function HeroMessage() {
       <div 
         className="absolute -inset-12 -z-10"
         style={{
-          background: "radial-gradient(ellipse 600px 400px at 30% 50%, rgba(255,255,255,0.04), transparent 70%)",
+          background: "radial-gradient(ellipse 500px 350px at 30% 40%, rgba(255,255,255,0.035), transparent 70%)",
           filter: "blur(40px)"
         }}
       />
 
-      {/* Quote: enhanced typography */}
+      {/* Quote: enhanced typography, smaller but still impactful */}
       <h1
         data-hero-item
         className="
           text-white font-bold
-          tracking-[-0.03em]
-          leading-[0.92]
-          text-[38px] sm:text-[46px]
-          md:text-[58px]
-          lg:text-[68px]
-          xl:text-[76px]
-          max-w-[540px]
+          tracking-[-0.025em]
+          leading-[0.94]
+          text-[32px] sm:text-[38px]
+          md:text-[46px]
+          lg:text-[52px]
+          xl:text-[58px]
+          max-w-[480px]
         "
         style={{ 
-          textShadow: "0 6px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4)",
-          filter: "drop-shadow(0 0 20px rgba(255,255,255,0.03))"
+          textShadow: "0 4px 24px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3)",
+          filter: "drop-shadow(0 0 16px rgba(255,255,255,0.025))"
         }}
       >
         I photograph silence
@@ -90,7 +90,7 @@ export function HeroMessage() {
       {/* Editorial navigation - vertical stack */}
       <nav 
         data-hero-item 
-        className="mt-10 flex flex-col gap-2 items-start"
+        className="mt-8 flex flex-col gap-2 items-start"
       >
         <button
           className="
