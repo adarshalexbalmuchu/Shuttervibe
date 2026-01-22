@@ -63,7 +63,7 @@ export function CategoryChips() {
   return (
     <div 
       ref={containerRef}
-      className="fixed top-[280px] md:top-64 left-6 md:left-8 z-40 flex flex-wrap gap-3"
+      className="fixed top-[420px] md:top-[500px] left-6 md:left-12 z-10 flex flex-wrap gap-3"
       style={{ opacity: 0 }}
     >
       {categories.map((cat, index) => (

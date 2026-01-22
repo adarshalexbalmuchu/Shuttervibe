@@ -9,70 +9,95 @@ export function HeroMessage() {
 
   useEffect(() => {
     if (!containerRef.current) return;
-
     gsap.registerPlugin(ScrollTrigger);
 
-    const elements = containerRef.current.querySelectorAll('.fade-in-item');
-    
-    // Start hidden with blur
-    gsap.set(elements, { 
-      opacity: 0, 
-      filter: "blur(8px)",
-      y: 10
-    });
+    const ctx = gsap.context(() => {
+      const container = containerRef.current!;
+      const items = container.querySelectorAll("[data-hero-item]");
 
-    // Cinematic fade in after intro completes (1.6s intro + 0.4s delay)
-    const tl = gsap.timeline({ delay: 2.0 });
-    
-    elements.forEach((el, i) => {
-      tl.to(el, {
+      // Start hidden + blurred
+      gsap.set(items, { opacity: 0, y: 12, filter: "blur(10px)" });
+
+      // Intro reveal after camera intro
+      gsap.timeline({ delay: 1.7 }).to(items, {
         opacity: 1,
-        filter: "blur(0px)",
         y: 0,
-        duration: 0.8,
-        ease: "power2.out"
-      }, i * 0.15); // stagger each line
-    });
+        filter: "blur(0px)",
+        duration: 0.9,
+        ease: "power2.out",
+        stagger: 0.12,
+      });
 
-    // Fade out when scrolling past hero section
-    ScrollTrigger.create({
-      trigger: "#scrollWrap",
-      start: "bottom bottom",
-      end: "bottom top",
-      scrub: 1,
-      onUpdate: (self) => {
-        if (containerRef.current) {
-          gsap.to(containerRef.current, {
-            opacity: 1 - self.progress,
-            duration: 0.1
-          });
-        }
-      }
-    });
+      // Fade out as we leave the hero
+      gsap.to(container, {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#scrollWrap",
+          start: "65% top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }, containerRef);
 
-    return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div 
+    // IMPORTANT: keep z lower than Canvas wrapper (Canvas should be z-20)
+    <div
       ref={containerRef}
-      className="fixed top-24 left-6 md:left-8 z-40 pointer-events-none max-w-xl"
-      style={{
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        letterSpacing: '0.02em'
-      }}
+      className="
+        absolute z-10 pointer-events-none
+        left-6 md:left-12 lg:left-16
+        top-[22vh] md:top-[24vh] lg:top-[26vh]
+        w-[min(560px,calc(100vw-3rem))]
+      "
+      style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
     >
-      <div className="fade-in-item text-xs md:text-sm text-gray-400 mb-3 tracking-[0.15em] uppercase">
-        Photographer • Visual Storyteller • India
-      </div>
-      
-      {/* Poetic narrative line - larger and more prominent */}
-      <div className="fade-in-item text-xl md:text-3xl lg:text-4xl text-white mb-6 font-light leading-tight" 
-           style={{ letterSpacing: '0.01em', lineHeight: '1.3' }}>
-        I photograph silence<br/>inside chaos.
+      {/* Quote: controlled size, controlled line breaks */}
+      <h1
+        data-hero-item
+        className="
+          mt-5 text-white/95 font-semibold
+          tracking-[-0.02em]
+          leading-[0.98]
+          text-[34px] sm:text-[40px]
+          md:text-[52px]
+          lg:text-[60px]
+          xl:text-[66px]
+        "
+        style={{ textShadow: "0 12px 40px rgba(0,0,0,0.45)" }}
+      >
+        I photograph silence
+        <br />
+        inside chaos.
+      </h1>
+
+      {/* Chips: aligned and not too low */}
+      <div data-hero-item className="mt-7 flex flex-wrap gap-3">
+        <button
+          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
+                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
+                     hover:border-white/28 hover:text-white/90 transition"
+        >
+          Portraits
+        </button>
+        <button
+          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
+                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
+                     hover:border-white/28 hover:text-white/90 transition"
+        >
+          Street
+        </button>
+        <button
+          className="pointer-events-auto rounded-full border border-white/14 bg-white/0
+                     px-4 py-2 text-[11px] tracking-[0.18em] uppercase text-white/70
+                     hover:border-white/28 hover:text-white/90 transition"
+        >
+          Nature
+        </button>
       </div>
     </div>
   );

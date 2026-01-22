@@ -3,11 +3,12 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Component as EtherealBackground } from "@/components/ethereal-shadows-background";
+import { AnimatedText } from "@/components/animated-text";
 import { GlassButton } from "@/components/glass-button";
-import { BrandName } from "@/components/brand-name";
 import { HeroMessage } from "@/components/hero-message";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { LensGlow } from "@/components/lens-glow";
+import { CategoryChips } from "@/components/category-chips";
 import { FilmGrain } from "@/components/film-grain";
 import { Vignette } from "@/components/vignette";
 import { FeaturedStoryStrip } from "@/components/featured-story-strip";
@@ -147,22 +148,31 @@ export default function Home() {
         </a>
       </div>
 
-      {/* Brand Name - Fixed position top left */}
-      <BrandName />
+      {/* Brand Name - Fixed position top left (behind camera) */}
+      <div id="brandName" className="fixed top-6 left-6 z-10 flex items-center">
+        <AnimatedText 
+          text="ADARSH ALEX BALMUCHU"
+          gradientColors="linear-gradient(90deg, #fff, #888, #fff)"
+          gradientAnimationDuration={3}
+          hoverEffect={true}
+          className="!py-0 !my-0"
+          textClassName="!text-3xl sm:!text-4xl md:!text-6xl lg:!text-7xl !font-black !uppercase !leading-none"
+        />
+      </div>
+
+      {/* Hero Message - positioning statement with poetic line */}
+      <HeroMessage />
+
+      {/* Category Chips */}
+      <CategoryChips />
 
       {/* Scroll Indicator */}
       <ScrollIndicator />
 
       {/* Scroll wrapper with pinned hero */}
       <section id="scrollWrap" style={{ height: "200vh", position: "relative" }}>
-        <div id="heroStage" className="relative h-screen w-full">
-          {/* Quote & chips behind the camera */}
-          <HeroMessage />
-
-          {/* Canvas above the text so the 3D model sits in front */}
-          <div className="absolute inset-0 z-20">
-            <HeroToGalleryScene />
-          </div>
+        <div id="heroStage" style={{ height: "100vh", width: "100%", position: "relative" }}>
+          <HeroToGalleryScene />
 
           {/* Flash glow (soft bloom) */}
           <div
@@ -182,10 +192,13 @@ export default function Home() {
           {/* Flash overlay (hard flash) */}
           <div
             id="flashOverlay"
-            className="absolute inset-0 z-50 pointer-events-none"
             style={{
+              position: "absolute",
+              inset: 0,
               background: "white",
               opacity: 0,
+              pointerEvents: "none",
+              zIndex: 50,
             }}
           />
         </div>

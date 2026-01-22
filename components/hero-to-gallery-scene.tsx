@@ -7,10 +7,46 @@ import { Environment, Html, useGLTF } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// Preload the model immediately
+useGLTF.preload('/models/camera.glb');
+
 function Loader() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 90) return prev;
+        return prev + Math.random() * 15;
+      });
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Html center>
-      <div style={{ color: "white", fontSize: 14 }}>Loading 3D model...</div>
+      <div style={{ 
+        color: "white", 
+        fontSize: 14, 
+        textAlign: "center",
+        fontFamily: "system-ui, sans-serif"
+      }}>
+        <div style={{ marginBottom: 8 }}>Loading camera...</div>
+        <div style={{ 
+          width: 120, 
+          height: 2, 
+          background: "rgba(255,255,255,0.1)",
+          borderRadius: 2,
+          overflow: "hidden"
+        }}>
+          <div style={{
+            width: `${progress}%`,
+            height: "100%",
+            background: "rgba(255,255,255,0.6)",
+            transition: "width 0.3s ease"
+          }} />
+        </div>
+      </div>
     </Html>
   );
 }
@@ -30,7 +66,7 @@ function CameraRig({ url }: { url: string }) {
     scale: 1.08,
   });
 
-  // "Displayed" values for premium damping (prevents jitter)
+  // “Displayed” values for premium damping (prevents jitter)
   const displayed = useRef({
     x: 0,
     y: 0,
@@ -59,18 +95,17 @@ function CameraRig({ url }: { url: string }) {
   useEffect(() => {
     if (!group.current) return;
 
-    // Start small and slightly "back"
-    group.current.scale.set(0.25, 0.25, 0.25);
-    group.current.rotation.set(0.03, -0.3, 0.0);
+    // Start small and slightly “back”
+    group.current.scale.set(0.28, 0.28, 0.28);
+    group.current.rotation.set(0.02, -0.25, 0.0);
 
     const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     intro
-      // Overshoot zoom with rotation
-      .to(group.current.scale, { x: 1.22, y: 1.22, z: 1.22, duration: 1.4, ease: "power3.out" }, 0)
-      .to(group.current.rotation, { y: 0.0, x: 0.0, duration: 1.2, ease: "power2.out" }, 0.1)
-      // Perfect settle
-      .to(group.current.scale, { x: 1.08, y: 1.08, z: 1.08, duration: 0.6, ease: "power2.out" }, 1.3)
+      .to(group.current.scale, { x: 1.18, y: 1.18, z: 1.18, duration: 1.15 }, 0)
+      .to(group.current.rotation, { y: -0.05, x: 0.0, duration: 1.05 }, 0.05)
+      // settle
+      .to(group.current.scale, { x: 1.08, y: 1.08, z: 1.08, duration: 0.45, ease: "power2.out" }, 1.05)
       .eventCallback("onComplete", () => {
         motion.current.scale = 1.08;
         displayed.current.scale = 1.08;
@@ -118,9 +153,9 @@ function CameraRig({ url }: { url: string }) {
           trigger: "#scrollWrap",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.95,              // even smoother scrub
+          scrub: 1.1,               // smoother premium scrub
           pin: "#heroStage",
-          pinSpacing: true,
+          pinSpacing: true,         // ensures next section isn't clipped
           anticipatePin: 1,
           invalidateOnRefresh: true,
           // keep hero visible when scrubbing back
@@ -138,69 +173,68 @@ function CameraRig({ url }: { url: string }) {
       });
 
       /**
-       * Phase 1 (0 → 0.32): premium rotate-right + tiny "ready" push
+       * Phase 1 (0 → 0.35): premium rotate-right + tiny “ready” push
        */
       tl.to(
         motion.current,
         {
-          rotY: 0.95,
-          rotX: 0.06,
-          z: 0.06,
+          rotY: 1.05,
+          rotX: 0.08,
+          z: 0.08,
           ease: "none",
         },
         0
       );
 
       /**
-       * Phase 1b (0.32 → 0.45): pre-click micro snap (like pressing shutter)
+       * Phase 1b (0.35 → 0.48): pre-click micro snap (like pressing shutter)
        */
       tl.to(
         motion.current,
         {
-          rotY: 1.08,
-          z: 0.14,
-          scale: 1.12,
+          rotY: 1.12,
+          z: 0.12,
+          scale: 1.10,
           ease: "none",
         },
-        0.32
+        0.35
       );
 
       /**
-       * Phase 2 (flash) around 0.47 - shorter, punchier
+       * Phase 2 (flash) around 0.50
        * White flash + glow after-bloom
        */
       if (flashOverlay) {
-        tl.to(flashOverlay, { opacity: 1, duration: 0.03, ease: "power1.in" }, 0.47)
-          .to(flashOverlay, { opacity: 0, duration: 0.22, ease: "power2.out" }, 0.50);
+        tl.to(flashOverlay, { opacity: 1, duration: 0.04, ease: "power1.in" }, 0.50)
+          .to(flashOverlay, { opacity: 0, duration: 0.20, ease: "power2.out" }, 0.54);
       }
 
       if (flashGlow) {
-        tl.to(flashGlow, { opacity: 0.95, scale: 1.03, duration: 0.08, ease: "power2.out" }, 0.47)
-          .to(flashGlow, { opacity: 0, scale: 1.06, duration: 0.35, ease: "power2.out" }, 0.55);
+        tl.to(flashGlow, { opacity: 0.9, scale: 1.02, duration: 0.10, ease: "power2.out" }, 0.50)
+          .to(flashGlow, { opacity: 0, scale: 1.04, duration: 0.30, ease: "power2.out" }, 0.58);
       }
 
       /**
-       * Phase 3 (0.55 → 0.90): exit-left + depth + cinematic roll
+       * Phase 3 (0.58 → 0.92): exit-left + depth + slight roll
        */
       tl.to(
         motion.current,
         {
           x: EXIT_X,
-          y: -0.05,      // slight drop adds weight
-          z: -0.15,      // pulls away more dramatically
-          scale: 0.28,
-          rotY: -0.75,
-          rotZ: 0.12,    // more roll for cinematic feel
+          z: -0.10,      // pulls slightly away (feels physical)
+          scale: 0.32,
+          rotY: -0.65,
+          rotZ: 0.08,    // slight roll for cinematic feel
           ease: "none",
         },
-        0.55
+        0.58
       );
 
       /**
-       * Phase 4 (0.90 → 1.0): fade stage smoothly
+       * Phase 4 (0.92 → 1.0): fade stage cleanly
        */
       if (heroStage) {
-        tl.to(heroStage, { opacity: 0, duration: 0.28, ease: "power2.out" }, 0.90);
+        tl.to(heroStage, { opacity: 0, duration: 0.25, ease: "power2.out" }, 0.92);
       }
 
       return () => tl.kill();
@@ -214,11 +248,11 @@ function CameraRig({ url }: { url: string }) {
 
     const t = clock.getElapsedTime();
 
-    // Premium damping (lower is smoother, more cinematic)
-    const damp = 0.065;
+    // Premium damping (lower is smoother)
+    const damp = 0.075;
 
-    // Ultra-subtle breathing (barely perceptible = premium)
-    const breathe = Math.sin(t * 0.28) * 0.012;
+    // Subtle breathing (very premium when minimal)
+    const breathe = Math.sin(t * 0.35) * 0.015;
 
     // Approach target motion smoothly
     displayed.current.x = THREE.MathUtils.lerp(displayed.current.x, motion.current.x, damp);
@@ -236,9 +270,9 @@ function CameraRig({ url }: { url: string }) {
     const s = displayed.current.scale;
     group.current.scale.set(s, s, s);
 
-    // More refined mouse parallax (subtle = premium)
-    const mx = mouse.x * 0.10;
-    const my = mouse.y * 0.05;
+    // Mouse parallax (very controlled)
+    const mx = mouse.x * 0.12;
+    const my = mouse.y * 0.06;
 
     group.current.rotation.y = displayed.current.rotY + mx + breathe;
     group.current.rotation.x = displayed.current.rotX + my;
@@ -282,10 +316,10 @@ export default function HeroToGalleryScene() {
       gl={{ antialias: !isMobile, alpha: true, powerPreference: isMobile ? "default" : "high-performance", stencil: false, depth: true }}
     >
       <Suspense fallback={<Loader />}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 6, 5]} intensity={1.4} castShadow={false} />
-        <directionalLight position={[-3, 2, -2]} intensity={0.5} />
-        <Environment preset="city" environmentIntensity={0.4} />
+        <ambientLight intensity={0.55} />
+        <directionalLight position={[6, 6, 6]} intensity={1.35} />
+        <directionalLight position={[-3, 2, -2]} intensity={0.45} />
+        <Environment preset="city" environmentIntensity={0.35} />
         <CameraRig url="/models/camera.glb" />
       </Suspense>
     </Canvas>
