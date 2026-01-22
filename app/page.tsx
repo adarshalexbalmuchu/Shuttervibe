@@ -168,7 +168,7 @@ export default function Home() {
           <HeroMessage />
 
           {/* Canvas above the text so the 3D model sits in front */}
-          <div className="absolute inset-0 z-20" style={{ willChange: 'transform' }}>
+          <div className="absolute inset-0 z-20 pointer-events-none" style={{ willChange: 'transform' }}>
             <HeroToGalleryScene />
           </div>
 

@@ -55,6 +55,8 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
   const group = useRef<THREE.Group>(null);
   const { scene } = useGLTF(url);
   const isTouchDevice = useRef(false);
+  const isScrolling = useRef(false);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Animated state driven by GSAP (we smooth application in useFrame)
   const motion = useRef({
@@ -81,6 +83,36 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
   // Detect if device supports touch
   useEffect(() => {
     isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }, []);
+
+  // Detect scroll state to disable parallax during scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrolling.current = true;
+      
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      
+      // Set scrolling to false after 150ms of no scroll
+      scrollTimeout.current = setTimeout(() => {
+        isScrolling.current = false;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleScroll, { passive: true });
+    window.addEventListener('touchmove', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('touchmove', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
   }, []);
 
   useMemo(() => {
@@ -284,9 +316,10 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
     const s = displayed.current.scale;
     group.current.scale.set(s, s, s);
 
-    // Mouse/touch parallax (only if not touch device or device is actively being used)
-    const parallaxX = isTouchDevice.current ? 0 : mouse.x * 0.12;
-    const parallaxY = isTouchDevice.current ? 0 : mouse.y * 0.06;
+    // Mouse/touch parallax (disabled during scroll to prevent interference)
+    const parallaxEnabled = !isTouchDevice.current && !isScrolling.current;
+    const parallaxX = parallaxEnabled ? mouse.x * 0.05 : 0;  // Reduced from 0.12
+    const parallaxY = parallaxEnabled ? mouse.y * 0.025 : 0; // Reduced from 0.06
 
     group.current.rotation.y = displayed.current.rotY + parallaxX + breathe;
     group.current.rotation.x = displayed.current.rotX + parallaxY;
@@ -401,11 +434,11 @@ export default function HeroToGalleryScene() {
   const cameraFov = isMobile ? 55 : isTablet ? 48 : 42;
 
   return (
-    <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
+    <div ref={containerRef} style={{ width: "100%", height: "100%", pointerEvents: "none" }}>
       <Canvas
         dpr={adaptiveDpr}
         camera={{ position: [0, 0, cameraZ], fov: cameraFov }}
-        style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y" }}
+        style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y", pointerEvents: "none" }}
         gl={{ 
           antialias: !isMobile, 
           alpha: true, 
