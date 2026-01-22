@@ -28,7 +28,7 @@ export function ScrollIndicator() {
 
     // Animate dot moving down the line
     const dotAnimation = gsap.to(dotRef.current, {
-      y: 40,
+      y: 52, // Move down 52px (through most of the 64px line)
       duration: 1.5,
       ease: "power1.inOut",
       repeat: -1,
@@ -62,15 +62,18 @@ export function ScrollIndicator() {
       className="fixed bottom-12 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 pointer-events-none"
       style={{ opacity: 0 }}
     >
-      <div className="text-[10px] md:text-xs text-gray-400 tracking-widest uppercase">
-        Scroll to shoot
-      </div>
-      
+      {/* Vertical line */}
       <div className="relative w-[1px] h-16 bg-gradient-to-b from-gray-600 to-transparent">
+        {/* Animated dot */}
         <div
           ref={dotRef}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-lg shadow-white/50"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
         />
+      </div>
+      
+      {/* Text below */}
+      <div className="text-[10px] text-gray-400 tracking-[0.2em] uppercase">
+        Scroll to shoot
       </div>
     </div>
   );

@@ -49,6 +49,11 @@ export function HeroMessage() {
         Photographer • Visual Storyteller • India
       </div>
       
+      {/* Poetic narrative line */}
+      <div className="fade-in-item text-base md:text-lg text-white mb-6 italic font-light" style={{ letterSpacing: '0.04em' }}>
+        I photograph silence inside chaos.
+      </div>
+      
       <div className="fade-in-item text-xs md:text-sm text-gray-400 mb-2">
         Portraits • Street • Nature
       </div>

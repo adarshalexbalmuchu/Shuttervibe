@@ -8,6 +8,11 @@ import { GlassButton } from "@/components/glass-button";
 import { HeroMessage } from "@/components/hero-message";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { LensGlow } from "@/components/lens-glow";
+import { CategoryChips } from "@/components/category-chips";
+import { FilmGrain } from "@/components/film-grain";
+import { Vignette } from "@/components/vignette";
+import { FeaturedStoryStrip } from "@/components/featured-story-strip";
+import { CategorizedGallery } from "@/components/categorized-gallery";
 import FeaturedProjects from "@/components/featured-projects";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
@@ -94,6 +99,12 @@ export default function Home() {
         />
       </div>
 
+      {/* Film Grain Overlay */}
+      <FilmGrain />
+
+      {/* Vignette Overlay */}
+      <Vignette />
+
       {/* Lens Glow - cursor following effect */}
       <LensGlow />
 
@@ -118,8 +129,11 @@ export default function Home() {
         />
       </div>
 
-      {/* Hero Message - positioning statement */}
+      {/* Hero Message - positioning statement with poetic line */}
       <HeroMessage />
+
+      {/* Category Chips */}
+      <CategoryChips />
 
       {/* Scroll Indicator */}
       <ScrollIndicator />
@@ -162,8 +176,14 @@ export default function Home() {
         <div style={{ height: "100vh", background: "#000" }} />
       </section>
 
-      {/* Featured Projects Section */}
+      {/* Featured Story Strip */}
+      <FeaturedStoryStrip />
+
+      {/* Featured Projects Section (3D Carousel) */}
       <FeaturedProjects />
+
+      {/* Categorized Gallery */}
+      <CategorizedGallery />
     </div>
   );
 }
