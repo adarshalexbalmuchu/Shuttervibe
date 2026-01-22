@@ -45,32 +45,6 @@ const gallerySections = [
       { id: "n5", url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=60&auto=format", title: "Forest Depths", location: "Meghalaya", year: "2023" },
       { id: "n6", url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=60&auto=format", title: "Valley Vista", location: "Kashmir", year: "2024" },
     ]
-  },
-  {
-    id: "architecture",
-    title: "Architecture",
-    description: "Geometry meets time in stone and steel",
-    images: [
-      { id: "a1", url: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=60&auto=format", title: "Heritage Echoes", location: "Jaipur", year: "2024" },
-      { id: "a2", url: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&q=60&auto=format", title: "Modern Lines", location: "Mumbai", year: "2024" },
-      { id: "a3", url: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=60&auto=format", title: "Urban Patterns", location: "Bangalore", year: "2023" },
-      { id: "a4", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=60&auto=format", title: "City Geometry", location: "Dubai", year: "2024" },
-      { id: "a5", url: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=60&auto=format", title: "Colonial Legacy", location: "Kolkata", year: "2023" },
-      { id: "a6", url: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=600&q=60&auto=format", title: "Steel Dreams", location: "Delhi", year: "2024" },
-    ]
-  },
-  {
-    id: "abstract",
-    title: "Abstract",
-    description: "Beyond reality, within perception",
-    images: [
-      { id: "ab1", url: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=60&auto=format", title: "Light Play", location: "Studio", year: "2024" },
-      { id: "ab2", url: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?w=600&q=60&auto=format", title: "Color Fields", location: "Workshop", year: "2024" },
-      { id: "ab3", url: "https://images.unsplash.com/photo-1551732998-9d98c3d6e4f4?w=600&q=60&auto=format", title: "Textures", location: "Mumbai", year: "2023" },
-      { id: "ab4", url: "https://images.unsplash.com/photo-1524169358666-79f22534bc6e?w=600&q=60&auto=format", title: "Reflections", location: "Goa", year: "2024" },
-      { id: "ab5", url: "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=600&q=60&auto=format", title: "Shadows", location: "Delhi", year: "2023" },
-      { id: "ab6", url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&q=60&auto=format", title: "Gradients", location: "Bangalore", year: "2024" },
-    ]
   }
 ];
 

@@ -78,6 +78,28 @@ const ShadowOverlay = ({
             }
             hueRotateMotionValue.set(0);
             hueRotateAnimation.current = animate(hueRotateMotionValue, 360, {
+                duration: animationDuration / 1000,
+                repeat: Infinity,
+                ease: "linear",
+            });
+
+            const unsubscribe = hueRotateMotionValue.on("change", (latest) => {
+                if (feColorMatrixRef.current) {
+                    feColorMatrixRef.current.setAttribute(
+                        "values",
+                        `${latest} 1 1 0 0`
+                    );
+                }
+            });
+
+            return () => {
+                unsubscribe();
+                if (hueRotateAnimation.current) {
+                    hueRotateAnimation.current.stop();
+                }
+            };
+        }
+    }, [feColorMatrixRef, animationEnabled, hueRotateMotionValue, animationDuration]);
                 duration: animationDuration / 25,
                 repeat: Infinity,
                 repeatType: "loop",

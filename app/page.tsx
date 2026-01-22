@@ -12,7 +12,7 @@ import { FilmGrain } from "@/components/film-grain";
 import { Vignette } from "@/components/vignette";
 import { FeaturedStoryStrip } from "@/components/featured-story-strip";
 import { CategorizedGallery } from "@/components/categorized-gallery";
-import FeaturedProjects from "@/components/featured-projects";
+import { Footer } from "@/components/footer";
 
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
@@ -75,7 +75,7 @@ export default function Home() {
     };
   }, [mounted]);
 
-  // Fade out brand name on scroll
+  // Fade out brand name on scroll (optimized)
   useEffect(() => {
     if (!mounted) return;
 
@@ -88,19 +88,20 @@ export default function Home() {
       const brandName = document.getElementById('brandName');
       
       if (brandName) {
+        // Use direct opacity change instead of nested gsap.to for better performance
         ScrollTrigger.create({
           trigger: "#scrollWrap",
           start: "bottom bottom",
           end: "bottom top",
-          scrub: 1,
+          scrub: 0.5,
           onUpdate: (self) => {
-            gsap.to(brandName, {
-              opacity: 1 - self.progress,
-              duration: 0.1
-            });
+            brandName.style.opacity = String(1 - self.progress);
           }
         });
       }
+
+      // Kill ScrollTriggers on sections that aren't visible (performance optimization)
+      ScrollTrigger.config({ limitCallbacks: true });
     };
 
     initBrandFade();
@@ -117,14 +118,14 @@ export default function Home() {
   return (
     <div style={{ background: "#000000", color: "white", position: "relative", overflowX: "hidden" }}>
       {/* Ethereal Shadows Background - Fixed behind everything */}
-      <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 0 }} className="contain-layout">
         <EtherealBackground
           animation={{
-            scale: 30,  // Reduced from 50 for better performance
-            speed: 30   // Reduced from 50 for smoother animation
+            scale: 20,  // Further reduced for better performance
+            speed: 20   // Further reduced for smoother animation
           }}
           noise={{
-            opacity: 0.25,  // Reduced from 0.3
+            opacity: 0.2,  // Further reduced
             scale: 1
           }}
         />
@@ -200,11 +201,11 @@ export default function Home() {
       {/* Featured Story Strip */}
       <FeaturedStoryStrip />
 
-      {/* Featured Projects Section (3D Carousel) */}
-      <FeaturedProjects />
-
       {/* Categorized Gallery */}
       <CategorizedGallery />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

@@ -4,35 +4,18 @@ import { useEffect, useRef } from "react";
 
 export function LensGlow() {
   const glowRef = useRef<HTMLDivElement>(null);
-  const targetPos = useRef({ x: 0, y: 0 });
-  const currentPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      targetPos.current = { x: e.clientX, y: e.clientY };
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // Smooth follow with lerp
-    let rafId: number;
-    const animate = () => {
       if (!glowRef.current) return;
-
-      // Lerp for smooth delayed follow
-      currentPos.current.x += (targetPos.current.x - currentPos.current.x) * 0.08;
-      currentPos.current.y += (targetPos.current.y - currentPos.current.y) * 0.08;
-
-      glowRef.current.style.transform = `translate(${currentPos.current.x}px, ${currentPos.current.y}px)`;
-
-      rafId = requestAnimationFrame(animate);
+      // Direct transform for better performance, let GPU handle it
+      glowRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     };
 
-    animate();
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -45,11 +28,14 @@ export function LensGlow() {
         height: "400px",
         marginLeft: "-200px",
         marginTop: "-200px",
-        background: "radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 70%)",
+        background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)",
         mixBlendMode: "screen",
-        opacity: 0.85,
+        opacity: 0.75,
         filter: "blur(40px)",
-        willChange: "transform"
+        willChange: "transform",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+        transition: "transform 0.15s ease-out"
       }}
     />
   );

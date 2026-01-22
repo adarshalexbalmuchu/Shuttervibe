@@ -29,6 +29,7 @@ export function GalleryGrid({ images, onImageClick }: GalleryGridProps) {
           transition={{ duration: 0.5 }}
           className="group relative aspect-[3/4] sm:aspect-[4/5] cursor-pointer overflow-hidden rounded-md sm:rounded-lg"
           onClick={() => onImageClick(image)}
+          style={{ contentVisibility: 'auto', willChange: 'transform' }}
         >
           <Image
             src={image.url}

@@ -2,6 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GPU Acceleration & Performance Optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force GPU layers for animated elements */
+[data-animate],
+.will-change-transform,
+[style*="transform"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scroll containers */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Image optimization */
+img,
+video {
+  content-visibility: auto;
+}
+
+/* Contain layout reflows */
+.contain-layout {
+  contain: layout style paint;
+}
+
+/* Performance hints for heavy sections */
+.performance-section {
+  contain: layout;
+  content-visibility: auto;
+}
+
 @layer base {
   /* Prevent horizontal scroll on mobile */
   html, body {

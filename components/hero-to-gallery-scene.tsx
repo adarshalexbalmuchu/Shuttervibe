@@ -325,11 +325,65 @@ function useDeviceType() {
 
 export default function HeroToGalleryScene() {
   const [isClient, setIsClient] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [adaptiveDpr, setAdaptiveDpr] = useState<[number, number]>([1, 2]);
+  const containerRef = useRef<HTMLDivElement>(null);
   const deviceType = useDeviceType();
+  const fpsRef = useRef<number[]>([]);
+  const lastTimeRef = useRef(performance.now());
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // IntersectionObserver to pause rendering when off-screen
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Adaptive quality based on FPS
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const checkPerformance = () => {
+      const now = performance.now();
+      const delta = now - lastTimeRef.current;
+      const fps = 1000 / delta;
+      lastTimeRef.current = now;
+
+      fpsRef.current.push(fps);
+      if (fpsRef.current.length > 60) fpsRef.current.shift();
+
+      const avgFps = fpsRef.current.reduce((a, b) => a + b, 0) / fpsRef.current.length;
+
+      const isMobile = deviceType === 'mobile';
+      const isTablet = deviceType === 'tablet';
+
+      // Adjust quality based on performance
+      if (avgFps < 30) {
+        setAdaptiveDpr([1, 1]); // Low quality
+      } else if (avgFps < 45) {
+        setAdaptiveDpr(isMobile ? [1, 1.2] : [1, 1.5]); // Medium quality
+      } else {
+        setAdaptiveDpr(isMobile ? [1, 1.5] : isTablet ? [1, 1.75] : [1, 2]); // High quality
+      }
+
+      requestAnimationFrame(checkPerformance);
+    };
+
+    const rafId = requestAnimationFrame(checkPerformance);
+    return () => cancelAnimationFrame(rafId);
+  }, [isVisible, deviceType]);
 
   if (!isClient) {
     return (
@@ -345,28 +399,30 @@ export default function HeroToGalleryScene() {
   // Device-specific camera settings
   const cameraZ = isMobile ? 4.2 : isTablet ? 3.6 : 3.1;
   const cameraFov = isMobile ? 55 : isTablet ? 48 : 42;
-  const dpr = isMobile ? [1, 1.5] : isTablet ? [1, 1.75] : [1, 2];
 
   return (
-    <Canvas
-      dpr={dpr as [number, number]}
-      camera={{ position: [0, 0, cameraZ], fov: cameraFov }}
-      style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y" }}
-      gl={{ 
-        antialias: !isMobile, 
-        alpha: true, 
-        powerPreference: isMobile ? "default" : "high-performance", 
-        stencil: false, 
-        depth: true 
-      }}
-    >
-      <Suspense fallback={<Loader />}>
-        <ambientLight intensity={0.55} />
-        <directionalLight position={[6, 6, 6]} intensity={1.35} />
-        <directionalLight position={[-3, 2, -2]} intensity={0.45} />
-        <Environment preset="city" environmentIntensity={0.35} />
-        <CameraRig url="/models/camera.glb" deviceType={deviceType} />
-      </Suspense>
-    </Canvas>
+    <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
+      <Canvas
+        dpr={adaptiveDpr}
+        camera={{ position: [0, 0, cameraZ], fov: cameraFov }}
+        style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y" }}
+        gl={{ 
+          antialias: !isMobile, 
+          alpha: true, 
+          powerPreference: isMobile ? "default" : "high-performance", 
+          stencil: false, 
+          depth: true 
+        }}
+        frameloop={isVisible ? "always" : "never"}
+      >
+        <Suspense fallback={<Loader />}>
+          <ambientLight intensity={0.55} />
+          <directionalLight position={[6, 6, 6]} intensity={1.35} />
+          <directionalLight position={[-3, 2, -2]} intensity={0.45} />
+          <Environment preset="city" environmentIntensity={0.35} />
+          <CameraRig url="/models/camera.glb" deviceType={deviceType} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }
