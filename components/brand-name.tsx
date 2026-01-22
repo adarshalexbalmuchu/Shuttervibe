@@ -14,15 +14,15 @@ export function BrandName() {
     const ctx = gsap.context(() => {
       const container = containerRef.current!;
 
-      // Fade out as we leave the hero
+      // Fade out as we leave the hero section
       gsap.to(container, {
         opacity: 0,
-        ease: "none",
+        ease: "power2.inOut",
         scrollTrigger: {
           trigger: "#scrollWrap",
-          start: "65% top",
-          end: "bottom top",
-          scrub: true,
+          start: "top top",
+          end: "15% top",
+          scrub: 0.5,
         },
       });
     }, containerRef);
