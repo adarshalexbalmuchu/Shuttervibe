@@ -52,10 +52,6 @@ export function HeroMessage() {
       <div className="fade-in-item text-xs md:text-sm text-gray-400 mb-2">
         Portraits • Street • Nature
       </div>
-      
-      <div className="fade-in-item text-xs md:text-sm text-gray-400">
-        20+ featured projects
-      </div>
     </div>
   );
 }
