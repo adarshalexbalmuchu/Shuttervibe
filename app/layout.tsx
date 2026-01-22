@@ -19,6 +19,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Shuttervibe . by Adarsh Alex Balmuchu",
   description: "Professional Photography Portfolio",
+  icons: {
+    icon: [
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({

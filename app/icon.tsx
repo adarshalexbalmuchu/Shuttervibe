@@ -14,19 +14,42 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #581C87 0%, #9333EA 100%)',
+          background: '#000000',
           borderRadius: '20%',
         }}
       >
-        <div
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: 'white',
-          }}
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          S
-        </div>
+          <rect
+            x="3"
+            y="6"
+            width="18"
+            height="13"
+            rx="2"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="3.5"
+            stroke="white"
+            strokeWidth="1.5"
+            fill="none"
+          />
+          <path
+            d="M15 5L16.5 6.5"
+            stroke="white"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
       </div>
     ),
     {
