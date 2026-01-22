@@ -254,8 +254,11 @@ function CameraRig({ url }: { url: string }) {
     // Subtle breathing (very premium when minimal)
     const breathe = Math.sin(t * 0.35) * 0.015;
 
+    // Shift camera to the right for better composition
+    const xOffset = 0.8;
+
     // Approach target motion smoothly
-    displayed.current.x = THREE.MathUtils.lerp(displayed.current.x, motion.current.x, damp);
+    displayed.current.x = THREE.MathUtils.lerp(displayed.current.x, motion.current.x + xOffset, damp);
     displayed.current.y = THREE.MathUtils.lerp(displayed.current.y, motion.current.y, damp);
     displayed.current.z = THREE.MathUtils.lerp(displayed.current.z, motion.current.z, damp);
     displayed.current.scale = THREE.MathUtils.lerp(displayed.current.scale, motion.current.scale, damp);
