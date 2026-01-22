@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const categories = [
   { id: "portraits", label: "Portraits" },
@@ -14,6 +15,8 @@ export function CategoryChips() {
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     // Fade in after hero text
     gsap.fromTo(
@@ -28,6 +31,26 @@ export function CategoryChips() {
         ease: "power2.out" 
       }
     );
+
+    // Fade out when scrolling past hero section
+    ScrollTrigger.create({
+      trigger: "#scrollWrap",
+      start: "bottom bottom",
+      end: "bottom top",
+      scrub: 1,
+      onUpdate: (self) => {
+        if (containerRef.current) {
+          gsap.to(containerRef.current, {
+            opacity: 1 - self.progress,
+            duration: 0.1
+          });
+        }
+      }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
   const handleClick = (id: string) => {

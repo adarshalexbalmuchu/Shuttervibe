@@ -75,6 +75,37 @@ export default function Home() {
     };
   }, [mounted]);
 
+  // Fade out brand name on scroll
+  useEffect(() => {
+    if (!mounted) return;
+
+    const initBrandFade = async () => {
+      const gsap = (await import("gsap")).default;
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      
+      gsap.registerPlugin(ScrollTrigger);
+
+      const brandName = document.getElementById('brandName');
+      
+      if (brandName) {
+        ScrollTrigger.create({
+          trigger: "#scrollWrap",
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: 1,
+          onUpdate: (self) => {
+            gsap.to(brandName, {
+              opacity: 1 - self.progress,
+              duration: 0.1
+            });
+          }
+        });
+      }
+    };
+
+    initBrandFade();
+  }, [mounted]);
+
   if (!mounted) {
     return (
       <div style={{ background: "#05060a", color: "white", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -118,7 +149,7 @@ export default function Home() {
       </div>
 
       {/* Brand Name - Fixed position top left */}
-      <div className="fixed top-6 left-6 z-50 flex items-center">
+      <div id="brandName" className="fixed top-6 left-6 z-50 flex items-center">
         <AnimatedText 
           text="ADARSH ALEX BALMUCHU"
           gradientColors="linear-gradient(90deg, #fff, #888, #fff)"

@@ -2,12 +2,15 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function HeroMessage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const elements = containerRef.current.querySelectorAll('.fade-in-item');
     
@@ -31,8 +34,25 @@ export function HeroMessage() {
       }, i * 0.15); // stagger each line
     });
 
+    // Fade out when scrolling past hero section
+    ScrollTrigger.create({
+      trigger: "#scrollWrap",
+      start: "bottom bottom",
+      end: "bottom top",
+      scrub: 1,
+      onUpdate: (self) => {
+        if (containerRef.current) {
+          gsap.to(containerRef.current, {
+            opacity: 1 - self.progress,
+            duration: 0.1
+          });
+        }
+      }
+    });
+
     return () => {
       tl.kill();
+      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
