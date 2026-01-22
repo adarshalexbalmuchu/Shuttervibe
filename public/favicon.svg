@@ -1,0 +1,40 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black background circle -->
+  <circle cx="256" cy="256" r="256" fill="#000000"/>
+  
+  <!-- Outer white circle -->
+  <circle cx="256" cy="256" r="130" fill="#FFFFFF"/>
+  
+  <!-- Central shutter mechanism -->
+  <g transform="translate(256, 256)">
+    <!-- Inner black circle (shutter center) -->
+    <circle cx="0" cy="0" r="65" fill="#000000"/>
+    
+    <!-- 8 shutter blade paths (aperture blades) -->
+    <g fill="#1a1a1a">
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(0)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(45)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(90)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(135)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(180)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(225)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(270)"/>
+      <path d="M 0,-65 L 30,-50 L 25,-30 L 0,-20 Z" transform="rotate(315)"/>
+    </g>
+    
+    <!-- Central aperture circle -->
+    <circle cx="0" cy="0" r="18" fill="#FFFFFF"/>
+  </g>
+  
+  <!-- Outer shutter blade highlights (creating the iconic shutter look) -->
+  <g transform="translate(256, 256)">
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(45)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(90)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(135)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(180)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(225)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(270)" fill="#FFFFFF"/>
+    <path d="M -95,30 L -70,95 L 70,95 L 95,30 Z" transform="rotate(315)" fill="#FFFFFF"/>
+  </g>
+</svg>

@@ -24,80 +24,38 @@ export default function Icon() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Outer lens ring */}
-          <circle
-            cx="16"
-            cy="16"
-            r="14"
-            stroke="white"
-            strokeWidth="1.2"
-            fill="none"
-          />
+          {/* Outer white circle */}
+          <circle cx="16" cy="16" r="8" fill="white" />
           
-          {/* Inner lens ring */}
-          <circle
-            cx="16"
-            cy="16"
-            r="11"
-            stroke="white"
-            strokeWidth="0.8"
-            fill="none"
-            opacity="0.6"
-          />
+          {/* Inner black circle (shutter center) */}
+          <circle cx="16" cy="16" r="4" fill="#000000" />
           
-          {/* Shutter blades - 6 segments forming aperture */}
-          <g opacity="0.9">
-            {/* Blade 1 */}
-            <path
-              d="M16 8 L18.5 12 L16 13 L13.5 12 Z"
-              fill="white"
-            />
-            {/* Blade 2 */}
-            <path
-              d="M21.86 11 L20.5 15.5 L17.5 15 L18 12.5 Z"
-              fill="white"
-            />
-            {/* Blade 3 */}
-            <path
-              d="M23 16 L20 18 L18 16 L19 13.5 Z"
-              fill="white"
-            />
-            {/* Blade 4 */}
-            <path
-              d="M21.86 21 L18 20 L17.5 17 L20.5 16.5 Z"
-              fill="white"
-            />
-            {/* Blade 5 */}
-            <path
-              d="M16 24 L13.5 20 L16 19 L18.5 20 Z"
-              fill="white"
-            />
-            {/* Blade 6 */}
-            <path
-              d="M10.14 21 L13 20 L14.5 17 L11.5 16.5 Z"
-              fill="white"
-            />
-            {/* Blade 7 */}
-            <path
-              d="M9 16 L12 14 L14 16 L13 18.5 Z"
-              fill="white"
-            />
-            {/* Blade 8 */}
-            <path
-              d="M10.14 11 L14 12 L14.5 15 L11.5 15.5 Z"
-              fill="white"
-            />
+          {/* 8 shutter blade paths (aperture blades) - matching the uploaded shutter image */}
+          <g transform="translate(16, 16)">
+            <path d="M 0,-4 L 1.8,-3 L 1.5,-2 L 0,-1.2 Z" fill="#1a1a1a" />
+            <path d="M 2.83,-2.83 L 3.6,-1.2 L 2,-1 L 0.85,-0.85 Z" fill="#1a1a1a" />
+            <path d="M 4,0 L 3,1.8 L 2,1.5 L 1.2,0 Z" fill="#1a1a1a" />
+            <path d="M 2.83,2.83 L 1.2,3.6 L 1,2 L 0.85,0.85 Z" fill="#1a1a1a" />
+            <path d="M 0,4 L -1.8,3 L -1.5,2 L 0,1.2 Z" fill="#1a1a1a" />
+            <path d="M -2.83,2.83 L -3.6,1.2 L -2,1 L -0.85,0.85 Z" fill="#1a1a1a" />
+            <path d="M -4,0 L -3,-1.8 L -2,-1.5 L -1.2,0 Z" fill="#1a1a1a" />
+            <path d="M -2.83,-2.83 L -1.2,-3.6 L -1,-2 L -0.85,-0.85 Z" fill="#1a1a1a" />
+          </g>
+          
+          {/* Outer shutter blade highlights */}
+          <g transform="translate(16, 16)">
+            <path d="M -6,2 L -4,6 L 4,6 L 6,2 Z" fill="white" />
+            <path d="M -4.24,-4.24 L -2.83,-6 L 2.83,-6 L 4.24,-4.24 Z" fill="white" />
+            <path d="M -2,-6 L 0,-7 L 4,-4 L 2,-2 Z" fill="white" />
+            <path d="M 4.24,-4.24 L 6,-2.83 L 6,2.83 L 4.24,4.24 Z" fill="white" />
+            <path d="M 6,-2 L 7,0 L 4,4 L 2,2 Z" fill="white" />
+            <path d="M 4.24,4.24 L 2.83,6 L -2.83,6 L -4.24,4.24 Z" fill="white" />
+            <path d="M 2,6 L 0,7 L -4,4 L -2,2 Z" fill="white" />
+            <path d="M -4.24,4.24 L -6,2.83 L -6,-2.83 L -4.24,-4.24 Z" fill="white" />
           </g>
           
           {/* Center aperture circle */}
-          <circle
-            cx="16"
-            cy="16"
-            r="3"
-            fill="#000000"
-            stroke="white"
-            strokeWidth="1"
-          />
+          <circle cx="16" cy="16" r="1.2" fill="white" />
         </svg>
       </div>
     ),
