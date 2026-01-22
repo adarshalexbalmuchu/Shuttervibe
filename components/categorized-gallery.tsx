@@ -104,16 +104,22 @@ export function CategorizedGallery() {
 
   return (
     <>
-      <div className="relative bg-black py-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto space-y-32">
+      <div className="relative bg-black py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 md:px-12 lg:px-16">
+        <div className="max-w-7xl mx-auto space-y-20 sm:space-y-24 md:space-y-28 lg:space-y-32">
           {gallerySections.map((section) => (
             <section key={section.id} id={section.id} className="scroll-mt-20">
               {/* Section Header */}
-              <div className="mb-12">
-                <h2 className="text-4xl md:text-5xl font-light text-white mb-3">
+              <div className="mb-8 sm:mb-10 md:mb-12">
+                <h2 
+                  className="text-white font-light mb-2 sm:mb-3"
+                  style={{ fontSize: "clamp(32px, 5vw, 60px)", lineHeight: 1.1 }}
+                >
                   {section.title}
                 </h2>
-                <p className="text-gray-400 text-base md:text-lg italic">
+                <p 
+                  className="text-gray-400 italic"
+                  style={{ fontSize: "clamp(14px, 2vw, 18px)" }}
+                >
                   {section.description}
                 </p>
               </div>

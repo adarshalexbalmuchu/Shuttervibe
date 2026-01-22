@@ -128,7 +128,12 @@ function CameraRig({ url }: { url: string }) {
     if (!scrollWrap) return;
 
     const ctx = gsap.context(() => {
-      const isMobile = window.innerWidth < 768;
+      const isMobile = deviceType === 'mobile';
+      const isTablet = deviceType === 'tablet';
+
+      // Device-specific offsets for better composition
+      const xOffset = isMobile ? 0.3 : isTablet ? 0.5 : 0.8;
+      const EXIT_X = isMobile ? -3.3 : isTablet ? -3.8 : -4.4;
 
       // Important: restore visibility when scrolling back up
       if (heroStage) gsap.set(heroStage, { opacity: 1 });
@@ -145,8 +150,6 @@ function CameraRig({ url }: { url: string }) {
         rotZ: 0,
         scale: 1.08,
       });
-
-      const EXIT_X = isMobile ? -3.3 : -4.4;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -241,7 +244,7 @@ function CameraRig({ url }: { url: string }) {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [deviceType]);
 
   useFrame(({ mouse, clock }) => {
     if (!group.current) return;
@@ -254,8 +257,10 @@ function CameraRig({ url }: { url: string }) {
     // Subtle breathing (very premium when minimal)
     const breathe = Math.sin(t * 0.35) * 0.015;
 
-    // Shift camera to the right for better composition
-    const xOffset = 0.8;
+    // Device-specific xOffset for better composition
+    const isMobile = deviceType === 'mobile';
+    const isTablet = deviceType === 'tablet';
+    const xOffset = isMobile ? 0.3 : isTablet ? 0.5 : 0.8;
 
     // Approach target motion smoothly
     displayed.current.x = THREE.MathUtils.lerp(displayed.current.x, motion.current.x + xOffset, damp);
@@ -273,12 +278,12 @@ function CameraRig({ url }: { url: string }) {
     const s = displayed.current.scale;
     group.current.scale.set(s, s, s);
 
-    // Mouse parallax (very controlled)
-    const mx = mouse.x * 0.12;
-    const my = mouse.y * 0.06;
+    // Mouse/touch parallax (only if not touch device or device is actively being used)
+    const parallaxX = isTouchDevice.current ? 0 : mouse.x * 0.12;
+    const parallaxY = isTouchDevice.current ? 0 : mouse.y * 0.06;
 
-    group.current.rotation.y = displayed.current.rotY + mx + breathe;
-    group.current.rotation.x = displayed.current.rotX + my;
+    group.current.rotation.y = displayed.current.rotY + parallaxX + breathe;
+    group.current.rotation.x = displayed.current.rotX + parallaxY;
     group.current.rotation.z = displayed.current.rotZ;
   });
 
@@ -291,16 +296,33 @@ function CameraRig({ url }: { url: string }) {
 
 useGLTF.preload("/models/camera.glb");
 
+function useDeviceType() {
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const getDeviceType = () => {
+      const width = window.innerWidth;
+      if (width < 768) return 'mobile';
+      if (width < 1024) return 'tablet';
+      return 'desktop';
+    };
+
+    setDeviceType(getDeviceType());
+
+    const handleResize = () => setDeviceType(getDeviceType());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return deviceType;
+}
+
 export default function HeroToGalleryScene() {
   const [isClient, setIsClient] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const deviceType = useDeviceType();
 
   useEffect(() => {
     setIsClient(true);
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
   }, []);
 
   if (!isClient) {
@@ -311,19 +333,33 @@ export default function HeroToGalleryScene() {
     );
   }
 
+  const isMobile = deviceType === 'mobile';
+  const isTablet = deviceType === 'tablet';
+
+  // Device-specific camera settings
+  const cameraZ = isMobile ? 4.2 : isTablet ? 3.6 : 3.1;
+  const cameraFov = isMobile ? 55 : isTablet ? 48 : 42;
+  const dpr = isMobile ? [1, 1.5] : isTablet ? [1, 1.75] : [1, 2];
+
   return (
     <Canvas
-      dpr={isMobile ? [1, 1.5] : [1, 2]}
-      camera={{ position: [0, 0, isMobile ? 4.2 : 3.1], fov: isMobile ? 55 : 42 }}
+      dpr={dpr as [number, number]}
+      camera={{ position: [0, 0, cameraZ], fov: cameraFov }}
       style={{ width: "100%", height: "100%", background: "transparent", touchAction: "pan-y" }}
-      gl={{ antialias: !isMobile, alpha: true, powerPreference: isMobile ? "default" : "high-performance", stencil: false, depth: true }}
+      gl={{ 
+        antialias: !isMobile, 
+        alpha: true, 
+        powerPreference: isMobile ? "default" : "high-performance", 
+        stencil: false, 
+        depth: true 
+      }}
     >
       <Suspense fallback={<Loader />}>
         <ambientLight intensity={0.55} />
         <directionalLight position={[6, 6, 6]} intensity={1.35} />
         <directionalLight position={[-3, 2, -2]} intensity={0.45} />
         <Environment preset="city" environmentIntensity={0.35} />
-        <CameraRig url="/models/camera.glb" />
+        <CameraRig url="/models/camera.glb" deviceType={deviceType} />
       </Suspense>
     </Canvas>
   );

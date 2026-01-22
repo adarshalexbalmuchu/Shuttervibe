@@ -49,15 +49,19 @@ export function HeroMessage() {
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-8 md:left-16 lg:left-20
-        top-[120px] md:top-[140px] lg:top-[160px]
-        w-[min(520px,calc(100vw-4rem))]
+        left-4 sm:left-8 md:left-16 lg:left-20
+        top-[90px] sm:top-[110px] md:top-[140px] lg:top-[160px]
+        right-4 sm:right-auto
+        px-safe
       "
-      style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+      style={{ 
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        maxWidth: "min(520px, calc(100vw - 2rem))"
+      }}
     >
       {/* Subtle backdrop glow */}
       <div 
-        className="absolute -inset-12 -z-10"
+        className="absolute -inset-8 sm:-inset-12 -z-10"
         style={{
           background: "radial-gradient(ellipse 500px 350px at 30% 40%, rgba(255,255,255,0.035), transparent 70%)",
           filter: "blur(40px)"
@@ -70,14 +74,11 @@ export function HeroMessage() {
         className="
           text-white font-bold
           tracking-[-0.025em]
-          leading-[0.94]
-          text-[32px] sm:text-[38px]
-          md:text-[46px]
-          lg:text-[52px]
-          xl:text-[58px]
           max-w-[480px]
         "
         style={{ 
+          fontSize: "clamp(28px, 6vw, 58px)",
+          lineHeight: "clamp(0.94, 0.96, 1.0)",
           textShadow: "0 4px 24px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3)",
           filter: "drop-shadow(0 0 16px rgba(255,255,255,0.025))"
         }}
@@ -90,17 +91,19 @@ export function HeroMessage() {
       {/* Editorial navigation - vertical stack */}
       <nav 
         data-hero-item 
-        className="mt-8 flex flex-col gap-2 items-start"
+        className="mt-6 sm:mt-8 flex flex-col gap-1 sm:gap-2 items-start"
       >
         <button
           className="
             pointer-events-auto 
-            text-[11px] tracking-[0.24em] uppercase 
+            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
             text-white/50 hover:text-white/90
             transition-all duration-500
             relative
             group
-            py-1
+            py-2 sm:py-1
+            min-h-[44px] sm:min-h-0
+            flex items-center
           "
         >
           <span className="relative z-10">Portraits</span>
@@ -109,12 +112,14 @@ export function HeroMessage() {
         <button
           className="
             pointer-events-auto 
-            text-[11px] tracking-[0.24em] uppercase 
+            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
             text-white/50 hover:text-white/90
             transition-all duration-500
             relative
             group
-            py-1
+            py-2 sm:py-1
+            min-h-[44px] sm:min-h-0
+            flex items-center
           "
         >
           <span className="relative z-10">Street</span>
@@ -123,12 +128,14 @@ export function HeroMessage() {
         <button
           className="
             pointer-events-auto 
-            text-[11px] tracking-[0.24em] uppercase 
+            text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.24em] uppercase 
             text-white/50 hover:text-white/90
             transition-all duration-500
             relative
             group
-            py-1
+            py-2 sm:py-1
+            min-h-[44px] sm:min-h-0
+            flex items-center
           "
         >
           <span className="relative z-10">Nature</span>

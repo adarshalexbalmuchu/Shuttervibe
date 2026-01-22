@@ -87,20 +87,26 @@ const featuredProjects: GalleryItem[] = [
 
 export default function FeaturedProjects() {
   return (
-    <section className="relative min-h-screen py-20 px-6">
+    <section className="relative min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16 text-center">
-          <h2 className="text-5xl md:text-6xl font-light text-white mb-4">
+        <div className="mb-12 sm:mb-14 md:mb-16 text-center">
+          <h2 
+            className="text-white font-light mb-3 sm:mb-4"
+            style={{ fontSize: "clamp(36px, 6vw, 72px)", lineHeight: 1.1 }}
+          >
             Featured Stories
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p 
+            className="text-gray-400"
+            style={{ fontSize: "clamp(14px, 2vw, 18px)" }}
+          >
             A curated selection of my most impactful work
           </p>
         </div>
 
         {/* Circular 3D Gallery */}
-        <div className="relative w-full h-[800px]">
+        <div className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px]">
           <CircularGallery 
             items={featuredProjects} 
             radius={600}

@@ -34,6 +34,26 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const [isScrolling, setIsScrolling] = useState(false);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const animationFrameRef = useRef<number | null>(null);
+    
+    // Responsive radius based on screen size
+    const [deviceRadius, setDeviceRadius] = useState(radius);
+    
+    useEffect(() => {
+      const updateRadius = () => {
+        const width = window.innerWidth;
+        if (width < 640) {
+          setDeviceRadius(radius * 0.5); // 50% for mobile
+        } else if (width < 1024) {
+          setDeviceRadius(radius * 0.75); // 75% for tablet
+        } else {
+          setDeviceRadius(radius); // 100% for desktop
+        }
+      };
+      
+      updateRadius();
+      window.addEventListener('resize', updateRadius);
+      return () => window.removeEventListener('resize', updateRadius);
+    }, [radius]);
 
     // Effect to handle scroll-based rotation
     useEffect(() => {
@@ -88,7 +108,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         role="region"
         aria-label="Circular 3D Gallery"
         className={cn("relative w-full h-full flex items-center justify-center", className)}
-        style={{ perspective: '2000px' }}
+        style={{ perspective: '1500px' }}
         {...props}
       >
         <div
@@ -104,6 +124,10 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
             const relativeAngle = (itemAngle + totalRotation + 360) % 360;
             const normalizedAngle = Math.abs(relativeAngle > 180 ? 360 - relativeAngle : relativeAngle);
             const opacity = Math.max(0.3, 1 - (normalizedAngle / 180));
+
+            // Use device-specific radius
+            const xPos = Math.sin((itemAngle * Math.PI) / 180) * deviceRadius;
+            const zPos = Math.cos((itemAngle * Math.PI) / 180) * deviceRadius;
 
             return (
               <div
@@ -128,10 +152,10 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{ objectPosition: item.photo.pos || 'center' }}
                   />
-                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent text-white">
-                    <h2 className="text-xl font-bold">{item.common}</h2>
-                    <em className="text-sm italic opacity-80">{item.binomial}</em>
-                    <p className="text-xs mt-2 opacity-70">Photo by: {item.photo.by}</p>
+                  <div className="absolute bottom-0 left-0 w-full p-3 sm:p-4 bg-gradient-to-t from-black/80 to-transparent text-white">
+                    <h2 className="text-base sm:text-lg md:text-xl font-bold">{item.common}</h2>
+                    <em className="text-xs sm:text-sm italic opacity-80">{item.binomial}</em>
+                    <p className="text-[10px] sm:text-xs mt-2 opacity-70">Photo by: {item.photo.by}</p>
                   </div>
                 </div>
               </div>

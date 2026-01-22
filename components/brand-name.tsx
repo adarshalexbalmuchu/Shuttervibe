@@ -34,7 +34,8 @@ export function BrandName() {
     <div
       ref={containerRef}
       className="
-        fixed top-10 md:top-12 left-6 md:left-12 lg:left-16
+        fixed top-6 sm:top-8 md:top-10 lg:top-12 
+        left-4 sm:left-6 md:left-12 lg:left-16
         z-50
         pointer-events-none
       "
@@ -44,13 +45,13 @@ export function BrandName() {
         className="
           whitespace-nowrap
           font-bold uppercase
-          tracking-[0.14em]
+          tracking-[0.10em] sm:tracking-[0.12em] md:tracking-[0.14em]
           text-white/75
-          text-[clamp(36px,5.25vw,72px)]
           leading-none
           max-w-[92vw] overflow-hidden text-ellipsis
         "
         style={{ 
+          fontSize: "clamp(20px, 5vw, 72px)",
           textShadow: "0 2px 20px rgba(0,0,0,0.3)",
           fontWeight: 700
         }}
