@@ -31,6 +31,7 @@ export default function Home() {
     if (!mounted) return;
 
     let lenis: any;
+    let rafId: number;
 
     const initLenis = async () => {
       try {
@@ -40,21 +41,25 @@ export default function Home() {
         
         lenis = new Lenis({ 
           smoothWheel: true, 
-          duration: 1.0,  // Reduced from 1.2 for better performance
-          lerp: 0.15,     // Increased from 0.1 for less recalculation
+          duration: 0.8,  // Faster response for better perceived performance
+          lerp: 0.12,     // More responsive
           orientation: 'vertical' as const,
           gestureOrientation: 'vertical' as const,
           touchMultiplier: 2,
           infinite: false,
+          syncTouch: true,
+          syncTouchLerp: 0.1,
         });
         
         // Sync Lenis with ScrollTrigger
         lenis.on("scroll", ScrollTrigger.update);
         
-        // Use GSAP ticker for smoother integration
-        gsap.ticker.add((time) => {
-          lenis.raf(time * 1000);
-        });
+        // Use requestAnimationFrame directly for maximum performance
+        const raf = (time: number) => {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        };
+        rafId = requestAnimationFrame(raf);
         
         // Disable lag smoothing for better scroll sync
         gsap.ticker.lagSmoothing(0);
@@ -67,10 +72,11 @@ export default function Home() {
         console.warn('Lenis not loaded:', error);
       }
     };
-
+    
     initLenis();
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       lenis?.destroy?.();
     };
   }, [mounted]);
@@ -121,11 +127,11 @@ export default function Home() {
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }} className="contain-layout">
         <EtherealBackground
           animation={{
-            scale: 20,  // Further reduced for better performance
-            speed: 20   // Further reduced for smoother animation
+            scale: 12,  // Further reduced for better performance
+            speed: 15   // Further reduced for smoother animation
           }}
           noise={{
-            opacity: 0.2,  // Further reduced
+            opacity: 0.15,  // Further reduced
             scale: 1
           }}
         />

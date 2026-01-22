@@ -257,11 +257,11 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
 
     const t = clock.getElapsedTime();
 
-    // Premium damping (lower is smoother)
-    const damp = 0.075;
+    // Premium damping - more responsive
+    const damp = 0.12;
 
     // Subtle breathing (very premium when minimal)
-    const breathe = Math.sin(t * 0.35) * 0.015;
+    const breathe = Math.sin(t * 0.35) * 0.012;
 
     // Device-specific xOffset for better composition
     const isMobile = deviceType === 'mobile';
@@ -409,11 +409,14 @@ export default function HeroToGalleryScene() {
         gl={{ 
           antialias: !isMobile, 
           alpha: true, 
-          powerPreference: isMobile ? "default" : "high-performance", 
+          powerPreference: "high-performance", 
           stencil: false, 
-          depth: true 
+          depth: true,
+          logarithmicDepthBuffer: false,
         }}
         frameloop={isVisible ? "always" : "never"}
+        performance={{ min: 0.5 }}
+        flat
       >
         <Suspense fallback={<Loader />}>
           <ambientLight intensity={0.55} />

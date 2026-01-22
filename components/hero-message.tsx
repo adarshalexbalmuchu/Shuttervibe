@@ -74,6 +74,7 @@ export function HeroMessage() {
         className="
           text-white font-inter
           max-w-[620px]
+          overflow-visible
         "
         style={{ 
           fontSize: "clamp(36px, 7vw, 82px)",
@@ -81,6 +82,7 @@ export function HeroMessage() {
           lineHeight: '1.1',
           letterSpacing: '-0.03em',
           textShadow: '0 2px 40px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3)',
+          paddingRight: '8px',
         }}
       >
         <span className="font-inter" style={{ fontWeight: 800 }}>
@@ -95,6 +97,8 @@ export function HeroMessage() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
+            display: 'inline-block',
+            paddingRight: '4px',
           }}
         >
           chaos
