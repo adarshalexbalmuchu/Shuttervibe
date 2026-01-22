@@ -6,10 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function ScrollIndicator() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !dotRef.current) return;
+    if (!containerRef.current) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -26,15 +25,6 @@ export function ScrollIndicator() {
       }
     );
 
-    // Animate dot moving down the line
-    const dotAnimation = gsap.to(dotRef.current, {
-      y: 52, // Move down 52px (through most of the 64px line)
-      duration: 1.5,
-      ease: "power1.inOut",
-      repeat: -1,
-      yoyo: true
-    });
-
     // Fade out when scroll starts
     ScrollTrigger.create({
       trigger: "#scrollWrap",
@@ -50,28 +40,14 @@ export function ScrollIndicator() {
         }
       }
     });
-
-    return () => {
-      dotAnimation.kill();
-    };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-12 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 pointer-events-none"
+      className="fixed bottom-12 left-1/2 -translate-x-1/2 z-40 pointer-events-none"
       style={{ opacity: 0 }}
     >
-      {/* Vertical line */}
-      <div className="relative w-[1px] h-16 bg-gradient-to-b from-gray-600 to-transparent">
-        {/* Animated dot */}
-        <div
-          ref={dotRef}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-        />
-      </div>
-      
-      {/* Text below */}
       <div className="text-[10px] text-gray-400 tracking-[0.2em] uppercase">
         Scroll to shoot
       </div>
