@@ -36,9 +36,14 @@ export function Footer() {
 						Capturing moments through the lens of creativity. 
 						Visual storytelling that resonates.
 					</p>
-					<p className="text-white/40 text-xs mt-6">
-						© {new Date().getFullYear()} Shuttervibe. All rights reserved.
-					</p>
+					<div className="mt-6 space-y-2">
+						<p className="text-white/50 text-sm font-light">
+							by <span className="text-white/70">Adarsh Alex Balmuchu</span>
+						</p>
+						<p className="text-white/40 text-xs">
+							© {new Date().getFullYear()} Shuttervibe. All rights reserved.
+						</p>
+					</div>
 				</AnimatedContainer>
 
 				{/* About Section */}
