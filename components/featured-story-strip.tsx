@@ -48,9 +48,10 @@ export function FeaturedStoryStrip() {
           {/* Left: Large Image */}
           <div className="animate-item relative h-[400px] sm:h-[500px] md:h-[550px] lg:h-[600px] rounded-lg overflow-hidden group">
             <Image
-              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&q=80"
+              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1000&q=65&auto=format"
               alt="Featured Story"
               fill
+              loading="lazy"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 50vw"
             />

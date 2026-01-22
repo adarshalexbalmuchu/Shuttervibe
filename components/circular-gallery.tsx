@@ -32,11 +32,29 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
   ({ items, className, radius = 600, autoRotateSpeed = 0.02, ...props }, ref) => {
     const [rotation, setRotation] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const animationFrameRef = useRef<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     
     // Responsive radius based on screen size
     const [deviceRadius, setDeviceRadius] = useState(radius);
+    
+    // Intersection Observer to pause animation when off-screen
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsVisible(entry.isIntersecting);
+        },
+        { threshold: 0.1 }
+      );
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
     
     useEffect(() => {
       const updateRadius = () => {
@@ -82,29 +100,38 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       };
     }, []);
 
-    // Effect for auto-rotation when not scrolling
+    // Effect for auto-rotation when not scrolling and visible
     useEffect(() => {
       const autoRotate = () => {
-        if (!isScrolling) {
+        if (!isScrolling && isVisible) {
           setRotation(prev => prev + autoRotateSpeed);
         }
         animationFrameRef.current = requestAnimationFrame(autoRotate);
       };
 
-      animationFrameRef.current = requestAnimationFrame(autoRotate);
+      if (isVisible) {
+        animationFrameRef.current = requestAnimationFrame(autoRotate);
+      }
 
       return () => {
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
       };
-    }, [isScrolling, autoRotateSpeed]);
+    }, [isScrolling, autoRotateSpeed, isVisible]);
 
     const anglePerItem = 360 / items.length;
     
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          containerRef.current = node;
+          if (typeof ref === 'function') {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
         role="region"
         aria-label="Circular 3D Gallery"
         className={cn("relative w-full h-full flex items-center justify-center", className)}

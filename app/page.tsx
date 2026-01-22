@@ -40,11 +40,12 @@ export default function Home() {
         
         lenis = new Lenis({ 
           smoothWheel: true, 
-          duration: 1.2,
-          lerp: 0.1,
+          duration: 1.0,  // Reduced from 1.2 for better performance
+          lerp: 0.15,     // Increased from 0.1 for less recalculation
           orientation: 'vertical' as const,
           gestureOrientation: 'vertical' as const,
           touchMultiplier: 2,
+          infinite: false,
         });
         
         // Sync Lenis with ScrollTrigger
@@ -119,11 +120,11 @@ export default function Home() {
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
         <EtherealBackground
           animation={{
-            scale: 50,
-            speed: 50
+            scale: 30,  // Reduced from 50 for better performance
+            speed: 30   // Reduced from 50 for smoother animation
           }}
           noise={{
-            opacity: 0.3,
+            opacity: 0.25,  // Reduced from 0.3
             scale: 1
           }}
         />
@@ -160,7 +161,7 @@ export default function Home() {
           <HeroMessage />
 
           {/* Canvas above the text so the 3D model sits in front */}
-          <div className="absolute inset-0 z-20">
+          <div className="absolute inset-0 z-20" style={{ willChange: 'transform' }}>
             <HeroToGalleryScene />
           </div>
 
@@ -176,6 +177,7 @@ export default function Home() {
               filter: "blur(18px)",
               zIndex: 49,
               transform: "scale(0.98)",
+              willChange: 'opacity, transform',
             }}
           />
 
@@ -186,6 +188,7 @@ export default function Home() {
             style={{
               background: "white",
               opacity: 0,
+              willChange: 'opacity',
             }}
           />
         </div>

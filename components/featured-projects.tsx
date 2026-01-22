@@ -7,7 +7,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Urban Pulse",
     binomial: "Mumbai, India",
     photo: {
-      url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Capturing the vibrant energy of Mumbai's streets",
       pos: "center",
       by: "Adarsh"
@@ -17,7 +17,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Mountain Solitude",
     binomial: "Himalayas, 2023",
     photo: {
-      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Serene peaks touching the sky",
       pos: "center",
       by: "Adarsh"
@@ -27,7 +27,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Street Stories",
     binomial: "Delhi, India",
     photo: {
-      url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Life unfolds in the capital's lanes",
       pos: "center",
       by: "Adarsh"
@@ -37,7 +37,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Coastal Dreams",
     binomial: "Goa, 2023",
     photo: {
-      url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Where the ocean meets tranquility",
       pos: "center",
       by: "Adarsh"
@@ -47,7 +47,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Desert Whispers",
     binomial: "Rajasthan, India",
     photo: {
-      url: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Golden sands tell ancient tales",
       pos: "center",
       by: "Adarsh"
@@ -67,7 +67,7 @@ const featuredProjects: GalleryItem[] = [
     common: "Heritage Echoes",
     binomial: "Jaipur, India",
     photo: {
-      url: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=500&h=600&q=60&auto=format&fit=crop",
       text: "Royal architecture frozen in time",
       pos: "center",
       by: "Adarsh"
@@ -77,7 +77,7 @@ const featuredProjects: GalleryItem[] = [
     common: "River Rhythms",
     binomial: "Varanasi, India",
     photo: {
-      url: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&h=1000&fit=crop",
+      url: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=500&h=600&q=60&auto=format&fit=crop",
       text: "The eternal flow of the Ganges",
       pos: "center",
       by: "Adarsh"
