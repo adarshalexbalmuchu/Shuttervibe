@@ -40,32 +40,38 @@ export function CategoryChips() {
   return (
     <div 
       ref={containerRef}
-      className="fixed top-56 left-6 z-40 flex gap-3"
+      className="fixed top-[280px] md:top-64 left-6 md:left-8 z-40 flex flex-wrap gap-3"
       style={{ opacity: 0 }}
     >
-      {categories.map((cat) => (
+      {categories.map((cat, index) => (
         <button
           key={cat.id}
           onClick={() => handleClick(cat.id)}
-          className="group relative px-4 py-1.5 rounded-full border border-gray-600/40 bg-black/20 backdrop-blur-sm text-xs text-gray-400 hover:text-white hover:border-gray-400/60 transition-all duration-300 cursor-pointer"
+          className="group relative px-5 py-2 rounded-full border border-gray-700/50 bg-black/30 backdrop-blur-md text-xs md:text-sm text-gray-300 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-500 cursor-pointer overflow-hidden"
+          style={{ 
+            animationDelay: `${index * 0.1}s`,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            fontWeight: '300'
+          }}
         >
+          {/* Shimmer effect on hover */}
+          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          
           <span className="relative z-10">{cat.label}</span>
           
-          {/* Underline animation */}
-          <span className="absolute bottom-1 left-4 right-4 h-px bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
-                style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}>
-          </span>
-          
-          {/* Glow effect */}
-          <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/5 transition-colors duration-300" />
+          {/* Bottom border accent */}
+          <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
           
           <style jsx>{`
-            button:hover span:nth-child(2) {
-              animation: underlineSlide 0.4s ease-out forwards;
-            }
-            @keyframes underlineSlide {
+            @keyframes fadeInUp {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
               to {
-                transform: scaleX(1);
+                opacity: 1;
+                transform: translateY(0);
               }
             }
           `}</style>

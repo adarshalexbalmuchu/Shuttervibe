@@ -39,23 +39,20 @@ export function HeroMessage() {
   return (
     <div 
       ref={containerRef}
-      className="fixed top-24 left-6 z-40 pointer-events-none"
+      className="fixed top-24 left-6 md:left-8 z-40 pointer-events-none max-w-xl"
       style={{
         fontFamily: 'system-ui, -apple-system, sans-serif',
         letterSpacing: '0.02em'
       }}
     >
-      <div className="fade-in-item text-sm md:text-base text-gray-300 mb-4">
+      <div className="fade-in-item text-xs md:text-sm text-gray-400 mb-3 tracking-[0.15em] uppercase">
         Photographer • Visual Storyteller • India
       </div>
       
-      {/* Poetic narrative line */}
-      <div className="fade-in-item text-base md:text-lg text-white mb-6 italic font-light" style={{ letterSpacing: '0.04em' }}>
-        I photograph silence inside chaos.
-      </div>
-      
-      <div className="fade-in-item text-xs md:text-sm text-gray-400 mb-2">
-        Portraits • Street • Nature
+      {/* Poetic narrative line - larger and more prominent */}
+      <div className="fade-in-item text-xl md:text-3xl lg:text-4xl text-white mb-6 font-light leading-tight" 
+           style={{ letterSpacing: '0.01em', lineHeight: '1.3' }}>
+        I photograph silence<br/>inside chaos.
       </div>
     </div>
   );
