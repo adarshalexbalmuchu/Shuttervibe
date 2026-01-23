@@ -36,14 +36,14 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Lenis smooth scroll with proper ScrollTrigger sync
+  // GSAP ScrollTrigger initialization
   useEffect(() => {
     if (!mounted) return;
 
-    // Defer GSAP initialization to after initial paint
+    // Defer GSAP initialization slightly for better initial paint
     const timer = setTimeout(() => {
       initScrollTrigger();
-    }, 100);
+    }, 50);
 
     async function initScrollTrigger() {
       try {

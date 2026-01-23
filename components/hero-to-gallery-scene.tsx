@@ -7,8 +7,8 @@ import { Environment, Html, useGLTF } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Don't preload the 18MB model - let it load after initial paint
-// useGLTF.preload('/models/camera.glb');
+// Preload the compressed 3.1MB model for better LCP
+useGLTF.preload('/models/camera.glb');
 
 function Loader() {
   const [progress, setProgress] = useState(0);
