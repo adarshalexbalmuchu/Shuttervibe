@@ -7,9 +7,6 @@ import { GlassButton } from "@/components/glass-button";
 import { BrandName } from "@/components/brand-name";
 import { HeroMessage } from "@/components/hero-message";
 import { ScrollIndicator } from "@/components/scroll-indicator";
-import { LensGlow } from "@/components/lens-glow";
-import { FilmGrain } from "@/components/film-grain";
-import { Vignette } from "@/components/vignette";
 import { FeaturedStoryStrip } from "@/components/featured-story-strip";
 import { CategorizedGallery } from "@/components/categorized-gallery";
 import { Footer } from "@/components/footer";
@@ -17,6 +14,19 @@ import { Footer } from "@/components/footer";
 const HeroToGalleryScene = dynamic(() => import("@/components/hero-to-gallery-scene"), {
   ssr: false,
   loading: () => null,
+});
+
+// Defer non-critical components
+const LensGlow = dynamic(() => import("@/components/lens-glow").then(m => ({ default: m.LensGlow })), {
+  ssr: false,
+});
+
+const FilmGrain = dynamic(() => import("@/components/film-grain").then(m => ({ default: m.FilmGrain })), {
+  ssr: false,
+});
+
+const Vignette = dynamic(() => import("@/components/vignette").then(m => ({ default: m.Vignette })), {
+  ssr: false,
 });
 
 export default function Home() {
@@ -30,9 +40,12 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Temporarily disabled Lenis for debugging scroll issues
-    // Native scroll works fine with GSAP ScrollTrigger
-    const initScrollTrigger = async () => {
+    // Defer GSAP initialization to after initial paint
+    const timer = setTimeout(() => {
+      initScrollTrigger();
+    }, 100);
+
+    async function initScrollTrigger() {
       try {
         const gsap = (await import("gsap")).default;
         const { ScrollTrigger } = await import("gsap/ScrollTrigger");
@@ -43,18 +56,14 @@ export default function Home() {
         gsap.ticker.lagSmoothing(0);
         
         // Refresh ScrollTrigger after init
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 100);
+        ScrollTrigger.refresh();
       } catch (error) {
         console.warn('GSAP not loaded:', error);
       }
-    };
-    
-    initScrollTrigger();
+    }
 
     return () => {
-      // Cleanup if needed
+      clearTimeout(timer);
     };
   }, [mounted]);
 
