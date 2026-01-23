@@ -40,10 +40,14 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Defer GSAP initialization significantly to not block LCP
-    const timer = setTimeout(() => {
+    // Use requestIdleCallback for better INP - runs during idle time
+    const idleCallback = () => {
       initScrollTrigger();
-    }, 2000);
+    };
+
+    const callbackId = 'requestIdleCallback' in window 
+      ? requestIdleCallback(idleCallback, { timeout: 100 })
+      : setTimeout(idleCallback, 0);
 
     async function initScrollTrigger() {
       try {
@@ -55,6 +59,12 @@ export default function Home() {
         // Disable lag smoothing for better scroll sync
         gsap.ticker.lagSmoothing(0);
         
+        // Debounce ScrollTrigger for better performance
+        ScrollTrigger.config({ 
+          limitCallbacks: true,
+          syncInterval: 200,
+        });
+        
         // Refresh ScrollTrigger after init
         ScrollTrigger.refresh();
       } catch (error) {
@@ -63,7 +73,11 @@ export default function Home() {
     }
 
     return () => {
-      clearTimeout(timer);
+      if ('requestIdleCallback' in window) {
+        cancelIdleCallback(callbackId as number);
+      } else {
+        clearTimeout(callbackId as number);
+      }
     };
   }, [mounted]);
 
@@ -71,10 +85,14 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Defer brand animation to after other critical work
-    const timer = setTimeout(() => {
+    // Use requestIdleCallback for non-blocking init
+    const idleCallback = () => {
       initBrandFade();
-    }, 2500);
+    };
+
+    const callbackId = 'requestIdleCallback' in window
+      ? requestIdleCallback(idleCallback, { timeout: 500 })
+      : setTimeout(idleCallback, 500);
 
     const initBrandFade = async () => {
       const gsap = (await import("gsap")).default;
@@ -96,12 +114,15 @@ export default function Home() {
           }
         });
       }
-
-      // Kill ScrollTriggers on sections that aren't visible (performance optimization)
-      ScrollTrigger.config({ limitCallbacks: true });
     };
 
-    return () => clearTimeout(timer);
+    return () => {
+      if ('requestIdleCallback' in window) {
+        cancelIdleCallback(callbackId as number);
+      } else {
+        clearTimeout(callbackId as number);
+      }
+    };
   }, [mounted]);
 
   if (!mounted) {

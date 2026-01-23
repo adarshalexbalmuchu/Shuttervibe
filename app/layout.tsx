@@ -7,7 +7,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-playfair',
-  display: 'swap',
+  display: 'optional',
   preload: true,
 });
 
@@ -15,7 +15,7 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400'],
   variable: '--font-inter',
-  display: 'swap',
+  display: 'optional',
   preload: true,
 });
 
@@ -49,6 +49,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        <link rel="preconnect" href="/models" />
+        <link rel="preload" href="/models/camera.glb" as="fetch" crossOrigin="anonymous" />
+      </head>
       <body className="antialiased">
         {children}
         <SpeedInsights />
