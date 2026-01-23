@@ -95,10 +95,10 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
         clearTimeout(scrollTimeout.current);
       }
       
-      // Set scrolling to false after 150ms of no scroll
+      // Set scrolling to false after 100ms of no scroll
       scrollTimeout.current = setTimeout(() => {
         isScrolling.current = false;
-      }, 150);
+      }, 100);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

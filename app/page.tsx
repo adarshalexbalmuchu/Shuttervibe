@@ -41,14 +41,16 @@ export default function Home() {
         
         lenis = new Lenis({ 
           smoothWheel: true, 
-          duration: 0.8,  // Faster response for better perceived performance
-          lerp: 0.12,     // More responsive
+          duration: 1.0,
+          lerp: 0.1,
           orientation: 'vertical' as const,
           gestureOrientation: 'vertical' as const,
           touchMultiplier: 2,
           infinite: false,
           syncTouch: true,
-          syncTouchLerp: 0.1,
+          syncTouchLerp: 0.075,
+          wheelMultiplier: 1.0,
+          touchInertiaMultiplier: 35,
         });
         
         // Sync Lenis with ScrollTrigger
@@ -147,7 +149,7 @@ export default function Home() {
       <LensGlow />
 
       {/* Navigation Button - Fixed position */}
-      <div className="fixed top-6 right-6 z-50">
+      <div className="fixed top-6 right-6 z-50 pointer-events-auto">
         <a href="#contact">
           <GlassButton size="sm">
             Contact
