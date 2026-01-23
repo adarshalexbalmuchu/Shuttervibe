@@ -19,7 +19,7 @@ const socialLinks: SocialLink[] = [
 
 export function Footer() {
 	return (
-		<footer className="relative w-full border-t border-white/5 bg-black px-6 sm:px-8 md:px-12">
+		<footer id="contact" className="relative w-full border-t border-white/5 bg-black px-6 sm:px-8 md:px-12">
 			{/* Subtle top gradient line */}
 			<div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 			
