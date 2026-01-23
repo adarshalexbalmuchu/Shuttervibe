@@ -45,14 +45,26 @@ export function ScrollIndicator() {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-6 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 z-40 pointer-events-none"
+      className="fixed bottom-[15%] sm:bottom-[18%] md:bottom-[20%] left-1/2 -translate-x-1/2 z-40 pointer-events-none"
       style={{ 
         opacity: 0,
         paddingBottom: "max(16px, env(safe-area-inset-bottom))"
       }}
     >
-      <div className="text-[11px] sm:text-[10px] text-gray-400 tracking-[0.18em] sm:tracking-[0.2em] uppercase font-light">
-        Scroll to shoot
+      <div className="flex flex-col items-center gap-3">
+        <div className="text-[13px] sm:text-[12px] md:text-[13px] text-gray-300 tracking-[0.2em] sm:tracking-[0.22em] uppercase font-light">
+          Scroll to shoot
+        </div>
+        {/* Subtle arrow indicator */}
+        <svg 
+          className="w-4 h-4 text-gray-400 animate-bounce" 
+          style={{ animationDuration: '2s' }}
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
       </div>
     </div>
   );

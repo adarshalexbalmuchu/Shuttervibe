@@ -49,50 +49,76 @@ export function HeroMessage() {
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-4 sm:left-8 md:left-16 lg:left-20
-        top-[70px] sm:top-[90px] md:top-[120px] lg:top-[140px]
+        left-[8%] sm:left-[10%] md:left-[14%] lg:left-[16%]
+        top-[100px] sm:top-[130px] md:top-[160px] lg:top-[180px]
         right-4 sm:right-auto
         px-safe
       "
       style={{ 
         fontFamily: "system-ui, -apple-system, sans-serif",
-        maxWidth: "min(520px, calc(100vw - 2rem))"
+        maxWidth: "min(580px, calc(100vw - 2rem))"
       }}
     >
-      {/* Subtle backdrop glow */}
+      {/* Enhanced backdrop with soft gradient shadow for depth */}
       <div 
-        className="absolute -inset-6 sm:-inset-8 md:-inset-12 -z-10"
+        className="absolute -inset-8 sm:-inset-12 md:-inset-16 -z-10"
         style={{
-          background: "radial-gradient(ellipse 500px 350px at 30% 40%, rgba(255,255,255,0.035), transparent 70%)",
-          filter: "blur(40px)"
+          background: "radial-gradient(ellipse 600px 400px at 30% 40%, rgba(0,0,0,0.4), transparent 70%)",
+          filter: "blur(50px)"
         }}
       />
 
-      {/* Quote: Bold Sans-Serif with Serif italic accent for 'chaos' */}
+      {/* Premium 3-line typography hierarchy */}
       <h1
         data-hero-item
         className="
-          text-white font-inter
-          max-w-[620px]
+          text-white
+          max-w-[680px]
           overflow-visible
         "
         style={{ 
-          fontSize: "clamp(28px, 8vw, 82px)",
-          fontWeight: 800,
-          lineHeight: '1.15',
-          letterSpacing: '-0.02em',
-          textShadow: '0 2px 40px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3)',
-          paddingRight: '8px',
+          textShadow: '0 4px 60px rgba(0,0,0,0.7), 0 12px 32px rgba(0,0,0,0.5)',
         }}
       >
-        <span className="font-inter" style={{ fontWeight: 800 }}>
-          I photograph silence inside{' '}
-        </span>
-        <span 
+        {/* Line 1: "I photograph" - Regular, smaller, reduced opacity */}
+        <div 
+          className="font-inter"
+          style={{ 
+            fontSize: "clamp(20px, 5.5vw, 58px)",
+            fontWeight: 400,
+            lineHeight: '1.2',
+            letterSpacing: '-0.01em',
+            opacity: 0.88,
+            marginBottom: 'clamp(4px, 1vw, 12px)',
+          }}
+        >
+          I photograph
+        </div>
+
+        {/* Line 2: "silence inside" - Bold, primary emphasis, tight leading */}
+        <div 
+          className="font-inter"
+          style={{ 
+            fontSize: "clamp(28px, 8vw, 82px)",
+            fontWeight: 700,
+            lineHeight: '0.95',
+            letterSpacing: '-0.025em',
+            marginBottom: 'clamp(4px, 1vw, 12px)',
+          }}
+        >
+          silence inside
+        </div>
+
+        {/* Line 3: "chaos." - Serif italic, larger, elegant */}
+        <div 
           className="font-playfair"
           style={{ 
-            fontStyle: 'italic',
+            fontSize: "clamp(34px, 9vw, 96px)",
             fontWeight: 700,
+            fontStyle: 'italic',
+            lineHeight: '1.1',
+            letterSpacing: '0.03em',
+            opacity: 0.92,
             background: 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -101,66 +127,71 @@ export function HeroMessage() {
             paddingRight: '4px',
           }}
         >
-          chaos
-        </span>
-        <span className="font-inter" style={{ fontWeight: 800 }}>.</span>
+          chaos.
+        </div>
       </h1>
 
-      {/* Editorial navigation - vertical stack */}
+      {/* Curated category navigation - horizontal with dot separators */}
       <nav 
         data-hero-item 
-        className="mt-8 sm:mt-10 md:mt-12 flex flex-col gap-2 sm:gap-3 items-start"
+        className="mt-6 sm:mt-7 md:mt-8 flex flex-wrap gap-3 sm:gap-4 items-center"
       >
         <button
           className="
             pointer-events-auto 
-            text-[11px] sm:text-[12px] tracking-[0.18em] sm:tracking-[0.24em] uppercase 
-            text-white/60 hover:text-white/90 active:text-white
+            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
+            text-white/65 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
             py-3 sm:py-2 md:py-1
             min-h-[48px] sm:min-h-[44px] md:min-h-0
             flex items-center
-            px-1
+            font-light
           "
         >
           <span className="relative z-10">Portraits</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full group-active:w-full transition-all duration-500" />
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/50 group-hover:w-full group-active:w-full transition-all duration-500" />
         </button>
+        
+        <span className="text-white/40 text-[10px] hidden sm:inline">·</span>
+        
         <button
           className="
             pointer-events-auto 
-            text-[11px] sm:text-[12px] tracking-[0.18em] sm:tracking-[0.24em] uppercase 
-            text-white/60 hover:text-white/90 active:text-white
+            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
+            text-white/65 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
             py-3 sm:py-2 md:py-1
             min-h-[48px] sm:min-h-[44px] md:min-h-0
             flex items-center
-            px-1
+            font-light
           "
         >
           <span className="relative z-10">Street</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full group-active:w-full transition-all duration-500" />
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/50 group-hover:w-full group-active:w-full transition-all duration-500" />
         </button>
+        
+        <span className="text-white/40 text-[10px] hidden sm:inline">·</span>
+        
         <button
           className="
             pointer-events-auto 
-            text-[11px] sm:text-[12px] tracking-[0.18em] sm:tracking-[0.24em] uppercase 
-            text-white/60 hover:text-white/90 active:text-white
+            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
+            text-white/65 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
             py-3 sm:py-2 md:py-1
             min-h-[48px] sm:min-h-[44px] md:min-h-0
             flex items-center
-            px-1
+            font-light
           "
         >
           <span className="relative z-10">Nature</span>
-          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 group-hover:w-full group-active:w-full transition-all duration-500" />
+          <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/50 group-hover:w-full group-active:w-full transition-all duration-500" />
         </button>
       </nav>
     </div>
