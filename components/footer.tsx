@@ -3,7 +3,7 @@
 import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Instagram, Mail, Linkedin, Camera } from 'lucide-react';
+import { Instagram, Mail, Linkedin } from 'lucide-react';
 
 interface SocialLink {
 	title: string;
@@ -19,64 +19,80 @@ const socialLinks: SocialLink[] = [
 
 export function Footer() {
 	return (
-		<footer className="relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center rounded-t-4xl md:rounded-t-6xl border-t border-white/10 bg-[radial-gradient(35%_128px_at_50%_0%,theme(backgroundColor.white/8%),transparent)] px-6 py-12 lg:py-16">
-			{/* Top glow line */}
-			<div className="absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/20 blur" />
-
-			<div className="grid w-full gap-12 lg:grid-cols-3 lg:gap-8">
-				{/* Brand Section */}
-				<AnimatedContainer className="space-y-4 lg:col-span-1">
-					<div className="flex items-center gap-2">
-						<Camera className="w-8 h-8 text-white" />
-						<h3 className="text-2xl font-light tracking-wider text-white">
-							Shuttervibe
-						</h3>
-					</div>
-					<p className="text-white/60 text-sm leading-relaxed max-w-xs">
-						Capturing moments through the lens of creativity. 
-						Visual storytelling that resonates.
-					</p>
-					<div className="mt-6 space-y-2">
-						<p className="text-white/50 text-sm font-light">
-							by <span className="text-white/70">Adarsh Alex Balmuchu</span>
+		<footer className="relative w-full border-t border-white/5 bg-black px-6 sm:px-8 md:px-12">
+			{/* Subtle top gradient line */}
+			<div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+			
+			<div className="max-w-7xl mx-auto">
+				{/* Main Content */}
+				<div className="py-16 sm:py-20 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+					{/* Brand Section - Serif Typography */}
+					<AnimatedContainer className="space-y-6 lg:col-span-1">
+						<div>
+							<h2 className="font-playfair text-4xl sm:text-5xl font-bold text-white tracking-tight mb-2" style={{ letterSpacing: '-0.02em' }}>
+								Shuttervibe
+							</h2>
+							<p className="font-playfair italic text-lg text-white/50">
+								by Adarsh Alex Balmuchu
+							</p>
+						</div>
+						<p className="font-inter text-white/40 text-sm leading-relaxed max-w-md font-light">
+							Capturing silence inside chaos. Every frame tells a story, every moment holds eternity.
 						</p>
-						<p className="text-white/40 text-xs">
+					</AnimatedContainer>
+
+					{/* Quick Links - Minimal */}
+					<AnimatedContainer delay={0.15} className="space-y-6 lg:col-span-1">
+						<h3 className="font-inter text-xs font-medium text-white/50 tracking-[0.2em] uppercase">
+							Navigate
+						</h3>
+						<nav className="flex flex-col space-y-3">
+							<a href="#work" className="font-inter text-white/60 hover:text-white text-sm transition-colors duration-300 w-fit">
+								Work
+							</a>
+							<a href="#about" className="font-inter text-white/60 hover:text-white text-sm transition-colors duration-300 w-fit">
+								About
+							</a>
+							<a href="#contact" className="font-inter text-white/60 hover:text-white text-sm transition-colors duration-300 w-fit">
+								Contact
+							</a>
+						</nav>
+					</AnimatedContainer>
+
+					{/* Social Links - Horizontal Pills */}
+					<AnimatedContainer delay={0.3} className="space-y-6 lg:col-span-1">
+						<h3 className="font-inter text-xs font-medium text-white/50 tracking-[0.2em] uppercase">
+							Connect
+						</h3>
+						<div className="flex flex-wrap gap-3">
+							{socialLinks.map((link) => (
+								<a
+									key={link.title}
+									href={link.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/10 bg-white/[0.02] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
+									aria-label={link.title}
+								>
+									<link.icon className="w-3.5 h-3.5 text-white/60 group-hover:text-white transition-colors" />
+									<span className="font-inter text-xs text-white/60 group-hover:text-white transition-colors">
+										{link.title}
+									</span>
+								</a>
+							))}
+						</div>
+					</AnimatedContainer>
+				</div>
+
+				{/* Bottom Bar - Ultra Minimal */}
+				<AnimatedContainer delay={0.4} className="border-t border-white/5 py-8">
+					<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30">
+						<p className="font-inter font-light">
 							© {new Date().getFullYear()} Shuttervibe. All rights reserved.
 						</p>
-					</div>
-				</AnimatedContainer>
-
-				{/* About Section */}
-				<AnimatedContainer delay={0.2} className="space-y-4 lg:col-span-1">
-					<h3 className="text-sm font-medium text-white/90 tracking-wide uppercase">
-						About
-					</h3>
-					<p className="text-white/60 text-sm leading-relaxed">
-						I'm a passionate photographer specializing in portrait, street, and nature photography. 
-						Each frame tells a unique story, capturing the essence of moments that matter.
-					</p>
-				</AnimatedContainer>
-
-				{/* Social Links Section */}
-				<AnimatedContainer delay={0.3} className="space-y-4 lg:col-span-1">
-					<h3 className="text-sm font-medium text-white/90 tracking-wide uppercase">
-						Connect
-					</h3>
-					<div className="flex flex-col space-y-3">
-						{socialLinks.map((link) => (
-							<a
-								key={link.title}
-								href={link.href}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-300"
-							>
-								<div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5 transition-all duration-300">
-									<link.icon className="w-4 h-4" />
-								</div>
-								<span className="text-sm">{link.title}</span>
-							</a>
-						))}
+						<p className="font-inter font-light">
+							Designed & Developed with ❤
+						</p>
 					</div>
 				</AnimatedContainer>
 			</div>
@@ -99,10 +115,10 @@ function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationPr
 
 	return (
 		<motion.div
-			initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
-			whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
-			viewport={{ once: true }}
-			transition={{ delay, duration: 0.8, ease: 'easeOut' }}
+			initial={{ opacity: 0, y: 20 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			viewport={{ once: true, margin: "-100px" }}
+			transition={{ delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
 			className={className}
 		>
 			{children}
