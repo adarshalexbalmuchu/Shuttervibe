@@ -19,8 +19,8 @@ export function BrandName() {
       ref={containerRef}
       id="brandName"
       className="
-        fixed top-6 sm:top-8 md:top-12 lg:top-14 
-        left-4 sm:left-6 md:left-10 lg:left-14
+        fixed top-5 sm:top-7 md:top-10 lg:top-12 
+        left-4 sm:left-5 md:left-8 lg:left-12
         z-50
         pointer-events-none
       "
@@ -41,8 +41,8 @@ export function BrandName() {
         <div 
           className="font-playfair font-bold"
           style={{
-            fontSize: "clamp(22px, 5.5vw, 100px)",
-            letterSpacing: '0.10em',
+            fontSize: "clamp(20px, 5vw, 100px)",
+            letterSpacing: 'clamp(0.08em, 0.10em, 0.12em)',
             background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

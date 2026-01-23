@@ -49,8 +49,8 @@ export function HeroMessage() {
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-[8%] sm:left-[10%] md:left-[14%] lg:left-[16%]
-        top-[100px] sm:top-[130px] md:top-[160px] lg:top-[180px]
+        left-[4%] sm:left-[8%] md:left-[12%] lg:left-[16%]
+        top-[85px] sm:top-[115px] md:top-[150px] lg:top-[180px]
         right-4 sm:right-auto
         px-safe
       "
@@ -61,7 +61,7 @@ export function HeroMessage() {
     >
       {/* Enhanced backdrop with soft gradient shadow for depth */}
       <div 
-        className="absolute -inset-8 sm:-inset-12 md:-inset-16 -z-10"
+        className="absolute -inset-6 sm:-inset-10 md:-inset-14 lg:-inset-16 -z-10"
         style={{
           background: "radial-gradient(ellipse 600px 400px at 30% 40%, rgba(0,0,0,0.4), transparent 70%)",
           filter: "blur(50px)"
@@ -84,12 +84,12 @@ export function HeroMessage() {
         <div 
           className="font-inter"
           style={{ 
-            fontSize: "clamp(20px, 5.5vw, 58px)",
+            fontSize: "clamp(16px, 5vw, 58px)",
             fontWeight: 400,
-            lineHeight: '1.2',
+            lineHeight: '1.25',
             letterSpacing: '-0.01em',
             opacity: 0.88,
-            marginBottom: 'clamp(4px, 1vw, 12px)',
+            marginBottom: 'clamp(2px, 0.8vw, 12px)',
           }}
         >
           I photograph
@@ -99,11 +99,11 @@ export function HeroMessage() {
         <div 
           className="font-inter"
           style={{ 
-            fontSize: "clamp(28px, 8vw, 82px)",
+            fontSize: "clamp(24px, 7.5vw, 82px)",
             fontWeight: 700,
-            lineHeight: '0.95',
+            lineHeight: '0.98',
             letterSpacing: '-0.025em',
-            marginBottom: 'clamp(4px, 1vw, 12px)',
+            marginBottom: 'clamp(2px, 0.8vw, 12px)',
           }}
         >
           silence inside
@@ -113,7 +113,7 @@ export function HeroMessage() {
         <div 
           className="font-playfair"
           style={{ 
-            fontSize: "clamp(34px, 9vw, 96px)",
+            fontSize: "clamp(28px, 8.5vw, 96px)",
             fontWeight: 700,
             fontStyle: 'italic',
             lineHeight: '1.1',
@@ -131,21 +131,21 @@ export function HeroMessage() {
         </div>
       </h1>
 
-      {/* Curated category navigation - horizontal with dot separators */}
+      {/* Curated category navigation - responsive layout */}
       <nav 
         data-hero-item 
-        className="mt-6 sm:mt-7 md:mt-8 flex flex-wrap gap-3 sm:gap-4 items-center"
+        className="mt-5 sm:mt-6 md:mt-7 lg:mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-start sm:items-center"
       >
         <button
           className="
             pointer-events-auto 
-            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
-            text-white/65 hover:text-white/95 active:text-white
+            text-[13px] sm:text-[12px] md:text-[13px] lg:text-[14px] tracking-[0.20em] sm:tracking-[0.22em] uppercase 
+            text-white/70 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
-            py-3 sm:py-2 md:py-1
-            min-h-[48px] sm:min-h-[44px] md:min-h-0
+            py-2.5 sm:py-2 md:py-1
+            min-h-[44px] sm:min-h-[40px] md:min-h-0
             flex items-center
             font-light
           "
@@ -159,13 +159,13 @@ export function HeroMessage() {
         <button
           className="
             pointer-events-auto 
-            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
-            text-white/65 hover:text-white/95 active:text-white
+            text-[13px] sm:text-[12px] md:text-[13px] lg:text-[14px] tracking-[0.20em] sm:tracking-[0.22em] uppercase 
+            text-white/70 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
-            py-3 sm:py-2 md:py-1
-            min-h-[48px] sm:min-h-[44px] md:min-h-0
+            py-2.5 sm:py-2 md:py-1
+            min-h-[44px] sm:min-h-[40px] md:min-h-0
             flex items-center
             font-light
           "
@@ -179,13 +179,13 @@ export function HeroMessage() {
         <button
           className="
             pointer-events-auto 
-            text-[12px] sm:text-[13px] md:text-[14px] tracking-[0.22em] uppercase 
-            text-white/65 hover:text-white/95 active:text-white
+            text-[13px] sm:text-[12px] md:text-[13px] lg:text-[14px] tracking-[0.20em] sm:tracking-[0.22em] uppercase 
+            text-white/70 hover:text-white/95 active:text-white
             transition-all duration-500
             relative
             group
-            py-3 sm:py-2 md:py-1
-            min-h-[48px] sm:min-h-[44px] md:min-h-0
+            py-2.5 sm:py-2 md:py-1
+            min-h-[44px] sm:min-h-[40px] md:min-h-0
             flex items-center
             font-light
           "
