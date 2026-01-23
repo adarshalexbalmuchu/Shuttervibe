@@ -12,9 +12,9 @@ interface SocialLink {
 }
 
 const socialLinks: SocialLink[] = [
-	{ title: 'Instagram', href: 'https://instagram.com/shuttervibe', icon: Instagram },
-	{ title: 'LinkedIn', href: 'https://linkedin.com/in/shuttervibe', icon: Linkedin },
-	{ title: 'Email', href: 'mailto:hello@shuttervibe.com', icon: Mail },
+	{ title: 'Instagram', href: 'https://www.instagram.com/shuttervibez12/', icon: Instagram },
+	{ title: 'LinkedIn', href: 'https://www.linkedin.com/in/adarshalexbalmuhu', icon: Linkedin },
+	{ title: 'Email', href: 'mailto:adarshbalmuchu@gmail.com', icon: Mail },
 ];
 
 export function Footer() {
