@@ -3,7 +3,7 @@
 export function FilmGrain() {
   return (
     <div 
-      className="fixed inset-0 z-[100] pointer-events-none"
+      className="fixed inset-0 z-[5] pointer-events-none"
       style={{
         opacity: 0.05,
         mixBlendMode: 'overlay',

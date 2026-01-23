@@ -30,38 +30,14 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    let lenis: any;
-    let rafId: number;
-
-    const initLenis = async () => {
+    // Temporarily disabled Lenis for debugging scroll issues
+    // Native scroll works fine with GSAP ScrollTrigger
+    const initScrollTrigger = async () => {
       try {
-        const { default: Lenis } = await import("@studio-freight/lenis");
         const gsap = (await import("gsap")).default;
         const { ScrollTrigger } = await import("gsap/ScrollTrigger");
         
-        lenis = new Lenis({ 
-          smoothWheel: true, 
-          duration: 1.0,
-          lerp: 0.1,
-          orientation: 'vertical' as const,
-          gestureOrientation: 'vertical' as const,
-          touchMultiplier: 2,
-          infinite: false,
-          syncTouch: true,
-          syncTouchLerp: 0.075,
-          wheelMultiplier: 1.0,
-          touchInertiaMultiplier: 35,
-        });
-        
-        // Sync Lenis with ScrollTrigger
-        lenis.on("scroll", ScrollTrigger.update);
-        
-        // Use requestAnimationFrame directly for maximum performance
-        const raf = (time: number) => {
-          lenis.raf(time);
-          rafId = requestAnimationFrame(raf);
-        };
-        rafId = requestAnimationFrame(raf);
+        gsap.registerPlugin(ScrollTrigger);
         
         // Disable lag smoothing for better scroll sync
         gsap.ticker.lagSmoothing(0);
@@ -71,15 +47,14 @@ export default function Home() {
           ScrollTrigger.refresh();
         }, 100);
       } catch (error) {
-        console.warn('Lenis not loaded:', error);
+        console.warn('GSAP not loaded:', error);
       }
     };
     
-    initLenis();
+    initScrollTrigger();
 
     return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      lenis?.destroy?.();
+      // Cleanup if needed
     };
   }, [mounted]);
 

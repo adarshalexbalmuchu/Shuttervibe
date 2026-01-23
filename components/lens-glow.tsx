@@ -37,7 +37,7 @@ export function LensGlow() {
   return (
     <div
       ref={glowRef}
-      className="fixed pointer-events-none z-30"
+      className="fixed pointer-events-none z-[3]"
       style={{
         width: "400px",
         height: "400px",
