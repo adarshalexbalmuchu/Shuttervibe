@@ -40,14 +40,10 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Use requestIdleCallback for better INP - runs during idle time
-    const idleCallback = () => {
+    // Small delay to not block initial render, but don't wait too long
+    const timer = setTimeout(() => {
       initScrollTrigger();
-    };
-
-    const callbackId = 'requestIdleCallback' in window 
-      ? requestIdleCallback(idleCallback, { timeout: 100 })
-      : setTimeout(idleCallback, 0);
+    }, 800);
 
     async function initScrollTrigger() {
       try {
@@ -62,7 +58,7 @@ export default function Home() {
         // Debounce ScrollTrigger for better performance
         ScrollTrigger.config({ 
           limitCallbacks: true,
-          syncInterval: 200,
+          syncInterval: 150,
         });
         
         // Refresh ScrollTrigger after init
@@ -73,11 +69,7 @@ export default function Home() {
     }
 
     return () => {
-      if ('requestIdleCallback' in window) {
-        cancelIdleCallback(callbackId as number);
-      } else {
-        clearTimeout(callbackId as number);
-      }
+      clearTimeout(timer);
     };
   }, [mounted]);
 
@@ -85,14 +77,10 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Use requestIdleCallback for non-blocking init
-    const idleCallback = () => {
+    // Defer brand animation slightly
+    const timer = setTimeout(() => {
       initBrandFade();
-    };
-
-    const callbackId = 'requestIdleCallback' in window
-      ? requestIdleCallback(idleCallback, { timeout: 500 })
-      : setTimeout(idleCallback, 500);
+    }, 1500);
 
     const initBrandFade = async () => {
       const gsap = (await import("gsap")).default;
@@ -106,8 +94,8 @@ export default function Home() {
         // Fade out only when scrolling past hero section
         ScrollTrigger.create({
           trigger: "#scrollWrap",
-          start: "80% top",  // Start fading when 80% scrolled through hero
-          end: "bottom top",  // Complete fade when leaving viewport
+          start: "80% top",
+          end: "bottom top",
           scrub: 0.5,
           onUpdate: (self) => {
             brandName.style.opacity = String(1 - self.progress);
@@ -116,13 +104,7 @@ export default function Home() {
       }
     };
 
-    return () => {
-      if ('requestIdleCallback' in window) {
-        cancelIdleCallback(callbackId as number);
-      } else {
-        clearTimeout(callbackId as number);
-      }
-    };
+    return () => clearTimeout(timer);
   }, [mounted]);
 
   if (!mounted) {
