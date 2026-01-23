@@ -40,10 +40,10 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Small delay to not block initial render, but don't wait too long
+    // Defer GSAP initialization significantly to not block LCP
     const timer = setTimeout(() => {
       initScrollTrigger();
-    }, 800);
+    }, 2000);
 
     async function initScrollTrigger() {
       try {
@@ -54,12 +54,6 @@ export default function Home() {
         
         // Disable lag smoothing for better scroll sync
         gsap.ticker.lagSmoothing(0);
-        
-        // Debounce ScrollTrigger for better performance
-        ScrollTrigger.config({ 
-          limitCallbacks: true,
-          syncInterval: 150,
-        });
         
         // Refresh ScrollTrigger after init
         ScrollTrigger.refresh();
@@ -77,10 +71,10 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Defer brand animation slightly
+    // Defer brand animation to after other critical work
     const timer = setTimeout(() => {
       initBrandFade();
-    }, 1500);
+    }, 2500);
 
     const initBrandFade = async () => {
       const gsap = (await import("gsap")).default;
@@ -94,14 +88,17 @@ export default function Home() {
         // Fade out only when scrolling past hero section
         ScrollTrigger.create({
           trigger: "#scrollWrap",
-          start: "80% top",
-          end: "bottom top",
+          start: "80% top",  // Start fading when 80% scrolled through hero
+          end: "bottom top",  // Complete fade when leaving viewport
           scrub: 0.5,
           onUpdate: (self) => {
             brandName.style.opacity = String(1 - self.progress);
           }
         });
       }
+
+      // Kill ScrollTriggers on sections that aren't visible (performance optimization)
+      ScrollTrigger.config({ limitCallbacks: true });
     };
 
     return () => clearTimeout(timer);

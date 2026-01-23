@@ -129,19 +129,21 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
     });
   }, [scene]);
 
-  // Simplified intro: quick scale-in
+  // Premium intro: overshoot + settle + micro-rotation
   useEffect(() => {
     if (!group.current) return;
 
     // Start small and slightly “back”
-    group.current.scale.set(0.3, 0.3, 0.3);
-    group.current.rotation.set(0, -0.2, 0);
+    group.current.scale.set(0.28, 0.28, 0.28);
+    group.current.rotation.set(0.02, -0.25, 0.0);
 
-    const intro = gsap.timeline({ defaults: { ease: "power2.out" } });
+    const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     intro
-      .to(group.current.scale, { x: 1.08, y: 1.08, z: 1.08, duration: 0.9 }, 0)
-      .to(group.current.rotation, { y: 0, duration: 0.8 }, 0.05)
+      .to(group.current.scale, { x: 1.18, y: 1.18, z: 1.18, duration: 1.15 }, 0)
+      .to(group.current.rotation, { y: -0.05, x: 0.0, duration: 1.05 }, 0.05)
+      // settle
+      .to(group.current.scale, { x: 1.08, y: 1.08, z: 1.08, duration: 0.45, ease: "power2.out" }, 1.05)
       .eventCallback("onComplete", () => {
         motion.current.scale = 1.08;
         displayed.current.scale = 1.08;
@@ -285,8 +287,13 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
   useFrame(({ mouse, clock }) => {
     if (!group.current) return;
 
+    const t = clock.getElapsedTime();
+
     // Premium damping - more responsive
     const damp = 0.12;
+
+    // Subtle breathing (very premium when minimal)
+    const breathe = Math.sin(t * 0.35) * 0.012;
 
     // Device-specific xOffset for better composition
     const isMobile = deviceType === 'mobile';
@@ -309,12 +316,15 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
     const s = displayed.current.scale;
     group.current.scale.set(s, s, s);
 
-    // Mouse/touch parallax (disabled during scroll and on mobile/tablet for performance)
-    const parallaxEnabled = !isTouchDevice.current && !isScrolling.current && deviceType === 'desktop';
-    const parallaxX = parallaxEnabled ? mouse.x * 0.04 : 0;
-    const parallaxY = parallaxEnabled ? mouse.y * 0.02 : 0;
+    // Mouse/touch parallax (disabled during scroll to prevent interference)
+    const parallaxEnabled = !isTouchDevice.current && !isScrolling.current;
+    // Device-specific parallax intensity
+    const parallaxIntensityX = isMobile ? 0.02 : isTablet ? 0.03 : 0.05;
+    const parallaxIntensityY = isMobile ? 0.01 : isTablet ? 0.015 : 0.025;
+    const parallaxX = parallaxEnabled ? mouse.x * parallaxIntensityX : 0;
+    const parallaxY = parallaxEnabled ? mouse.y * parallaxIntensityY : 0;
 
-    group.current.rotation.y = displayed.current.rotY + parallaxX;
+    group.current.rotation.y = displayed.current.rotY + parallaxX + breathe;
     group.current.rotation.x = displayed.current.rotX + parallaxY;
     group.current.rotation.z = displayed.current.rotZ;
   });
@@ -352,7 +362,7 @@ function useDeviceType() {
 export default function HeroToGalleryScene() {
   const [isClient, setIsClient] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [adaptiveDpr, setAdaptiveDpr] = useState<[number, number]>([0.8, 1]);
+  const [adaptiveDpr, setAdaptiveDpr] = useState<[number, number]>([1, 1]);
   const containerRef = useRef<HTMLDivElement>(null);
   const deviceType = useDeviceType();
   const fpsRef = useRef<number[]>([]);
@@ -362,10 +372,10 @@ export default function HeroToGalleryScene() {
     setIsClient(true);
   }, []);
 
-  // Only load model after 1.5 seconds to let critical rendering finish
+  // Only load model after 3 seconds to let critical rendering finish
   const [modelReady, setModelReady] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => setModelReady(true), 1500);
+    const timer = setTimeout(() => setModelReady(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 

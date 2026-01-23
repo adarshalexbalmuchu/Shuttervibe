@@ -49,66 +49,6 @@ video {
   content-visibility: auto;
 }
 
-/* Gallery Grid Animations - CSS replacement for Framer Motion */
-@keyframes galleryFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.gallery-item {
-  animation: galleryFadeIn 0.5s ease-out forwards;
-  animation-play-state: paused;
-}
-
-.gallery-item.animate {
-  animation-play-state: running;
-}
-
-.gallery-metadata {
-  animation: galleryFadeIn 0.3s ease-out 0.1s forwards;
-}
-
-/* Lightbox Animations - CSS replacement for Framer Motion */
-@keyframes lightboxFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes lightboxSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.lightbox-backdrop {
-  animation: lightboxFadeIn 0.2s ease-out;
-}
-
-.lightbox-content {
-  animation: lightboxFadeIn 0.3s ease-out;
-}
-
-.lightbox-metadata {
-  animation: lightboxSlideUp 0.4s ease-out 0.2s forwards;
-  opacity: 0;
-  animation-fill-mode: forwards;
-}
-
 /* Contain layout reflows */
 .contain-layout {
   contain: layout style paint;
