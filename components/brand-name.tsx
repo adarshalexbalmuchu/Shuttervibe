@@ -12,32 +12,12 @@ export function BrandName() {
     setIsLoaded(true);
   }, []);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      const container = containerRef.current!;
-
-      // Fade out as we leave the hero section
-      gsap.to(container, {
-        opacity: 0,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: "#scrollWrap",
-          start: "top top",
-          end: "15% top",
-          scrub: 0.5,
-        },
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  // Scroll fade is now handled in page.tsx to avoid conflicts
 
   return (
     <div
       ref={containerRef}
+      id="brandName"
       className="
         fixed top-4 sm:top-6 md:top-8 lg:top-10 
         left-4 sm:left-6 md:left-10 lg:left-14

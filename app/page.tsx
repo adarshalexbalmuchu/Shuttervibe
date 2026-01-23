@@ -85,11 +85,11 @@ export default function Home() {
       const brandName = document.getElementById('brandName');
       
       if (brandName) {
-        // Use direct opacity change instead of nested gsap.to for better performance
+        // Fade out only when scrolling past hero section
         ScrollTrigger.create({
           trigger: "#scrollWrap",
-          start: "bottom bottom",
-          end: "bottom top",
+          start: "80% top",  // Start fading when 80% scrolled through hero
+          end: "bottom top",  // Complete fade when leaving viewport
           scrub: 0.5,
           onUpdate: (self) => {
             brandName.style.opacity = String(1 - self.progress);
