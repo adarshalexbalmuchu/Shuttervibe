@@ -49,14 +49,14 @@ export function HeroMessage() {
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-[4%] sm:left-[8%] md:left-[12%] lg:left-[16%]
-        top-[85px] sm:top-[115px] md:top-[150px] lg:top-[180px]
+        left-[6%] sm:left-[8%] md:left-[9%] lg:left-[16%]
+        top-[100px] sm:top-[120px] md:top-[160px] lg:top-[180px]
+        max-w-[340px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[580px]
         right-4 sm:right-auto
         px-safe
       "
       style={{ 
         fontFamily: "system-ui, -apple-system, sans-serif",
-        maxWidth: "min(580px, calc(100vw - 2rem))"
       }}
     >
       {/* Enhanced backdrop with soft gradient shadow for depth */}
@@ -84,11 +84,11 @@ export function HeroMessage() {
         <div 
           className="font-inter"
           style={{ 
-            fontSize: "clamp(16px, 5vw, 58px)",
+            fontSize: "clamp(18px, 4.8vw, 54px)",
             fontWeight: 400,
             lineHeight: '1.25',
             letterSpacing: '-0.01em',
-            opacity: 0.88,
+            opacity: 0.82,
             marginBottom: 'clamp(2px, 0.8vw, 12px)',
           }}
         >
@@ -99,10 +99,10 @@ export function HeroMessage() {
         <div 
           className="font-inter"
           style={{ 
-            fontSize: "clamp(24px, 7.5vw, 82px)",
+            fontSize: "clamp(34px, 7.2vw, 82px)",
             fontWeight: 700,
             lineHeight: '0.98',
-            letterSpacing: '-0.025em',
+            letterSpacing: '-0.02em',
             marginBottom: 'clamp(2px, 0.8vw, 12px)',
           }}
         >
@@ -113,7 +113,7 @@ export function HeroMessage() {
         <div 
           className="font-playfair"
           style={{ 
-            fontSize: "clamp(28px, 8.5vw, 96px)",
+            fontSize: "clamp(36px, 7.8vw, 96px)",
             fontWeight: 700,
             fontStyle: 'italic',
             lineHeight: '1.1',
@@ -131,10 +131,10 @@ export function HeroMessage() {
         </div>
       </h1>
 
-      {/* Curated category navigation - responsive layout */}
+      {/* Curated category navigation - hidden on mobile, visible from tablet up */}
       <nav 
         data-hero-item 
-        className="mt-5 sm:mt-6 md:mt-7 lg:mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-start sm:items-center"
+        className="hidden sm:flex mt-6 md:mt-7 lg:mt-8 flex-wrap gap-3 sm:gap-4 items-center"
       >
         <button
           className="

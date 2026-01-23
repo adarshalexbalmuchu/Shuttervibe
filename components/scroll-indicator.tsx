@@ -45,19 +45,19 @@ export function ScrollIndicator() {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-[12%] sm:bottom-[15%] md:bottom-[18%] lg:bottom-[20%] left-1/2 -translate-x-1/2 z-40 pointer-events-none"
+      className="fixed bottom-[9%] sm:bottom-[12%] md:bottom-[14%] lg:bottom-[18%] left-1/2 -translate-x-1/2 z-40 pointer-events-none"
       style={{ 
         opacity: 0,
         paddingBottom: "max(16px, env(safe-area-inset-bottom))"
       }}
     >
       <div className="flex flex-col items-center gap-2 sm:gap-3">
-        <div className="text-[12px] sm:text-[11px] md:text-[12px] lg:text-[13px] text-gray-300 tracking-[0.18em] sm:tracking-[0.20em] md:tracking-[0.22em] uppercase font-light">
+        <div className="text-[12px] sm:text-[11px] md:text-[12px] lg:text-[13px] text-white/75 tracking-[0.18em] sm:tracking-[0.20em] md:tracking-[0.22em] uppercase font-light">
           Scroll to shoot
         </div>
-        {/* Subtle arrow indicator */}
+        {/* Subtle arrow indicator - only bounce on sm+ */}
         <svg 
-          className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 animate-bounce" 
+          className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/60 sm:animate-bounce" 
           style={{ animationDuration: '2s' }}
           fill="none" 
           stroke="currentColor" 
