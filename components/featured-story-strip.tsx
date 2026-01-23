@@ -40,13 +40,13 @@ export function FeaturedStoryStrip() {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-16"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 md:px-12 lg:px-16"
       style={{ background: "#000" }}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
           {/* Left: Large Image */}
-          <div className="animate-item relative h-[400px] sm:h-[500px] md:h-[550px] lg:h-[600px] rounded-lg overflow-hidden group">
+          <div className="animate-item relative h-[350px] sm:h-[450px] md:h-[500px] lg:h-[550px] rounded-lg overflow-hidden group">
             <Image
               src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1000&q=65&auto=format"
               alt="Featured Story"
@@ -59,19 +59,19 @@ export function FeaturedStoryStrip() {
           </div>
 
           {/* Right: Content */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-5 md:space-y-6">
             <div className="animate-item">
-              <p className="text-xs text-gray-500 uppercase tracking-[0.2em] mb-2">Featured Story</p>
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-[0.2em] mb-2">Featured Story</p>
               <h2 
-                className="text-white font-light mb-4"
-                style={{ fontSize: "clamp(32px, 5vw, 60px)", lineHeight: 1.1 }}
+                className="text-white font-light mb-3 sm:mb-4"
+                style={{ fontSize: "clamp(28px, 6vw, 60px)", lineHeight: 1.1 }}
               >
                 Echoes of Mumbai
               </h2>
             </div>
 
             <div className="animate-item">
-              <p className="text-sm text-gray-400 mb-1">Mumbai, India • 2024</p>
+              <p className="text-xs sm:text-sm text-gray-400 mb-1">Mumbai, India • 2024</p>
             </div>
 
             <div className="animate-item">
@@ -86,7 +86,7 @@ export function FeaturedStoryStrip() {
             </div>
 
             <div className="animate-item">
-              <button className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 mt-4 border border-gray-600/50 rounded-full text-sm sm:text-base text-white hover:bg-white/5 hover:border-gray-400/70 transition-all duration-300 min-h-[44px]">
+              <button className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 mt-2 sm:mt-4 border border-gray-600/50 rounded-full text-sm sm:text-base text-white hover:bg-white/5 hover:border-gray-400/70 active:bg-white/10 transition-all duration-300 min-h-[48px] sm:min-h-[44px] touch-manipulation">
                 <span>View story</span>
                 <svg 
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 

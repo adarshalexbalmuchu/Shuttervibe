@@ -8,14 +8,14 @@ function cn(...inputs: (string | undefined | null | false)[]): string {
 }
 
 const glassButtonVariants = cva(
-  "relative isolate all-unset cursor-pointer rounded-full transition-all",
+  "relative isolate all-unset cursor-pointer rounded-full transition-all touch-manipulation active:scale-95",
   {
     variants: {
       size: {
         default: "text-base font-medium",
-        sm: "text-sm font-medium",
+        sm: "text-sm font-medium min-h-[44px] min-w-[80px]",
         lg: "text-lg font-medium",
-        icon: "h-10 w-10",
+        icon: "h-12 w-12 sm:h-10 sm:w-10",
       },
     },
     defaultVariants: {
@@ -30,9 +30,9 @@ const glassButtonTextVariants = cva(
     variants: {
       size: {
         default: "px-6 py-3.5",
-        sm: "px-4 py-2",
+        sm: "px-5 py-2.5 sm:px-4 sm:py-2",
         lg: "px-8 py-4",
-        icon: "flex h-10 w-10 items-center justify-center",
+        icon: "flex h-12 w-12 sm:h-10 sm:w-10 items-center justify-center",
       },
     },
     defaultVariants: {

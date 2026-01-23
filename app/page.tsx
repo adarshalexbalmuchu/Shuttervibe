@@ -40,10 +40,10 @@ export default function Home() {
   useEffect(() => {
     if (!mounted) return;
 
-    // Defer GSAP initialization slightly for better initial paint
+    // Defer GSAP initialization significantly to not block LCP
     const timer = setTimeout(() => {
       initScrollTrigger();
-    }, 50);
+    }, 2000);
 
     async function initScrollTrigger() {
       try {
@@ -67,9 +67,14 @@ export default function Home() {
     };
   }, [mounted]);
 
-  // Fade out brand name on scroll (optimized)
+  // Fade out brand name on scroll (deferred to reduce INP)
   useEffect(() => {
     if (!mounted) return;
+
+    // Defer brand animation to after other critical work
+    const timer = setTimeout(() => {
+      initBrandFade();
+    }, 2500);
 
     const initBrandFade = async () => {
       const gsap = (await import("gsap")).default;
@@ -96,7 +101,7 @@ export default function Home() {
       ScrollTrigger.config({ limitCallbacks: true });
     };
 
-    initBrandFade();
+    return () => clearTimeout(timer);
   }, [mounted]);
 
   if (!mounted) {
@@ -129,12 +134,12 @@ export default function Home() {
       {/* Vignette Overlay */}
       <Vignette />
 
-      {/* Lens Glow - cursor following effect */}
-      <LensGlow />
+      {/* Lens Glow - cursor following effect - only on desktop */}
+      {typeof window !== 'undefined' && !/mobile|tablet/i.test(navigator.userAgent) && <LensGlow />}
 
       {/* Navigation Button - Fixed position */}
-      <div className="fixed top-6 right-6 z-50 pointer-events-auto">
-        <a href="#contact">
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 pointer-events-auto">
+        <a href="#contact" className="block touch-manipulation">
           <GlassButton size="sm">
             Contact
           </GlassButton>

@@ -8,6 +8,7 @@ const playfair = Playfair_Display({
   weight: ['400', '700'],
   variable: '--font-playfair',
   display: 'swap',
+  preload: true,
 });
 
 const inter = Inter({ 
@@ -15,6 +16,7 @@ const inter = Inter({
   weight: ['300', '400'],
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -24,6 +26,19 @@ export const metadata: Metadata = {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    viewportFit: 'cover',
+  },
+  themeColor: '#000000',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Shuttervibe',
   },
 };
 

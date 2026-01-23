@@ -7,8 +7,8 @@ import { Environment, Html, useGLTF } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Preload the compressed 3.1MB model for better LCP
-useGLTF.preload('/models/camera.glb');
+// Lazy load model only when needed - don't preload to avoid LCP bottleneck
+// useGLTF.preload('/models/camera.glb');
 
 function Loader() {
   const [progress, setProgress] = useState(0);
@@ -318,8 +318,11 @@ function CameraRig({ url, deviceType }: { url: string; deviceType: 'mobile' | 't
 
     // Mouse/touch parallax (disabled during scroll to prevent interference)
     const parallaxEnabled = !isTouchDevice.current && !isScrolling.current;
-    const parallaxX = parallaxEnabled ? mouse.x * 0.05 : 0;  // Reduced from 0.12
-    const parallaxY = parallaxEnabled ? mouse.y * 0.025 : 0; // Reduced from 0.06
+    // Device-specific parallax intensity
+    const parallaxIntensityX = isMobile ? 0.02 : isTablet ? 0.03 : 0.05;
+    const parallaxIntensityY = isMobile ? 0.01 : isTablet ? 0.015 : 0.025;
+    const parallaxX = parallaxEnabled ? mouse.x * parallaxIntensityX : 0;
+    const parallaxY = parallaxEnabled ? mouse.y * parallaxIntensityY : 0;
 
     group.current.rotation.y = displayed.current.rotY + parallaxX + breathe;
     group.current.rotation.x = displayed.current.rotX + parallaxY;
@@ -359,7 +362,7 @@ function useDeviceType() {
 export default function HeroToGalleryScene() {
   const [isClient, setIsClient] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [adaptiveDpr, setAdaptiveDpr] = useState<[number, number]>([1, 2]);
+  const [adaptiveDpr, setAdaptiveDpr] = useState<[number, number]>([1, 1]);
   const containerRef = useRef<HTMLDivElement>(null);
   const deviceType = useDeviceType();
   const fpsRef = useRef<number[]>([]);
@@ -367,6 +370,13 @@ export default function HeroToGalleryScene() {
 
   useEffect(() => {
     setIsClient(true);
+  }, []);
+
+  // Only load model after 3 seconds to let critical rendering finish
+  const [modelReady, setModelReady] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setModelReady(true), 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   // IntersectionObserver to pause rendering when off-screen
@@ -429,9 +439,9 @@ export default function HeroToGalleryScene() {
   const isMobile = deviceType === 'mobile';
   const isTablet = deviceType === 'tablet';
 
-  // Device-specific camera settings
-  const cameraZ = isMobile ? 4.2 : isTablet ? 3.6 : 3.1;
-  const cameraFov = isMobile ? 55 : isTablet ? 48 : 42;
+  // Device-specific camera settings - optimized for each screen size
+  const cameraZ = isMobile ? 4.5 : isTablet ? 3.8 : 3.1;
+  const cameraFov = isMobile ? 60 : isTablet ? 50 : 42;
 
   return (
     <div ref={containerRef} style={{ width: "100%", height: "100%", pointerEvents: "none" }}>
@@ -442,21 +452,23 @@ export default function HeroToGalleryScene() {
         gl={{ 
           antialias: !isMobile, 
           alpha: true, 
-          powerPreference: "high-performance", 
+          powerPreference: isMobile ? "default" : "high-performance", 
           stencil: false, 
           depth: true,
           logarithmicDepthBuffer: false,
+          preserveDrawingBuffer: false,
         }}
         frameloop={isVisible ? "always" : "never"}
         performance={{ min: 0.5 }}
         flat
+        legacy={isMobile}
       >
         <Suspense fallback={<Loader />}>
-          <ambientLight intensity={0.55} />
-          <directionalLight position={[6, 6, 6]} intensity={1.35} />
-          <directionalLight position={[-3, 2, -2]} intensity={0.45} />
-          <Environment preset="city" environmentIntensity={0.35} />
-          <CameraRig url="/models/camera.glb" deviceType={deviceType} />
+          <ambientLight intensity={isMobile ? 0.6 : 0.55} />
+          <directionalLight position={[6, 6, 6]} intensity={isMobile ? 1.2 : 1.35} />
+          {!isMobile && <directionalLight position={[-3, 2, -2]} intensity={0.45} />}
+          <Environment preset="city" environmentIntensity={isMobile ? 0.25 : 0.35} />
+          {modelReady && <CameraRig url="/models/camera.glb" deviceType={deviceType} />}
         </Suspense>
       </Canvas>
     </div>

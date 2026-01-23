@@ -25,30 +25,30 @@ export function Footer() {
 			
 			<div className="max-w-5xl mx-auto">
 				{/* Centered Simple Layout */}
-				<div className="py-20 sm:py-24 flex flex-col items-center text-center space-y-12">
+				<div className="py-16 sm:py-20 md:py-24 flex flex-col items-center text-center space-y-10 sm:space-y-12">
 					{/* Brand Section */}
-					<AnimatedContainer className="space-y-4">
-						<h2 className="font-playfair text-5xl sm:text-6xl font-bold text-white tracking-tight" style={{ letterSpacing: '-0.02em' }}>
+					<AnimatedContainer className="space-y-3 sm:space-y-4">
+						<h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight" style={{ letterSpacing: '-0.02em' }}>
 							Shuttervibe
 						</h2>
-						<p className="font-playfair italic text-xl text-white/50">
+						<p className="font-playfair italic text-lg sm:text-xl text-white/50">
 							by Adarsh Alex Balmuchu
 						</p>
 					</AnimatedContainer>
 
 					{/* Social Links - Simple Icons */}
-					<AnimatedContainer delay={0.15} className="flex items-center gap-6">
+					<AnimatedContainer delay={0.15} className="flex items-center gap-5 sm:gap-6">
 						{socialLinks.map((link) => (
 							<a
 								key={link.title}
 								href={link.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group"
+								className="group touch-manipulation"
 								aria-label={link.title}
 							>
-								<div className="w-12 h-12 rounded-full border border-white/10 bg-white/[0.02] flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/[0.08] transition-all duration-300">
-									<link.icon className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
+								<div className="w-14 h-14 sm:w-12 sm:h-12 rounded-full border border-white/10 bg-white/[0.02] flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/[0.08] group-active:bg-white/[0.12] transition-all duration-300">
+									<link.icon className="w-6 h-6 sm:w-5 sm:h-5 text-white/60 group-hover:text-white transition-colors" />
 								</div>
 							</a>
 						))}

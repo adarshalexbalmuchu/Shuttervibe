@@ -45,13 +45,13 @@ export function ScrollIndicator() {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-8 sm:bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 z-40 pointer-events-none"
+      className="fixed bottom-6 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 z-40 pointer-events-none"
       style={{ 
         opacity: 0,
-        paddingBottom: "env(safe-area-inset-bottom)"
+        paddingBottom: "max(16px, env(safe-area-inset-bottom))"
       }}
     >
-      <div className="text-[10px] text-gray-400 tracking-[0.2em] uppercase">
+      <div className="text-[11px] sm:text-[10px] text-gray-400 tracking-[0.18em] sm:tracking-[0.2em] uppercase font-light">
         Scroll to shoot
       </div>
     </div>

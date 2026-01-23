@@ -132,10 +132,8 @@ export function CinematicGallery({ images }: CinematicGalleryProps) {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '60vw',
-                height: '70vh',
-                maxWidth: '800px',
-                maxHeight: '600px',
+                width: 'min(90vw, 800px)',
+                height: 'min(60vh, 600px)',
               }}
             >
               <img
