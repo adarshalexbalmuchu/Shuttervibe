@@ -41,7 +41,7 @@ export function BrandName() {
         <div 
           className="font-playfair font-bold"
           style={{
-            fontSize: "clamp(32px, 7vw, 92px)",
+            fontSize: "clamp(28px, 6vw, 80px)",
             letterSpacing: '0.10em',
             background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%)',
             WebkitBackgroundClip: 'text',

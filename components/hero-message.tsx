@@ -49,9 +49,9 @@ export function HeroMessage() {
       ref={containerRef}
       className="
         absolute z-10 pointer-events-none
-        left-[6%] sm:left-[8%] md:left-[9%] lg:left-[16%]
+        left-[6%] sm:left-[7%] md:left-[7%] lg:left-[8%]
         top-[100px] sm:top-[120px] md:top-[160px] lg:top-[180px]
-        max-w-[340px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[580px]
+        max-w-[340px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[520px]
         right-4 sm:right-auto
         px-safe
       "
