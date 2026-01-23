@@ -45,7 +45,7 @@ export function ScrollIndicator() {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-[9%] sm:bottom-[12%] md:bottom-[14%] lg:bottom-[18%] left-1/2 -translate-x-1/2 z-40 pointer-events-none"
+      className="fixed bottom-[6%] sm:bottom-[8%] md:bottom-[10%] lg:bottom-[12%] left-1/2 -translate-x-1/2 z-40 pointer-events-none"
       style={{ 
         opacity: 0,
         paddingBottom: "max(16px, env(safe-area-inset-bottom))"
